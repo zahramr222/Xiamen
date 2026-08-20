@@ -1,0 +1,39 @@
+<% 
+  # Get breadcrumbs from local assigns, default to empty array
+  crumbs = local_assigns[:breadcrumbs] || []
+  
+  # If it's a string (JSON), parse it
+  if crumbs.is_a?(String)
+    begin
+      crumbs = JSON.parse(crumbs).map(&:symbolize_keys)
+    rescue
+      crumbs = []
+    end
+  end
+  
+  # Ensure it's an array
+  crumbs = [] unless crumbs.is_a?(Array)
+%>
+
+<% if crumbs.present? %>
+  <nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+      <li>
+        <%= link_to root_path do %>
+          <i class="fa-solid fa-house"></i> Home
+        <% end %>
+      </li>
+      
+      <% crumbs.each do |crumb| %>
+        <li>
+          <span class="separator">/</span>
+          <% if crumb[:path].present? %>
+            <%= link_to crumb[:label], crumb[:path] %>
+          <% else %>
+            <span class="current"><%= crumb[:label] %></span>
+          <% end %>
+        </li>
+      <% end %>
+    </ol>
+  </nav>
+<% end %>

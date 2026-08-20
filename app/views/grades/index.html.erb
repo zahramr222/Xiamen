@@ -1,0 +1,50 @@
+<h1>Grades</h1>
+
+<%= link_to "New Grade", new_grade_path %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Specifications</th>
+    <th>Packings</th>
+    <th>Image</th>
+    <th></th>
+  </tr>
+
+  <% @grades.each do |grade| %>
+    <tr>
+      <td>
+        <%= grade.name %>
+      </td>
+
+      <td>
+        <% if grade.specifications.present? %>
+          <%= grade.specifications.pluck(:title).join(", ") %>
+        <% else %>
+          <span style="color: #999;">No specifications</span>
+        <% end %>
+      </td>
+
+      <td>
+        <% grade.packings.each do |packing| %>
+          <%= packing.name %><br>
+        <% end %>
+      </td>
+
+      <td>
+        <% if grade.image.attached? %>
+          <%= image_tag grade.image, width: 100 %>
+        <% end %>
+      </td>
+
+      <td>
+        <%= link_to "Show", grade_path(grade) %>
+        <%= link_to "Edit", edit_grade_path(grade) %>
+        <%= link_to "Delete",
+                    grade_path(grade),
+                    data: { turbo_method: :delete,
+                            turbo_confirm: "Are you sure?" } %>
+      </td>
+    </tr>
+  <% end %>
+</table>

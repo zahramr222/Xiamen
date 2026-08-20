@@ -1,0 +1,205 @@
+<%# BREADCRUMBS %>
+<% @breadcrumbs = [
+  { label: "Products", path: products_path },
+  { label: "Bitumen" }
+  ] %>
+
+  <%# PAGE TITLE %>
+  <% content_for(:page_title, "Bitumen | Infinity Galaxy") %>
+
+  <div class="bitumen-landing">
+
+    <!-- Hero Section -->
+    <section class="bitumen-hero">
+      <div class="bitumen-hero-content">
+        <span class="section-label">
+          <span class="section-label-line"></span>
+          BITUMEN
+        </span>
+        <h1>Premium Quality <span>Bitumen</span> for Industrial Use</h1>
+        <p class="bitumen-hero-description">
+          Leverage the durability and versatility of our top-grade bitumen, ideal for a wide range of 
+          construction and paving projects. We ensure competitive prices and consistent supply, 
+          directly sourced from the best producers.
+        </p>
+        <div class="bitumen-hero-actions">
+          <%= link_to "#{root_path}#inquiry", class: "about-btn about-btn-primary" do %>
+          Get a Quote
+          <i class="fa-solid fa-arrow-right"></i>
+          <% end %>
+          <%= link_to "/contact", class: "about-btn about-btn-secondary" do %>
+          Contact Us
+          <i class="fa-solid fa-phone"></i>
+          <% end %>
+        </div>
+      </div>
+      <div class="bitumen-hero-image">
+        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=85" alt="Bitumen">
+      </div>
+    </section>
+
+    <!-- Product Categories -->
+    <section class="bitumen-products">
+      <div class="bitumen-products-header">
+        <span class="section-label">
+          <span class="section-label-line"></span>
+          BITUMEN PRODUCTS
+        </span>
+        <h2>Explore Our <span>Bitumen Range</span></h2>
+        <p>
+          Our bitumen products meet the highest standards of quality and performance, making them a 
+          preferred choice for road constructors and industrial companies worldwide.
+        </p>
+      </div>
+
+      <div class="bitumen-products-grid">
+        
+        <!-- Oxidized Bitumen -->
+        <article class="bitumen-product-card">
+          <div class="bitumen-product-card-icon">
+            <i class="fa-solid fa-fire"></i>
+          </div>
+          <h3>Oxidized Bitumen</h3>
+          <p>High-quality oxidized bitumen for industrial applications with excellent durability.</p>
+          <div class="bitumen-product-count">
+            <span>(12)</span> Products
+          </div>
+          <%= link_to "/products/bitumen/oxidized", class: "bitumen-product-link" do %>
+          View Products
+          <i class="fa-solid fa-arrow-right"></i>
+          <% end %>
+        </article>
+
+        <!-- Penetration Bitumen -->
+        <article class="bitumen-product-card">
+          <div class="bitumen-product-card-icon">
+            <i class="fa-solid fa-road"></i>
+          </div>
+          <h3>Penetration Bitumen</h3>
+          <p>Standard penetration grade bitumen for road construction and paving applications.</p>
+          <div class="bitumen-product-count">
+            <span>(12)</span> Products
+          </div>
+          <%= link_to "/products/bitumen/penetration", class: "bitumen-product-link" do %>
+          View Products
+          <i class="fa-solid fa-arrow-right"></i>
+          <% end %>
+        </article>
+
+        <!-- Cutback Bitumen -->
+        <article class="bitumen-product-card">
+          <div class="bitumen-product-card-icon">
+            <i class="fa-solid fa-droplet"></i>
+          </div>
+          <h3>Cutback Bitumen</h3>
+          <p>Bitumen dissolved in solvent for cold application, ideal for surface treatments.</p>
+          <div class="bitumen-product-count">
+            <span>(13)</span> Products
+          </div>
+          <%= link_to "/products/bitumen/cutback", class: "bitumen-product-link" do %>
+          View Products
+          <i class="fa-solid fa-arrow-right"></i>
+          <% end %>
+        </article>
+
+        <!-- Emulsion Bitumen -->
+        <article class="bitumen-product-card">
+          <div class="bitumen-product-card-icon">
+            <i class="fa-solid fa-water"></i>
+          </div>
+          <h3>Emulsion Bitumen</h3>
+          <p>Bitumen emulsion for surface dressing, maintenance, and cold mix applications.</p>
+          <div class="bitumen-product-count">
+            <span>(3)</span> Products
+          </div>
+          <%= link_to "/products/bitumen/emulsion", class: "bitumen-product-link" do %>
+          View Products
+          <i class="fa-solid fa-arrow-right"></i>
+          <% end %>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Why Choose Us / Benefits -->
+    <section class="bitumen-benefits">
+      <div class="bitumen-benefits-header">
+        <span class="section-label">
+          <span class="section-label-line"></span>
+          WHY CHOOSE US
+        </span>
+        <h2>Why Choose <span>Our Bitumen?</span></h2>
+      </div>
+
+      <div class="bitumen-benefits-grid">
+        <div class="bitumen-benefit-card">
+          <div class="bitumen-benefit-icon">
+            <i class="fa-solid fa-medal"></i>
+          </div>
+          <h3>Premium Quality</h3>
+          <p>Our bitumen products meet the highest standards of quality and performance worldwide.</p>
+        </div>
+
+        <div class="bitumen-benefit-card">
+          <div class="bitumen-benefit-icon">
+            <i class="fa-solid fa-handshake"></i>
+          </div>
+          <h3>Strategic Partnerships</h3>
+          <p>Partnerships in UAE, China, and Turkey guarantee fast and efficient delivery.</p>
+        </div>
+
+        <div class="bitumen-benefit-card">
+          <div class="bitumen-benefit-icon">
+            <i class="fa-solid fa-headset"></i>
+          </div>
+          <h3>Expert Support</h3>
+          <p>Comprehensive support and technical expertise to select the right bitumen.</p>
+        </div>
+
+        <div class="bitumen-benefit-card">
+          <div class="bitumen-benefit-icon">
+            <i class="fa-solid fa-tag"></i>
+          </div>
+          <h3>Competitive Pricing</h3>
+          <p>Advanced procurement processes keep our bitumen prices affordable.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Understanding Bitumen Pricing -->
+    <section class="bitumen-pricing">
+      <div class="bitumen-pricing-content">
+        <span class="section-label">
+          <span class="section-label-line"></span>
+          PRICING
+        </span>
+        <h2>Understanding <span>Bitumen Pricing</span></h2>
+        <p class="bitumen-pricing-intro">
+          The price of bitumen is influenced by a variety of global factors including crude oil prices, 
+          production costs, and market demand. As a leading supplier, we stay abreast of market trends 
+          to offer our customers competitive bitumen prices without compromising on quality.
+        </p>
+        
+        <div class="bitumen-pricing-grid">
+          <div class="bitumen-pricing-item">
+            <h4>Factors Affecting Bitumen Prices</h4>
+            <p>Several key factors impact the cost of bitumen globally. These include the price of crude oil, 
+            refining costs, and logistical expenses. Seasonal demands can also sway bitumen prices.</p>
+          </div>
+          <div class="bitumen-pricing-item">
+            <h4>How We Offer Competitive Prices</h4>
+            <p>We leverage advanced procurement and production processes to keep our bitumen prices affordable. 
+            Our strategic partnerships with top Middle Eastern producers allow us to secure bitumen at optimal prices.</p>
+          </div>
+          <div class="bitumen-pricing-item">
+            <h4>Our Pricing Strategy</h4>
+            <p>Our pricing strategy is transparent and tailored to meet diverse client needs. We offer various 
+            pricing models designed to accommodate project-specific requirements and budget constraints.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <%= render 'shared/inquiry' %>
+
+  </div>

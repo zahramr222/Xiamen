@@ -1,0 +1,41 @@
+<div class="container mt-4">
+
+    <h1><%= @packing.name %></h1>
+
+    <hr>
+
+    <p>
+
+        <strong>Specification:</strong>
+
+        <% if @packing.specification.present? %>
+            <%= @packing.specification.title %>
+        <% else %>
+            -
+        <% end %>
+
+    </p>
+
+    <hr>
+
+    <div>
+
+        <%= raw @packing.content %>
+
+    </div>
+
+    <br>
+
+    <%= link_to "Edit",
+                edit_packing_path(@packing),
+                class: "btn btn-warning" %>
+
+    <%= link_to "Back",
+                packings_path,
+                class: "btn btn-secondary" %>
+
+   <% if @packing.image.attached? %>
+  <%= image_tag @packing.image, width: 300 %>
+<% end %>            
+
+</div>

@@ -1,0 +1,15 @@
+<nav class="navbar">
+  <div class="container">
+    <%= link_to root_path, class: "navbar-brand" do %>
+      B<span>i</span>tumen.
+    <% end %>
+
+    <div class="nav-menu">
+      <%= link_to "Home", root_path, class: "nav-link" %>
+      <%= link_to "Products", products_path, class: "nav-link" %>
+      <%= link_to "Articles", posts_path, class: "nav-link" %>
+      <%= link_to "Inquiry", "#{root_path}#inquiry", class: "nav-link" %>
+      <%= link_to "Contact", "#{root_path}#contact", class: "nav-link" %>
+    </div>
+  </div>
+</nav>

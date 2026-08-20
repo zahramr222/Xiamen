@@ -1,0 +1,65 @@
+<!-- ARTICLES SECTION -->
+<section class="articles-section">
+  <div class="articles-header">
+    <div>
+      <div class="partners-label">
+        <span class="partners-label-line"></span> INSIGHTS
+      </div>
+      <h2>Latest Articles</h2>
+    </div>
+
+    <a href="#" class="articles-view-all">
+      View all <i class="fa-solid fa-arrow-right"></i>
+    </a>
+  </div>
+
+  <div class="articles-grid">
+
+    <% @articles.each do |article| %>
+
+      <article class="article-card">
+
+        <a href="#" class="article-image">
+          <%= image_tag article.image, alt: article.title %>
+
+          <span class="article-category">
+            BITUMEN
+          </span>
+        </a>
+
+        <div class="article-content">
+
+          <div class="article-meta">
+            <span>
+              <i class="fa-regular fa-calendar"></i>
+              <%= article.updated_at.strftime("%b %d, %Y") %>
+            </span>
+
+            <span class="article-read">
+              5 min read
+            </span>
+          </div>
+
+          <h3>
+            <%= article.title %>
+          </h3>
+
+          <p>
+            <%= truncate(article.summery.to_s, length: 135) %>
+          </p>
+
+          <%= link_to post_path(article.slug), class: "article-link" do %>
+            Read article
+            <span>
+              <i class="fa-solid fa-arrow-up-right"></i>
+            </span>
+          <% end %>
+
+        </div>
+
+      </article>
+
+    <% end %>
+
+  </div>
+</section>

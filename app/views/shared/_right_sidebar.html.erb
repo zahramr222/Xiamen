@@ -1,0 +1,33 @@
+<%# 
+  Local variables:
+  - label: The section label (e.g., "INSIGHTS")
+  - title: The title of the sidebar (e.g., "Related Articles")
+  - description: Description text
+  - articles: Array of article hashes with :path, :image_url, :category, :title, :summary
+%>
+
+<div class="grade-related-sidebar-inner">
+  <div class="grade-related-heading">
+    <span class="grade-section-label"><%= local_assigns[:label] || "INSIGHTS" %></span>
+    <h2><%= local_assigns[:title] || "Related Articles" %></h2>
+    <p><%= local_assigns[:description] || "Latest insights and related content." %></p>
+  </div>
+
+  <% local_assigns[:articles]&.each do |article| %>
+    <article class="grade-related-article">
+      <a href="<%= article[:path] %>" class="grade-related-image">
+        <img src="<%= article[:image_url] %>" alt="<%= article[:title] %>" loading="lazy">
+      </a>
+
+      <div class="grade-related-content">
+        <span class="grade-related-category"><%= article[:category].to_s.upcase %></span>
+        <h3><%= article[:title] %></h3>
+        <p><%= article[:summary] %></p>
+        <a href="<%= article[:path] %>" class="grade-related-link">
+          Read article
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </article>
+  <% end %>
+</div>

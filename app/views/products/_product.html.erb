@@ -1,0 +1,13 @@
+<%# product - local variable %>
+
+<%= link_to product_path(product), class: "product-item" do %>
+  <div class="product-icon">
+    <i class="fa-solid fa-cube"></i>
+  </div>
+
+  <span class="product-name">
+    <%= product.name %>
+  </span>
+
+  <i class="fa-solid fa-arrow-up-right-from-square product-arrow"></i>
+<% end %>

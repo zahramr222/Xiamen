@@ -1,0 +1,100 @@
+<footer class="modern-footer">
+  <div class="footer-container">
+    <div class="footer-main">
+      <!-- Brand -->
+      <div class="footer-brand">
+        <%= link_to root_path, class: "footer-logo" do %>
+          B<span>i</span>tumen.
+        <% end %>
+        <p class="footer-description">
+          A trusted partner for industrial products, international sourcing and reliable supply solutions across global markets.
+        </p>
+        <div class="footer-socials">
+          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+
+      <!-- Offices -->
+      <div class="footer-offices">
+        <div class="footer-heading">Our Offices</div>
+        <div class="office-list">
+          <!-- Tehran -->
+          <div class="office">
+            <div class="office-icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div>
+              <strong>Tehran</strong>
+              <p>No. 24, Valiasr Street, Tehran, Iran</p>
+            </div>
+          </div>
+          <!-- Bandar Abbas -->
+          <div class="office">
+            <div class="office-icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div>
+              <strong>Bandar Abbas</strong>
+              <p>No. 18, Imam Khomeini Boulevard, Bandar Abbas, Iran</p>
+            </div>
+          </div>
+          <!-- Hong Kong -->
+          <div class="office">
+            <div class="office-icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div>
+              <strong>Hong Kong</strong>
+              <p>Unit 1208, 12/F, Exchange Tower, Hong Kong</p>
+            </div>
+          </div>
+          <!-- Dubai -->
+          <div class="office">
+            <div class="office-icon"><i class="fa-solid fa-location-dot"></i></div>
+            <div>
+              <strong>Dubai</strong>
+              <p>Level 41, Emirates Towers, Sheikh Zayed Road, Dubai, UAE</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Links -->
+      <div class="footer-links-column">
+        <div class="footer-heading">Explore</div>
+        <%= link_to products_path do %>
+          Products <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        <% end %>
+        <%= link_to posts_path do %>
+          Articles <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        <% end %>
+        <%= link_to about_path do %>
+          About Us <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        <% end %>
+        <%= link_to contact_path do %>
+          Contact Us <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        <% end %>
+      </div>
+
+      <!-- Contact -->
+      <div class="footer-contact">
+        <div class="footer-heading">Get in touch</div>
+        <%= mail_to "info@example.com", "info@example.com", class: "footer-email" %>
+        <div class="footer-phone">
+          <i class="fa-solid fa-phone"></i>
+          <span>+971 505 12 8033</span>
+        </div>
+        <p>Questions about products, pricing or supply?</p>
+        <%= link_to inquiry_path, class: "footer-inquiry" do %>
+          Make an inquiry
+          <span><i class="fa-solid fa-arrow-right"></i></span>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Bitumen. All rights reserved.</span>
+      <div class="footer-legal">
+        <%= link_to "Privacy Policy", "#" %>
+        <%= link_to "Terms", "#" %>
+      </div>
+    </div>
+  </div>
+</footer>

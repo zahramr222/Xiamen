@@ -1,0 +1,149 @@
+<%# BREADCRUMBS %>
+<% @breadcrumbs = [
+  { label: "Products", path: products_path },
+  { label: @product.name }
+] %>
+
+<%# PAGE TITLE %>
+<% content_for(:page_title, "#{@product.name} | Infinity Galaxy") %>
+
+<div class="product-show">
+
+  <!-- Header -->
+  <header class="product-show-header">
+    <div class="product-show-header-content">
+      <span class="section-label">
+        <span class="section-label-line"></span>
+        <%= @product.name.upcase %>
+      </span>
+      <h1 class="section-title">
+        <span><%= @product.name %></span>
+      </h1>
+      <p class="product-show-subtitle">
+        Explore our comprehensive range of <%= @product.name.downcase %> grades, 
+        each designed to meet specific industry requirements and standards.
+      </p>
+    </div>
+  </header>
+
+  <!-- Product Stats -->
+  <div class="product-stats">
+    <div class="product-stat-item">
+      <span class="product-stat-number"><%= @product.grades.count %></span>
+      <span class="product-stat-label">Available Grades</span>
+    </div>
+    <div class="product-stat-item">
+      <span class="product-stat-number"><%= @product.try(:supply_capacity) || "30,000+" %></span>
+      <span class="product-stat-label">MT / Month Supply</span>
+    </div>
+    <div class="product-stat-item">
+      <span class="product-stat-number">60+</span>
+      <span class="product-stat-label">Countries Served</span>
+    </div>
+  </div>
+
+  <!-- Grades Display -->
+  <section class="product-grades">
+    <div class="product-features-header">
+      <span class="section-label">
+        <span class="section-label-line"></span>
+        AVAILABLE GRADES
+      </span>
+      <h2>All <span><%= @product.name %></span> Grades</h2>
+      <p class="product-show-subtitle">
+        Choose from our wide selection of high-quality <%= @product.name.downcase %> grades, 
+        each rigorously tested to meet international standards.
+      </p>
+    </div>
+
+    <div class="product-grades-grid">
+      <% if @product.grades.present? %>
+        <% @product.grades.each do |grade| %>
+          <%= link_to grade_path(grade), class: "product-grade-card" do %>
+            <div class="product-grade-image-wrapper">
+              <% if grade.image.attached? %>
+                <%= image_tag grade.image, alt: grade.name, class: "product-grade-image" %>
+              <% else %>
+                <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=80" alt="<%= grade.name %>" class="product-grade-image">
+              <% end %>
+              <div class="product-grade-badge">
+                <span>Premium</span>
+              </div>
+            </div>
+            <div class="product-grade-content">
+              <h3><%= grade.name %></h3>
+              <p><%= grade.try(:summary) || "Premium quality #{grade.name} for industrial applications." %></p>
+              <div class="product-grade-meta">
+                <span class="product-grade-tag">
+                  <i class="fa-solid fa-check-circle"></i>
+                  Premium
+                </span>
+                <span class="product-grade-arrow">
+                  View Details
+                  <i class="fa-solid fa-arrow-right"></i>
+                </span>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      <% else %>
+        <div class="product-grades-empty">
+          <i class="fa-solid fa-box-open"></i>
+          <h3>No Grades Available</h3>
+          <p>Check back soon for <%= @product.name %> grades.</p>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <!-- Features / Why Choose -->
+  <section class="product-features">
+    <div class="product-features-header">
+      <span class="section-label">
+        <span class="section-label-line"></span>
+        WHY CHOOSE US
+      </span>
+      <h2>Why Choose Our <span><%= @product.name %></span>?</h2>
+    </div>
+
+    <div class="product-features-grid">
+      <div class="product-feature-card">
+        <div class="product-feature-icon">
+          <i class="fa-solid fa-medal"></i>
+        </div>
+        <h3>Premium Quality</h3>
+        <p>All products meet the highest international standards and are rigorously tested for quality assurance.</p>
+      </div>
+
+      <div class="product-feature-card">
+        <div class="product-feature-icon">
+          <i class="fa-solid fa-globe"></i>
+        </div>
+        <h3>Global Supply</h3>
+        <p>With strategic partnerships worldwide, we ensure fast and reliable delivery to any destination.</p>
+      </div>
+
+      <div class="product-feature-card">
+        <div class="product-feature-icon">
+          <i class="fa-solid fa-headset"></i>
+        </div>
+        <h3>Expert Support</h3>
+        <p>Our technical team provides comprehensive support to help you select the right product.</p>
+      </div>
+
+      <div class="product-feature-card">
+        <div class="product-feature-icon">
+          <i class="fa-solid fa-tag"></i>
+        </div>
+        <h3>Competitive Pricing</h3>
+        <p>We offer the best market prices without compromising on quality or service.</p>
+      </div>
+    </div>
+  </section>
+
+  
+
+  <!-- Inquiry Partial -->
+  <%= render 'shared/inquiry', product_name: @product.name %>
+
+</div>

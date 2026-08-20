@@ -1,15 +1,45 @@
 Rails.application.routes.draw do
-  get "test/index"
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  get "search/index"
+  devise_for :users
+  
+  root "home#index"
+  get "/home", to: "home#index"
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  get "/inquiry", to: "inquiry#inquiry", as: :inquiry
+  post "/inquiry", to: "inquiry#create"
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+
+  # Pages
+  get "/contact", to: "pages#contact", as: :contact
+  get "/about", to: "pages#about", as: :about
+  get "/aboutus", to: "pages#about", as: :aboutus   # Optional - both work
+
+  # Products routes with custom collection routes
+  resources :products do
+    collection do
+      get :bitumen
+      get :paraffin_wax
+      get :slack_wax
+      get :footsoil
+      get :base_oil
+      get :rpo
+    end
+  end
+
+  # Bitumen sub-products
+  get "products/bitumen/oxidized", to: "products#oxidized_bitumen", as: :products_oxidized_bitumen
+  get "products/bitumen/penetration", to: "products#penetration_bitumen", as: :products_penetration_bitumen
+  get "products/bitumen/cutback", to: "products#cutback_bitumen", as: :products_cutback_bitumen
+  get "products/bitumen/emulsion", to: "products#emulsion_bitumen", as: :products_emulsion_bitumen
+
+  resources :specifications, only: [:new, :create, :edit, :update, :destroy]
+  resources :packings
+  resources :grades
+  resources :posts
+  resources :tags
+  resources :post_tags
+  resources :inquiry, only: [:new, :create]
+  
+  get "/search", to: "search#index", as: :search
 end

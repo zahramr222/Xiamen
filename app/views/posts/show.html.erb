@@ -1,0 +1,122 @@
+<%# BREADCRUMBS %>
+<% @breadcrumbs = [
+  { label: "Posts", path: posts_path },
+  { label: @post.title }
+] %>
+
+<%# PAGE TITLE %>
+<% content_for(:page_title, "#{@post.title} | Infinity Galaxy") %>
+
+<%# HEAD META %>
+<% content_for(:head) do %>
+  <meta name="description" content="<%= truncate(@post.summery || @post.content, length: 160) %>">
+<% end %>
+
+<%# LEFT SIDEBAR - Table of Contents with custom nav items %>
+<% 
+  nav_items = []
+  nav_items << { id: "summary", label: "Summary" } if @post.summery.present?
+  nav_items << { id: "content", label: "Content" }
+  nav_items << { id: "related", label: "Related Posts" } if @related_posts.present?
+%>
+
+<% content_for(:left_sidebar) do %>
+  <%= render "shared/left_sidebar",
+    title: @post.title,
+    nav_items: nav_items,
+    show_order_button: false,
+    order_url: "#{root_path}#inquiry",
+    order_text: "Send Inquiry"
+  %>
+<% end %>
+<%# PAGE CONTENT %>
+<div class="post-show">
+
+  <!-- Header -->
+  <header class="post-header">
+    <div class="post-header-content">
+      <span class="section-label">
+        <span class="section-label-line"></span>
+        <%= @post.post_type&.upcase || "POST" %>
+      </span>
+      <h1 class="section-title">
+        <span><%= @post.title %></span>
+      </h1>
+      <div class="post-meta">
+        <span class="post-meta-item">
+          <i class="fa-regular fa-calendar"></i>
+          <%= @post.created_at.strftime("%B %d, %Y") %>
+        </span>
+        <span class="post-meta-item">
+          <i class="fa-regular fa-clock"></i>
+          <%= time_ago_in_words(@post.created_at) %> ago
+        </span>
+        <% if @post.tags.present? %>
+          <span class="post-meta-item">
+            <i class="fa-solid fa-tags"></i>
+            <%= @post.tags.pluck(:name).join(", ") %>
+          </span>
+        <% end %>
+      </div>
+    </div>
+  </header>
+
+  <!-- Featured Image -->
+  <% if @post.image.attached? %>
+    <div class="post-featured-image">
+      <%= image_tag @post.image, alt: @post.title %>
+    </div>
+  <% end %>
+
+  <!-- SUMMARY SECTION -->
+  <% if @post.summery.present? %>
+    <div class="post-summary" id="summary">
+      <div class="post-summary-content">
+        <span class="post-summary-label">SUMMARY</span>
+        <p><%= @post.summery %></p>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- CONTENT SECTION -->
+  <div class="post-content" id="content">
+    <div class="post-content-wrapper">
+      <% if @post.content.present? %>
+        <%= simple_format(@post.content).html_safe %>
+      <% else %>
+        <p class="text-muted">No content available.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- RELATED POSTS SECTION -->
+  <% if @related_posts.present? %>
+    <section class="post-related" id="related">
+      <span class="section-label">
+        <span class="section-label-line"></span>
+        RELATED POSTS
+      </span>
+      <h2 class="section-title">You Might Also <span>Like</span></h2>
+      <div class="post-related-grid">
+        <% @related_posts.each do |related| %>
+          <%= link_to post_path(related), class: "post-related-card" do %>
+            <% if related.image.attached? %>
+              <div class="post-related-image">
+                <%= image_tag related.image, alt: related.title %>
+              </div>
+            <% end %>
+            <div class="post-related-content">
+              <span class="post-related-type"><%= related.post_type&.upcase || "POST" %></span>
+              <h3><%= related.title %></h3>
+              <span class="post-related-date"><%= related.created_at.strftime("%b %d, %Y") %></span>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+
+  <!-- Inquiry -->
+  <%= render 'shared/inquiry', product_name: @post.title %>
+
+</div>

@@ -1,0 +1,56 @@
+<%# BREADCRUMBS %>
+<% @breadcrumbs = [
+  { label: "Contact" }
+] %>
+
+<%# PAGE TITLE %>
+<% content_for(:page_title, "Contact Us | Infinity Galaxy") %>
+
+<div class="contact-page" style="text-align: left !important;">
+
+  <!-- Header -->
+  <header class="contact-header">
+    <span class="section-label">
+      <span class="section-label-line"></span>
+      CONTACT US
+    </span>
+    <h1 class="section-title">Get in <span>Touch</span></h1>
+    <p class="contact-subtitle">
+      Have a question or want to work with us? Fill out the form below and our team will get back to you within 12 hours.
+    </p>
+  </header>
+
+  <!-- Contact Content -->
+  <div class="contact-content-wrapper">
+    
+    <!-- Form -->
+    <div class="contact-form-wrapper">
+      <h3>Write Us</h3>
+      
+      <form class="contact-form">
+        <div class="contact-form-group">
+          <label for="full_name">Full Name</label>
+          <input type="text" id="full_name" placeholder="John Doe" required>
+        </div>
+
+        <div class="contact-form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="+1 234 567 890" required>
+        </div>
+
+        <div class="contact-form-group">
+          <label for="message">Your Message</label>
+          <textarea id="message" rows="5" placeholder="Tell us how we can help..." required></textarea>
+        </div>
+
+        <button type="submit" class="contact-submit-btn">
+          Send Message
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </form>
+    </div>
+
+    <%= render 'inquiries/getintouch' %>
+  </div>
+
+</div>

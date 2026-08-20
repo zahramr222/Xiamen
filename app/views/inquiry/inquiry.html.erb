@@ -1,0 +1,161 @@
+<%# PAGE TITLE %>
+<% content_for(:page_title, "Send Inquiry | Infinity Galaxy") %>
+
+<%# BREADCRUMBS %>
+<% @breadcrumbs = [
+  { label: "Send Inquiry" }
+] %>
+
+<div class="inquiry-page">
+
+  <!-- Header -->
+  <header class="inquiry-header">
+    <div class="inquiry-header-content">
+      <span class="section-label">
+        <span class="section-label-line"></span>
+        INQUIRY FORM
+      </span>
+      <h1 class="section-title">
+        Send Us an <span>Inquiry</span>
+      </h1>
+      <p class="inquiry-subtitle">
+        Fill out the form below and our team will get back to you within 12 hours.
+        We're here to help you find the right products for your needs.
+      </p>
+    </div>
+  </header>
+
+  <!-- Inquiry Form -->
+  <section class="inquiry-form-section">
+    <div class="inquiry-form-container">
+      
+      <!-- Form -->
+      <div class="inquiry-form-wrapper">
+        <%= form_with model: @inquiry, url: inquiry_path, class: "inquiry-form" do |f| %>
+          
+          <!-- Row: Full Name & Email -->
+          <div class="inquiry-form-row">
+            <div class="inquiry-form-group">
+              <%= f.label :full_name, "Full Name", class: "inquiry-label" %>
+              <div class="inquiry-input-wrapper">
+                <i class="fa-regular fa-user"></i>
+                <%= f.text_field :full_name, placeholder: "John Doe", class: "inquiry-input", required: true %>
+              </div>
+            </div>
+            <div class="inquiry-form-group">
+              <%= f.label :email, "Email Address", class: "inquiry-label" %>
+              <div class="inquiry-input-wrapper">
+                <i class="fa-regular fa-envelope"></i>
+                <%= f.email_field :email, placeholder: "john@example.com", class: "inquiry-input", required: true %>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row: Phone & Company -->
+          <div class="inquiry-form-row">
+            <div class="inquiry-form-group">
+              <%= f.label :phone, "Phone Number", class: "inquiry-label" %>
+              <div class="inquiry-input-wrapper">
+                <i class="fa-solid fa-phone"></i>
+                <%= f.telephone_field :phone, placeholder: "+1 234 567 890", class: "inquiry-input" %>
+              </div>
+            </div>
+            <div class="inquiry-form-group">
+              <%= f.label :company, "Company", class: "inquiry-label" %>
+              <div class="inquiry-input-wrapper">
+                <i class="fa-regular fa-building"></i>
+                <%= f.text_field :company, placeholder: "Your Company Name", class: "inquiry-input" %>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row: Product & Packing -->
+          <div class="inquiry-form-row">
+            <div class="inquiry-form-group">
+              <%= f.label :product, "Product", class: "inquiry-label" %>
+              <div class="inquiry-input-wrapper">
+                <i class="fa-solid fa-cube"></i>
+                <%= f.select :product, 
+                    options_for_select([
+                      ["Select Product", ""],
+                      ["Bitumen", "bitumen"],
+                      ["Paraffin Wax", "paraffin_wax"],
+                      ["Slack Wax", "slack_wax"],
+                      ["Footsoil", "footsoil"],
+                      ["Base Oil", "base_oil"],
+                      ["RPO", "rpo"]
+                    ]), 
+                    {}, 
+                    class: "inquiry-select" %>
+              </div>
+            </div>
+            <div class="inquiry-form-group">
+              <%= f.label :packing, "Packing Type", class: "inquiry-label" %>
+              <div class="inquiry-input-wrapper">
+                <i class="fa-solid fa-box"></i>
+                <%= f.select :packing, 
+                    options_for_select([
+                      ["Select Packing", ""],
+                      ["Jumbo Bag", "jumbo_bag"],
+                      ["Flexi Tank", "flexi_tank"],
+                      ["Drums", "drums"],
+                      ["Bulk", "bulk"]
+                    ]), 
+                    {}, 
+                    class: "inquiry-select" %>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row: Country & Port of Discharge -->
+          <div class="inquiry-form-row">
+            <div class="inquiry-form-group">
+              <%= f.label :country, "Country", class: "inquiry-label" %>
+              <div class="inquiry-input-wrapper">
+                <i class="fa-solid fa-globe"></i>
+                <%= f.country_select :country, 
+                    priority_countries: ["US", "GB", "AE", "TR", "CN", "DE", "FR", "IT", "ES", "NL", "BE", "IN", "BR", "AU", "CA", "SG", "MY", "ID", "TH", "VN", "KE", "TZ", "ZA", "EG", "SA", "QA", "KW", "OM", "BH", "IR", "IQ", "SY", "LB", "JO", "YE", "SD", "LY", "DZ", "MA", "TN"],
+                    include_blank: "Select Country", 
+                    class: "inquiry-select" %>
+              </div>
+            </div>
+            <div class="inquiry-form-group">
+              <%= f.label :port_of_discharge, "Port of Discharge", class: "inquiry-label" %>
+              <div class="inquiry-input-wrapper">
+                <i class="fa-solid fa-ship"></i>
+                <%= f.text_field :port_of_discharge, placeholder: "e.g., Jebel Ali, Dubai", class: "inquiry-input" %>
+              </div>
+            </div>
+          </div>
+
+          <!-- Details -->
+          <div class="inquiry-form-group inquiry-form-group--full">
+            <%= f.label :details, "Details / Message", class: "inquiry-label" %>
+            <div class="inquiry-input-wrapper inquiry-input-wrapper--textarea">
+              <i class="fa-regular fa-message"></i>
+              <%= f.text_area :details, 
+                  placeholder: "Please provide any additional details about your requirements...", 
+                  rows: 5, 
+                  class: "inquiry-textarea" %>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div class="inquiry-form-actions">
+            <%= f.submit "Send Inquiry", class: "inquiry-submit-btn" %>
+            <span class="inquiry-form-note">
+              <i class="fa-regular fa-clock"></i>
+              We'll respond within 12 hours
+            </span>
+          </div>
+
+        <% end %>
+      </div>
+
+      <!-- Sidebar / Contact Info -->
+      <%= render 'getintouch' %>
+
+    </div>
+  </section>
+
+</div>

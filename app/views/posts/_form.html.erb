@@ -1,0 +1,80 @@
+<%= form_with(model: post) do |form| %>
+
+  <% if post.errors.any? %>
+    <div style="color:red">
+      <h2>
+        <%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:
+      </h2>
+
+      <ul>
+        <% post.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.label :slug %><br>
+    <%= form.text_field :slug %>
+  </div>
+
+  <br>
+<div>
+  <%= form.label :post_type, "Post Type" %><br>
+
+  <%= form.select :post_type,
+                  Post::POST_TYPES.map { |type| [type, type] },
+                  { prompt: "Select Post Type" } %>
+</div>
+
+<br>
+<!-- Image -->
+  <div>
+    <%= form.label :image, "Post Image" %><br>
+    <%= form.file_field :image %>
+  </div>
+
+  <br>
+<br>
+
+  <br>
+
+  <div>
+    <%= form.label :content %><br>
+    <%= form.text_area :content, rows: 15 %>
+  </div>
+
+  <div>
+    <%= form.label :summery %><br>
+    <%= form.text_area :summery, rows: 15 %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= label_tag :tag_names, "Tags" %><br>
+
+    <%= text_field_tag :tag_names,
+                       @tag_names,
+                       placeholder: "plastic, food, container" %>
+
+    <br>
+
+    <small>Separate tags with commas (,)</small>
+  </div>
+
+  <br>
+
+  <div>
+    <%= form.submit %>
+  </div>
+
+<% end %>

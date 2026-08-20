@@ -1,0 +1,56 @@
+ <!-- REPORTS SECTION -->
+ <section class="reports-section">
+    <div class="reports-container">
+        <div class="reports-header">
+            <div class="reports-heading">
+                <span class="reports-label">MARKET INTELLIGENCE</span>
+                <h2>Latest <span>Reports.</span></h2>
+            </div>
+            <p>Stay informed with the latest market insights, pricing trends and global trade developments from our experts.</p>
+        </div>
+        <div class="reports-layout">
+            <article class="featured-report">
+                <div class="featured-report-image">
+                    <%= image_tag @reports.first.image, alt: @reports.first.title %>
+                    <div class="featured-report-overlay">
+                        <span>WEEKLY REPORT</span>
+                        <i class="fa-solid fa-arrow-up-right"></i>
+                    </div>
+                </div>
+                <div class="featured-report-content">
+                    <div class="report-meta">
+                        <span class="report-category">Bitumen Market</span>
+                        <span class="report-date"><%= @reports.first.updated_at.strftime("%b %d, %Y") %></span>
+                    </div>
+                    <h3><%= @reports.first.title %></h3>
+                    <p><%= truncate(@reports.first.summery, length: 135) %></p>
+                    <%= link_to post_path(@reports.first.slug), class: "report-read-link" do %>
+                    Read Report <i class="fa-solid fa-arrow-right"></i>
+                    <% end %>
+                </div>
+            </article>
+            <div class="reports-list">
+                <% @reports.drop(1).each do |po| %>
+                    <article class="report-item">
+                        <div class="report-item-image">
+                            <%= image_tag po.image, alt: po.title %>
+                        </div>
+                        <div class="report-item-content">
+                            <div class="report-item-top">
+                                <span>MARKET REPORT</span>
+                                <time><%= po.updated_at.strftime("%b %d, %Y") %></time>
+                            </div>
+                            <h3><%= po.title %></h3>
+                            <%= link_to post_path(po.slug), class: "report-read-link" do %>
+                    Read Report <i class="fa-solid fa-arrow-right"></i>
+                    <% end %>
+                        </div>
+                    </article>
+                <% end %>
+
+                
+            </div>
+        </div>
+
+    </div>
+</section>

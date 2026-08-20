@@ -1,0 +1,29 @@
+<%# 
+  Local variables:
+  - title: The title of the sidebar (e.g., "Bitumen AH70")
+  - nav_items: Array of hashes with :id, :label (e.g., [{ id: "overview", label: "Overview" }])
+  - order_url: URL for the order/CTA button
+  - order_text: Text for the order button (default: "Order Now")
+%>
+
+<div class="grade-sidebar-inner">
+  <div class="grade-nav-title">
+    <%= local_assigns[:title] || "Product" %>
+  </div>
+
+  <nav class="grade-nav">
+    <% local_assigns[:nav_items]&.each do |item| %>
+      <a href="#<%= item[:id] %>" class="grade-nav-link" data-section="<%= item[:id] %>">
+        <%= item[:label] %>
+      </a>
+    <% end %>
+  </nav>
+
+  <a href="<%= local_assigns[:order_url] || "#" %>" 
+     target="_blank" 
+     rel="noopener noreferrer" 
+     class="grade-order-button">
+    <span><%= local_assigns[:order_text] || "Order Now" %></span>
+    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+  </a>
+</div>

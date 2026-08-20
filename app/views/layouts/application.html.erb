@@ -1,29 +1,91 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Xiamen" %></title>
+    <title>Xiamen</title>
+
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Xiamen">
-    <meta name="mobile-web-app-capable" content="yes">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= yield :head %>
 
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   </head>
 
   <body>
-    <%= yield %>
+    <div class="page">
+
+      <%= render 'shared/header' %>
+
+      <%# CHECK IF SIDEBARS ARE PRESENT %>
+      <% if content_for?(:left_sidebar) || content_for?(:right_sidebar) %>
+
+        <%# PAGE WITH SIDEBARS (Grade pages, etc.) %>
+        <div class="grade-page">
+
+          <%# LEFT SIDEBAR %>
+          <% if content_for?(:left_sidebar) %>
+            <aside class="grade-sidebar">
+              <%= yield(:left_sidebar) %>
+            </aside>
+          <% end %>
+
+          <%# MAIN CONTENT %>
+          <main class="grade-main">
+            
+            <%# BREADCRUMBS - Show only if not home page %>
+            <% unless current_page?(root_path) %>
+              <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
+            <% end %>
+            
+            <%= yield %>
+          </main>
+
+          <%# RIGHT SIDEBAR %>
+          <% if content_for?(:right_sidebar) %>
+            <aside class="grade-related-sidebar">
+              <%= yield(:right_sidebar) %>
+            </aside>
+          <% end %>
+
+        </div>
+
+      <% else %>
+
+        <%# PAGE WITHOUT SIDEBARS (Home, etc.) %>
+        <main class="main">
+          <div class="content">
+            
+            <%# BREADCRUMBS - Show only if not home page %>
+            <% unless current_page?(root_path) %>
+              <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
+            <% end %>
+            
+            <%= yield %>
+          </div>
+        </main>
+
+      <% end %>
+
+      <%= render 'shared/footer' %>
+
+    </div>
+
+    <%= yield(:javascript) %>
+
   </body>
 </html>

@@ -1,0 +1,10 @@
+<h1>Edit Specification</h1>
+
+<%= render "form" %>
+
+<br>
+
+<%= button_to "Delete Specification",
+              @specification,
+              method: :delete,
+              data: { turbo_confirm: "Are you sure?" } %>

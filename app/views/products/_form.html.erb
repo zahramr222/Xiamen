@@ -1,0 +1,111 @@
+<%= form_with model: product do |form| %>
+
+  <% if product.errors.any? %>
+    <div style="color: red;">
+      <h2>
+        <%= pluralize(product.errors.count, "error") %>
+        prohibited this product from being saved:
+      </h2>
+
+      <ul>
+        <% product.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Product Name -->
+  <div>
+    <%= form.label :name, "Product Name" %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <br>
+
+  <!-- Slug -->
+  <div>
+    <%= form.label :slug, "Slug" %><br>
+    <%= form.text_field :slug %>
+  </div>
+
+  <br>
+
+  <!-- Grades (Multiple Selection) -->
+  <div>
+    <%= form.label :grade_ids, "Grades" %><br>
+    <%= form.collection_select :grade_ids,
+                              Grade.all,
+                              :id,
+                              :name,
+                              { prompt: "Select Grades" },
+                              { multiple: true } %>
+    <br>
+    <small>Hold Ctrl/Cmd to select multiple grades</small>
+    <br>
+    <%= link_to "New Grade",
+                new_grade_path,
+                class: "btn btn-primary" %>
+  </div>
+
+  <br>
+
+  <!-- Specification -->
+  <div>
+    <%= form.label :specification_id, "Specification" %><br>
+
+    <%= form.collection_select :specification_id,
+                              Specification.all,
+                              :id,
+                              :title,
+                              { prompt: "Select Specification" } %>
+
+    <%= link_to "New Specification",
+                new_specification_path,
+                class: "btn btn-primary" %>
+  </div>
+
+  <br>
+
+  <!-- Content -->
+  <div>
+    <%= form.label :content, "Content" %><br>
+
+    <%= form.text_area :content,
+                       rows: 15,
+                       placeholder: "Write product content here..." %>
+  </div>
+
+  <br>
+
+  <!-- Image -->
+  <div>
+    <%= form.label :image, "Product Image" %><br>
+    <%= form.file_field :image %>
+  </div>
+
+  <br>
+
+  <!-- Tags -->
+  <div>
+    <%= label_tag :tag_names, "Tags" %><br>
+
+    <%= text_field_tag :tag_names,
+                       @tag_names,
+                       placeholder: "plastic, wax, oil" %>
+
+    <br>
+
+    <small>
+      Separate tags with commas (,)
+    </small>
+  </div>
+
+  <br>
+
+  <!-- Submit -->
+  <div>
+    <%= form.submit %>
+  </div>
+
+<% end %>

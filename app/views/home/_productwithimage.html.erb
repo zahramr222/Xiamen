@@ -1,0 +1,160 @@
+<!-- PRODUCTS SECTION (NEWS) -->
+<section class="news-section">
+  <div class="news-header">
+    <div class="news-header-left">
+      <div class="partners-label">
+        <span class="partners-label-line"></span> PRODUCTS
+      </div>
+      <h2>Our <span>Products</span></h2>
+    </div>
+    <a href="<%= products_path %>" class="news-view-all">
+      View all <i class="fas fa-arrow-up-right-from-square"></i>
+    </a>
+  </div>
+
+  <div class="news-grid">
+    <!-- Product 1 -->
+    <article class="news-item">
+      <div class="news-image">
+        <% if @products[0]&.image&.attached? %>
+          <%= image_tag @products[0].image, alt: @products[0].name %>
+        <% else %>
+          <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=900&q=80" alt="<%= @products[0]&.name || 'Product' %>">
+        <% end %>
+        <span class="news-category"><%= @products[0]&.name&.upcase || "PRODUCT" %></span>
+      </div>
+      <div class="news-content">
+        <div class="news-meta">
+          <span>PRODUCT</span>
+          <span class="news-dot"></span>
+          <span>EXPORT</span>
+        </div>
+        <h3><%= @products[0]&.name || "Product" %></h3>
+        <p><%= @products[0]&.content.present? ? truncate(@products[0].content, length: 100) : "Premium product supplier for global projects" %></p>
+        <a href="<%= product_path(@products[0]) if @products[0] %>" class="news-read">
+          View product <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </article>
+
+    <!-- Product 2 -->
+    <article class="news-item">
+      <div class="news-image">
+        <% if @products[1]&.image&.attached? %>
+          <%= image_tag @products[1].image, alt: @products[1].name %>
+        <% else %>
+          <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=900&q=80" alt="<%= @products[1]&.name || 'Product' %>">
+        <% end %>
+        <span class="news-category"><%= @products[1]&.name&.upcase || "PRODUCT" %></span>
+      </div>
+      <div class="news-content">
+        <div class="news-meta">
+          <span>PRODUCT</span>
+          <span class="news-dot"></span>
+          <span>EXPORT</span>
+        </div>
+        <h3><%= @products[1]&.name || "Product" %></h3>
+        <p><%= @products[1]&.content.present? ? truncate(@products[1].content, length: 100) : "Premium product supplier for global projects" %></p>
+        <a href="<%= product_path(@products[1]) if @products[1] %>" class="news-read">
+          View product <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </article>
+
+    <!-- Product 3 -->
+    <article class="news-item">
+      <div class="news-content">
+        <div class="news-meta">
+          <span>PRODUCT</span>
+          <span class="news-dot"></span>
+          <span>EXPORT</span>
+        </div>
+        <h3><%= @products[2]&.name || "Product" %></h3>
+        <p><%= @products[2]&.content.present? ? truncate(@products[2].content, length: 100) : "Premium product supplier for global projects" %></p>
+        <a href="<%= product_path(@products[2]) if @products[2] %>" class="news-read">
+          View product <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+      <div class="news-image">
+        <% if @products[2]&.image&.attached? %>
+          <%= image_tag @products[2].image, alt: @products[2].name %>
+        <% else %>
+          <img src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?auto=format&fit=crop&w=900&q=80" alt="<%= @products[2]&.name || 'Product' %>">
+        <% end %>
+        <span class="news-category"><%= @products[2]&.name&.upcase || "PRODUCT" %></span>
+      </div>
+    </article>
+
+    <!-- Product 4 -->
+    <article class="news-item">
+      <div class="news-content">
+        <div class="news-meta">
+          <span>PRODUCT</span>
+          <span class="news-dot"></span>
+          <span>EXPORT</span>
+        </div>
+        <h3><%= @products[3]&.name || "Product" %></h3>
+        <p><%= @products[3]&.content.present? ? truncate(@products[3].content, length: 100) : "Premium product supplier for global projects" %></p>
+        <a href="<%= product_path(@products[3]) if @products[3] %>" class="news-read">
+          View product <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+      <div class="news-image">
+        <% if @products[3]&.image&.attached? %>
+          <%= image_tag @products[3].image, alt: @products[3].name %>
+        <% else %>
+          <img src="https://images.unsplash.com/photo-1532187643603-ba119ca4109e?auto=format&fit=crop&w=900&q=80" alt="<%= @products[3]&.name || 'Product' %>">
+        <% end %>
+        <span class="news-category"><%= @products[3]&.name&.upcase || "PRODUCT" %></span>
+      </div>
+    </article>
+
+    <!-- Product 5 -->
+    <article class="news-item">
+      <div class="news-image">
+        <% if @products[4]&.image&.attached? %>
+          <%= image_tag @products[4].image, alt: @products[4].name %>
+        <% else %>
+          <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80" alt="<%= @products[4]&.name || 'Product' %>">
+        <% end %>
+        <span class="news-category"><%= @products[4]&.name&.upcase || "PRODUCT" %></span>
+      </div>
+      <div class="news-content">
+        <div class="news-meta">
+          <span>PRODUCT</span>
+          <span class="news-dot"></span>
+          <span>EXPORT</span>
+        </div>
+        <h3><%= @products[4]&.name || "Product" %></h3>
+        <p><%= @products[4]&.content.present? ? truncate(@products[4].content, length: 100) : "Premium product supplier for global projects" %></p>
+        <a href="<%= product_path(@products[4]) if @products[4] %>" class="news-read">
+          View product <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </article>
+
+    <!-- Product 6 -->
+    <article class="news-item">
+      <div class="news-image">
+        <% if @products[5]&.image&.attached? %>
+          <%= image_tag @products[5].image, alt: @products[5].name %>
+        <% else %>
+          <img src="https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&w=900&q=80" alt="<%= @products[5]&.name || 'Product' %>">
+        <% end %>
+        <span class="news-category"><%= @products[5]&.name&.upcase || "PRODUCT" %></span>
+      </div>
+      <div class="news-content">
+        <div class="news-meta">
+          <span>PRODUCT</span>
+          <span class="news-dot"></span>
+          <span>EXPORT</span>
+        </div>
+        <h3><%= @products[5]&.name || "Product" %></h3>
+        <p><%= @products[5]&.content.present? ? truncate(@products[5].content, length: 100) : "Premium product supplier for global projects" %></p>
+        <a href="<%= product_path(@products[5]) if @products[5] %>" class="news-read">
+          View product <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </article>
+  </div>
+</section>

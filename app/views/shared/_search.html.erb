@@ -1,0 +1,33 @@
+<div data-controller="search" class="search-box">
+
+  <div class="search-input-wrapper">
+
+
+<input
+  type="search"
+  placeholder="Search..."
+  autocomplete="off"
+  data-search-target="input"
+  data-action="input->search#search"
+  class="search-input"
+>
+
+<button
+  type="button"
+  class="search-button"
+  data-action="click->search#search"
+  aria-label="Search">
+
+  <i class="bi bi-search"></i>
+
+</button>
+
+
+  </div>
+
+  <div
+    data-search-target="results"
+    class="search-results">
+  </div>
+
+</div>
