@@ -1,0 +1,46 @@
+<h1>Specifications</h1>
+
+<%= link_to "New Specification", new_specification_path %>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Grade</th>
+    <th>Content Preview</th>
+    <th>Created At</th>
+    <th></th>
+  </tr>
+
+  <% @specifications.each do |spec| %>
+    <tr>
+      <td>
+        <%= spec.title %>
+      </td>
+
+      <td>
+        <%= spec.grade&.name || "No grade" %>
+      </td>
+
+      <td>
+        <% if spec.content.present? %>
+          <%= truncate(strip_tags(spec.content), length: 80) %>
+        <% else %>
+          <span style="color: #999;">No content</span>
+        <% end %>
+      </td>
+
+      <td>
+        <%= spec.created_at.strftime("%b %d, %Y") %>
+      </td>
+
+      <td>
+        <%= link_to "Show", specification_path(spec) %>
+        <%= link_to "Edit", edit_specification_path(spec) %>
+        <%= link_to "Delete",
+                    specification_path(spec),
+                    data: { turbo_method: :delete,
+                            turbo_confirm: "Are you sure?" } %>
+      </td>
+    </tr>
+  <% end %>
+</table>

@@ -1,10 +1,6 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[
-    show
-    edit
-    update
-    destroy
-  ]
+  before_action :set_post, only: %i[show edit update destroy]
+  before_action :authenticate_user!, only: %i[new create edit update destroy]
 
   def index
     @posts = Post.all.order(created_at: :desc)
@@ -13,12 +9,8 @@ class PostsController < ApplicationController
     @articles = Post.where(post_type: ["Articles", "article", "articles"]).order(created_at: :desc).limit(4)
     @news = Post.where(post_type: ["News", "news"]).order(created_at: :desc).limit(4)
     @applications = Post.where(post_type: ["Applications", "application", "applications"]).order(created_at: :desc).limit(4)
-
-    @products = Product.limit(6).order(created_at: :desc)
     
-    @breadcrumbs = [
-      { label: "Posts" }
-    ]
+    @breadcrumbs = [{ label: "Posts" }]
   end
 
   def show
@@ -26,9 +18,8 @@ class PostsController < ApplicationController
       redirect_to post_path(@post), status: :moved_permanently
     end
     
-    @related_posts = Post.where(post_type: @post.post_type)
-                         .where.not(id: @post.id)
-                         .limit(3)
+    # Get related posts based on tags, title, and summary
+    @related_posts = find_related_posts(@post)
     
     @breadcrumbs = [
       { label: "Posts", path: posts_path },
@@ -104,5 +95,53 @@ class PostsController < ApplicationController
                .first_or_create!(name: tag_name)
       @post.tags << tag unless @post.tags.exists?(tag.id)
     end
+  end
+
+  def find_related_posts(post, limit: 3)
+    # Get all posts except current
+    all_posts = Post.where.not(id: post.id)
+
+    # Get current post's tags
+    post_tags = post.tags.pluck(:name).map(&:downcase)
+    post_words = post.title.downcase.split + (post.summery || "").downcase.split
+
+    # Calculate relevance score for each post
+    scored_posts = all_posts.map do |other_post|
+      score = 0
+      
+      # 1. Tag match (highest weight)
+      other_tags = other_post.tags.pluck(:name).map(&:downcase)
+      matching_tags = (post_tags & other_tags).count
+      score += matching_tags * 10
+
+      # 2. Same category/post_type
+      if other_post.post_type == post.post_type
+        score += 5
+      end
+
+      # 3. Title word match
+      other_title_words = other_post.title.downcase.split
+      matching_title_words = (post_words & other_title_words).count
+      score += matching_title_words * 3
+
+      # 4. Summary word match
+      if other_post.summery.present?
+        other_summary_words = other_post.summery.downcase.split
+        matching_summary_words = (post_words & other_summary_words).count
+        score += matching_summary_words * 2
+      end
+
+      {
+        post: other_post,
+        score: score,
+        matching_tags: matching_tags
+      }
+    end
+
+    # Sort by score (highest first) and get top posts
+    scored_posts.sort_by { |item| -item[:score] }
+                .reject { |item| item[:score] == 0 }
+                .first(limit)
+                .map { |item| item[:post] }
   end
 end

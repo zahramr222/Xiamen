@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :specifications
   # Bitumen sub-products
   get "products/bitumen/oxidized", to: "products#oxidized_bitumen", as: :products_oxidized_bitumen
   get "products/bitumen/penetration", to: "products#penetration_bitumen", as: :products_penetration_bitumen

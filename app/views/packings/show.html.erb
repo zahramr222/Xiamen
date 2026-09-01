@@ -1,41 +1,82 @@
-<div class="container mt-4">
+<%# BREADCRUMBS %>
+<% @breadcrumbs = [
+  { label: "Packings", path: packings_path },
+  { label: @packing.name }
+] %>
 
-    <h1><%= @packing.name %></h1>
+<%# PAGE TITLE %>
+<% content_for(:page_title, "#{@packing.name} | Infinity Galaxy") %>
 
-    <hr>
+<%# HEAD META %>
+<% content_for(:head) do %>
+  <meta name="description" content="<%= truncate(strip_tags(@packing.content), length: 160) %>">
+<% end %>
 
-    <p>
+<div class="packing-show">
 
-        <strong>Specification:</strong>
-
-        <% if @packing.specification.present? %>
-            <%= @packing.specification.title %>
-        <% else %>
-            -
+  <!-- Header -->
+  <header class="packing-header">
+    <div class="packing-header-content">
+      <span class="section-label">
+        <span class="section-label-line"></span>
+        PACKING
+      </span>
+      <h1 class="section-title">
+        <span><%= @packing.name %></span>
+      </h1>
+      <div class="packing-meta">
+        <span class="packing-meta-item">
+          <i class="fa-regular fa-calendar"></i>
+          <%= @packing.created_at.strftime("%B %d, %Y") %>
+        </span>
+        <% if @packing.grades.present? %>
+          <span class="packing-meta-item">
+            <i class="fa-solid fa-flask"></i>
+            Grades: 
+            <%= @packing.grades.map { |g| link_to(g.name, grade_path(g)) }.join(", ").html_safe %>
+          </span>
         <% end %>
+        <% if @packing.tags.present? %>
+          <span class="packing-meta-item">
+            <i class="fa-solid fa-tags"></i>
+            <%= @packing.tags.pluck(:name).join(", ") %>
+          </span>
+        <% end %>
+      </div>
+    </div>
+  </header>
 
-    </p>
+  <!-- Main Content -->
+  <div class="packing-content-wrapper">
+    
+    <!-- Image -->
+    <% if @packing.image.attached? %>
+      <div class="packing-image">
+        <%= image_tag @packing.image, alt: @packing.name %>
+      </div>
+    <% end %>
 
-    <hr>
-
-    <div>
-
-        <%= raw @packing.content %>
-
+    <!-- Content -->
+    <div class="packing-content">
+      <% if @packing.content.present? %>
+        <%= @packing.content.html_safe %>
+      <% else %>
+        <p class="text-muted">No description available for this packing.</p>
+      <% end %>
     </div>
 
-    <br>
+  </div>
 
-    <%= link_to "Edit",
-                edit_packing_path(@packing),
-                class: "btn btn-warning" %>
-
-    <%= link_to "Back",
-                packings_path,
-                class: "btn btn-secondary" %>
-
-   <% if @packing.image.attached? %>
-  <%= image_tag @packing.image, width: 300 %>
-<% end %>            
+  <!-- Back Link -->
+  <div class="packing-actions">
+    <%= link_to packings_path, class: "packing-back-btn" do %>
+      <i class="fa-solid fa-arrow-left"></i>
+      Back to Packings
+    <% end %>
+    <%= link_to edit_packing_path(@packing), class: "packing-edit-btn" do %>
+      <i class="fa-solid fa-pencil"></i>
+      Edit Packing
+    <% end %>
+  </div>
 
 </div>

@@ -1,13 +1,13 @@
-<%= form_with(model: @specification, local: true) do |form| %>
+<%= form_with(model: specification, local: true) do |form| %>
 
-  <% if @specification.errors.any? %>
+  <% if specification.errors.any? %>
     <div class="errors">
       <h3>
-        <%= pluralize(@specification.errors.count, "error") %> prohibited this specification from being saved:
+        <%= pluralize(specification.errors.count, "error") %> prohibited this specification from being saved:
       </h3>
 
       <ul>
-        <% @specification.errors.full_messages.each do |message| %>
+        <% specification.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
@@ -27,10 +27,13 @@
   </div>
 
   <br>
+
   <div>
-  <%= form.label :grade_id, "Grade" %><br>
-  <%= form.collection_select :grade_id, Grade.all, :id, :name, prompt: "Select Grade" %>
-</div>
+    <%= form.label :grade_id, "Grade" %><br>
+    <%= form.collection_select :grade_id, Grade.all, :id, :name, prompt: "Select Grade" %>
+  </div>
+
+  <br>
 
   <%= form.submit %>
 

@@ -40,7 +40,7 @@
         <%= @post.post_type&.upcase || "POST" %>
       </span>
       <h1 class="section-title">
-        <span><%= @post.title %></span>
+        <span><%= @post.title.titleize %></span>
       </h1>
       <div class="post-meta">
         <span class="post-meta-item">
@@ -89,33 +89,32 @@
     </div>
   </div>
 
-  <!-- RELATED POSTS SECTION -->
-  <% if @related_posts.present? %>
-    <section class="post-related" id="related">
-      <span class="section-label">
-        <span class="section-label-line"></span>
-        RELATED POSTS
-      </span>
-      <h2 class="section-title">You Might Also <span>Like</span></h2>
-      <div class="post-related-grid">
-        <% @related_posts.each do |related| %>
-          <%= link_to post_path(related), class: "post-related-card" do %>
-            <% if related.image.attached? %>
-              <div class="post-related-image">
-                <%= image_tag related.image, alt: related.title %>
-              </div>
-            <% end %>
-            <div class="post-related-content">
-              <span class="post-related-type"><%= related.post_type&.upcase || "POST" %></span>
-              <h3><%= related.title %></h3>
-              <span class="post-related-date"><%= related.created_at.strftime("%b %d, %Y") %></span>
+<!-- RELATED POSTS SECTION -->
+<% if @related_posts.present? %>
+  <section class="post-related" id="related">
+    <span class="section-label">
+      <span class="section-label-line"></span>
+      RELATED POSTS
+    </span>
+    <h2 class="section-title">You Might Also <span>Like</span></h2>
+    <div class="post-related-grid">
+      <% @related_posts.each do |related| %>
+        <%= link_to post_path(related), class: "post-related-card" do %>
+          <% if related.image.attached? %>
+            <div class="post-related-image">
+              <%= image_tag related.image, alt: related.title %>
             </div>
           <% end %>
+          <div class="post-related-content">
+            <span class="post-related-type"><%= related.post_type&.upcase || "POST" %></span>
+            <h3><%= related.title %></h3>
+            <span class="post-related-date"><%= related.created_at.strftime("%b %d, %Y") %></span>
+          </div>
         <% end %>
-      </div>
-    </section>
-  <% end %>
-
+      <% end %>
+    </div>
+  </section>
+<% end %>
   <!-- Inquiry -->
   <%= render 'shared/inquiry', product_name: @post.title %>
 

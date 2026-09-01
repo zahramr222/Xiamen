@@ -26,4 +26,14 @@ validates :post_type, inclusion: { in: POST_TYPES }, inclusion: { in: ["News", "
   scope :reports, -> { where(post_type: "Reports") }
   scope :articles, -> {where(post_type: ["Articles", "Applications"])}
 
+  # Scopes for related posts
+  scope :by_category, ->(category) { where(post_type: category) }
+  scope :except_post, ->(post) { where.not(id: post) }
+  scope :latest, ->(limit) { order(created_at: :desc).limit(limit) }
+
+  # Method to get related posts
+  def related_posts(limit: 3)
+    RelatedPostsService.new(self, limit: limit).call
+  end
+
 end

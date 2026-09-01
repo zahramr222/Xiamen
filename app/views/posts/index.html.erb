@@ -16,22 +16,23 @@
       { id: "news", label: "News" },
       { id: "applications", label: "Applications" }
     ],
-    order_url: "#{root_path}#inquiry",
+    order_url: inquiry_path,
     order_text: "Send Inquiry"
   %>
 <% end %>
-
 <div class="posts-page">
 
   <!-- =====================================================
        REPORTS SECTION
   ====================================================== -->
   <% if @reports.present? %>
-    <section class="reports-section">
+    <section class="reports-section" id="reports">
       <div class="reports-container">
         <div class="reports-header">
           <div class="reports-heading">
-            <span class="reports-label">MARKET INTELLIGENCE</span>
+            <div class="about-label">
+              <span class="about-label-line"></span> MARKET INTELIGENCE
+            </div>
             <h2>Latest <span>Reports.</span></h2>
           </div>
           <p>Stay informed with the latest market insights, pricing trends and global trade developments from our experts.</p>
@@ -94,16 +95,18 @@
        ARTICLES SECTION
   ====================================================== -->
   <% if @articles.present? %>
-    <section class="reports-section">
-      <div class="reports-container">
-        <div class="reports-header">
-          <div class="reports-heading">
-            <span class="reports-label">INSIGHTS</span>
-            <h2>Latest <span>Articles.</span></h2>
+  <section class="reports-section" id="articles">
+    <div class="reports-container">
+      <div class="reports-header">
+        <div class="reports-heading">
+          <div class="about-label">
+            <span class="about-label-line"></span> INSIGHTS
           </div>
-          <p>Read our latest articles on industry trends, expert insights, and market analysis.</p>
+          <h2>Latest <span>Articles.</span></h2>
         </div>
-        <div class="reports-layout">
+        <p>Read our latest articles on industry trends, expert insights, and market analysis.</p>
+      </div>
+      <div class="reports-layout">
           <article class="featured-report">
             <div class="featured-report-image">
               <% if @articles.first.image.attached? %>
@@ -161,11 +164,13 @@
        NEWS SECTION
   ====================================================== -->
   <% if @news.present? %>
-    <section class="reports-section">
+    <section class="reports-section" id="news">
       <div class="reports-container">
         <div class="reports-header">
           <div class="reports-heading">
-            <span class="reports-label">UPDATES</span>
+            <div class="about-label">
+                                <span class="about-label-line"></span> UPDATES
+                            </div>
             <h2>Latest <span>News.</span></h2>
           </div>
           <p>Stay updated with the latest company news, industry announcements, and product updates.</p>
@@ -228,11 +233,13 @@
        APPLICATIONS SECTION
   ====================================================== -->
   <% if @applications.present? %>
-    <section class="reports-section">
+    <section class="reports-section" id="applications">
       <div class="reports-container">
         <div class="reports-header">
           <div class="reports-heading">
-            <span class="reports-label">APPLICATIONS</span>
+            <div class="about-label">
+                                <span class="about-label-line"></span> APPLICATIONS
+                            </div>
             <h2>Industry <span>Applications.</span></h2>
           </div>
           <p>Explore how our products are used across various industries and applications worldwide.</p>

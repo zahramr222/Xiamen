@@ -73,6 +73,17 @@
 
   <br>
 
+
+   <!-- MSDS File Upload -->
+  <div>
+    <%= form.label :msds_file, "MSDS File (PDF only)" %><br>
+    <%= form.file_field :msds_file, accept: "application/pdf" %>
+    <% if grade.msds_file.attached? %>
+      <p>Current MSDS: <%= link_to grade.msds_file.filename, grade.msds_file, target: "_blank" %></p>
+      <p><%= check_box_tag :remove_msds %> Remove MSDS</p>
+    <% end %>
+  </div>
+  
   <!-- Tags -->
   <div>
     <%= label_tag :tag_names, "Tags" %><br>

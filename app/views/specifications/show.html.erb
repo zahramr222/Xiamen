@@ -1,0 +1,23 @@
+<h1><%= @specification.title %></h1>
+
+<p>
+  <strong>Grade:</strong>
+  <%= @specification.grade&.name || "No grade" %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+</p>
+
+<% if @specification.content.present? %>
+  <div class="specification-content">
+    <%= @specification.content.html_safe %>
+  </div>
+<% else %>
+  <p style="color: #999;">No content available.</p>
+<% end %>
+
+<br>
+
+<%= link_to "Edit", edit_specification_path(@specification) %> |
+<%= link_to "Back to Specifications", specifications_path %>

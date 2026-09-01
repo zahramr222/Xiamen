@@ -1,28 +1,41 @@
 <!-- MOTTO -->
-                <div class="motto">
-                    <i class="fa-solid fa-sparkles"></i>
-                    Search. Discover. Explore.
-                </div>
+<div class="motto">
+  <i class="fa-solid fa-sparkles"></i>
+  Search. Discover. Explore.
+</div>
 
-                <!-- TITLE -->
-                <h1 class="title">BITUMEN SUPPLIER</h1>
+<!-- TITLE -->
+<h1 class="title">BITUMEN SUPPLIER</h1>
 
-                <!-- SUBTITLE -->
-                <p class="subtitle">Everything you need, in one place.</p>
+<!-- SUBTITLE -->
+<p class="subtitle">Everything you need, in one place.</p>
 
-                <!-- SEARCH -->
-                <div class="search-wrapper">
-                    <form class="search-box" onsubmit="handleSearch(event)">
-                        <div class="search-icon">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </div>
-                        <input type="text" id="searchInput" class="search-input" placeholder="What are you looking for?" autocomplete="off">
-                        <button type="submit" class="search-button">
-                            <span>Search</span>
-                            <i class="fa-solid fa-arrow-right d-none"></i>
-                        </button>
-                    </form>
-                    <div class="search-hint">
-                        Press <span class="keyboard-key">↵</span> to search
-                    </div>
-                </div>
+<!-- SEARCH -->
+<div class="search-wrapper" data-controller="search">
+  <form class="search-box" action="/search" method="get" data-turbo="false">
+    <div class="search-icon">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </div>
+    <input
+      type="text"
+      name="q"
+      class="search-input"
+      placeholder="What are you looking for?"
+      autocomplete="off"
+      data-search-target="input"
+      data-action="input->search#search"
+      value="<%= params[:q] %>"
+    >
+    <button type="submit" class="search-button">
+      <span>Search</span>
+      <i class="fa-solid fa-arrow-right d-none"></i>
+    </button>
+  </form>
+
+  <div class="search-hint">
+    Press <span class="keyboard-key">/</span> to focus
+  </div>
+
+  <!-- Live dropdown (still works while typing) -->
+  <div class="search-results" data-search-target="results" style="display: none;"></div>
+</div>

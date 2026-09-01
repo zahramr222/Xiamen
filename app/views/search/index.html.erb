@@ -1,0 +1,65 @@
+<div class="search-hero">
+  <div class="search-hero-inner">
+    <h1 class="search-hero-title">Search Results</h1>
+    
+    <% if @query.present? %>
+      <p class="search-hero-query">
+        for <span>"<%= @query %>"</span>
+      </p>
+    <% end %>
+    
+    <p class="search-hero-count"><%= @results.length %> results found</p>
+
+    <form class="search-hero-form" action="/search" method="get" data-turbo="false">
+      <div class="search-hero-input-wrap">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" name="q" value="<%= @query %>" placeholder="Refine your search..." autocomplete="off">
+        <button type="submit">Search</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="search-page-container">
+  <% if @results.any? %>
+    <div class="results-grid">
+      <% @results.each do |result| %>
+
+        <a href="<%= result[:url] %>" class="result-card">
+          <div class="result-image-wrap">
+
+            <%# REAL IMAGE %>
+            <% if result[:image].present? %>
+              <img src="<%= result[:image] %>" alt="<%= result[:title] %>" class="result-image" loading="lazy">
+
+            <%# FALLBACK ICON %>
+            <% else %>
+              <div class="result-image-placeholder">
+                <i class="fa-solid fa-image"></i>
+              </div>
+            <% end %>
+
+            <span class="result-badge">
+              <%= result[:type] %>
+            </span>
+          </div>
+          
+          <div class="result-body">
+            <h3 class="result-title"><%= result[:title] %></h3>
+            <p class="result-meta">Matched by <strong><%= result[:matched_by] %></strong></p>
+          </div>
+        </a>
+
+      <% end %>
+    </div>
+  <% else %>
+    <div class="search-empty">
+      <div class="search-empty-icon">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+      <h2>No results found</h2>
+      <p>We couldn't find anything matching "<strong><%= @query %></strong>".<br>Try a different keyword.</p>
+      <a href="/" class="search-empty-btn">Back to Home</a>
+    </div>
+  <% end %>
+</div>

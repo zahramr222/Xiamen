@@ -3,7 +3,7 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import * as bootstrap from "bootstrap"
 
-<script>
+
         function handleSearch(event) {
             event.preventDefault();
             const input = document.getElementById("searchInput");
@@ -165,4 +165,4 @@ import * as bootstrap from "bootstrap"
                 }, 250);
             });
         });
-    </script>
+

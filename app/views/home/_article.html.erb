@@ -1,16 +1,18 @@
 <!-- ARTICLES SECTION -->
 <section class="articles-section">
   <div class="articles-header">
-    <div>
+    <div class="news-header">
+    <div class="news-header-left">
       <div class="partners-label">
         <span class="partners-label-line"></span> INSIGHTS
       </div>
-      <h2>Latest Articles</h2>
+      <h2>Latest <span>Articles</span></h2>
     </div>
+  </div>
 
-    <a href="#" class="articles-view-all">
+    <%= link_to posts_path, class: "articles-view-all" do %>
       View all <i class="fa-solid fa-arrow-right"></i>
-    </a>
+    <% end %>
   </div>
 
   <div class="articles-grid">

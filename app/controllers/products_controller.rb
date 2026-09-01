@@ -1,42 +1,46 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
-  
-  # REMOVE THIS LINE:
-  # layout "product"
+  before_action :authenticate_user!, only: %i[new create edit update destroy]
+  helper ActionView::Helpers::TextHelper 
 
   def index
     @products = Product.all
   end
 
   def show
-    
     # Permanently redirect old numeric URLs to the slug URL
     if params[:id].to_s != @product.slug.to_s
-    redirect_to product_path(@product), status: :moved_permanently
+      redirect_to product_path(@product), status: :moved_permanently
+    end
+    
+    # Get grades for this product
+    @grades = @product.grades
+
+    @articles_data = get_related_articles(@product)
+
+    # ✅ Get packings ONLY from grades that belong to this product
+    @packings = if @grades.any?
+      Packing.joins(:grade_packings)
+             .where(grade_packings: { grade_id: @grades.pluck(:id) })
+             .distinct
+             .order(:name)
+    else
+      []
+    end
+    
+    @breadcrumbs = [
+      { label: "Products", path: products_path },
+      { label: @product.name }
+    ]
   end
-  end
-  
 
   # Bitumen Landing Page
   def bitumen
-    @sub_products = [
-      { name: "Oxidized Bitumen", 
-        path: products_oxidized_bitumen_path, 
-        description: "High-quality oxidized bitumen for industrial applications.",
-        icon: "fa-solid fa-fire" },
-      { name: "Penetration Bitumen", 
-        path: products_penetration_bitumen_path, 
-        description: "Standard penetration grade bitumen for road construction.",
-        icon: "fa-solid fa-road" },
-      { name: "Cutback Bitumen", 
-        path: products_cutback_bitumen_path, 
-        description: "Bitumen dissolved in solvent for cold application.",
-        icon: "fa-solid fa-droplet" },
-      { name: "Emulsion Bitumen", 
-        path: products_emulsion_bitumen_path, 
-        description: "Bitumen emulsion for surface dressing and maintenance.",
-        icon: "fa-solid fa-water" }
-    ]
+    # Find the actual products (not the landing page)
+    @oxidized_bitumen = Product.find_by(name: "Oxidized Bitumen") || Product.find_by(slug: "oxidized-bitumen")
+    @penetration_bitumen = Product.find_by(name: "Penetration Bitumen") || Product.find_by(slug: "penetration-bitumen")
+    @cutback_bitumen = Product.find_by(name: "Cutback Bitumen") || Product.find_by(slug: "cutback-bitumen")
+    @emulsion_bitumen = Product.find_by(name: "Emulsion Bitumen") || Product.find_by(slug: "emulsion-bitumen")
     
     @breadcrumbs = [
       { label: "Products", path: products_path },
@@ -171,29 +175,73 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-  params.require(:product).permit(
-    :name,
-    :content,
-    :slug,
-    :specification_id,
-    :image,
-    grade_ids: [] 
-  )
-end
+    params.require(:product).permit(
+      :name,
+      :content,
+      :slug,
+      :specification_id,
+      :image,
+      grade_ids: []
+    )
+  end
 
   def save_tags
     return if params[:tag_names].blank?
 
     tag_names = params[:tag_names]
-                  .split(",")
-                  .map(&:strip)
-                  .reject(&:blank?)
-                  .uniq
+      .split(",")
+      .map(&:strip)
+      .reject(&:blank?)
+      .uniq
 
     tag_names.each do |tag_name|
       tag = Tag.where("LOWER(name) = ?", tag_name.downcase)
                .first_or_create!(name: tag_name)
       @product.tags << tag unless @product.tags.exists?(tag.id)
+    end
+  end
+
+  def get_related_articles(product, limit: 3)
+    # Get product tags
+    product_tags = product.tags.pluck(:name)
+    
+    if product_tags.any?
+      # Find posts with same tags
+      related_posts = Post.joins(:tags)
+                          .where(tags: { name: product_tags })
+                          .group("posts.id")
+                          .select("posts.*, COUNT(tags.id) as match_count")
+                          .order("match_count DESC")
+                          .limit(limit)
+      
+      if related_posts.any?
+        return related_posts.map do |post|
+          summary_text = post.summery || post.content || ""
+          summary_text = summary_text[0..119] + "..." if summary_text.length > 120
+          
+          {
+            path: post_path(post),
+            image_url: post.image.attached? ? url_for(post.image) : "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=900&q=85",
+            category: post.post_type || "Article",
+            title: post.title,
+            summary: summary_text
+          }
+        end
+      end
+    end
+    
+    # Fallback: Get latest posts
+    Post.limit(limit).order(created_at: :desc).map do |post|
+      summary_text = post.summery || post.content || ""
+      summary_text = summary_text[0..119] + "..." if summary_text.length > 120
+      
+      {
+        path: post_path(post),
+        image_url: post.image.attached? ? url_for(post.image) : "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=900&q=85",
+        category: post.post_type || "Article",
+        title: post.title,
+        summary: summary_text
+      }
     end
   end
 end

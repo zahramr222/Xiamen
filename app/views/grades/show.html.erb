@@ -14,14 +14,17 @@
 
 <%# LEFT SIDEBAR %>
 <% content_for(:left_sidebar) do %>
+  <% 
+    nav_items = []
+    nav_items << { id: "overview", label: "Overview" }
+    nav_items << { id: "specification", label: "Specification" } if @grade.specifications.present?
+    nav_items << { id: "msds", label: "MSDS" } if @grade.msds_file.attached?
+    nav_items << { id: "packing", label: "Packing" } if @grade.packings.present? || @grade.packing_options.present?
+  %>
+  
   <%= render "shared/left_sidebar",
     title: @grade.name,
-    nav_items: [
-      { id: "overview", label: "Overview" },
-      { id: "specification", label: "Specification" },
-      { id: "msds", label: "MSDS" },
-      { id: "packing", label: "Packing" }
-    ],
+    nav_items: nav_items,
     order_url: @grade.try(:contact_url) || "https://wa.me/17788678823?text=Hi%2C%20I%20want%20to%20order%20#{@grade.name}",
     order_text: "Order Now"
   %>
@@ -32,42 +35,11 @@
 
 <%# RIGHT SIDEBAR %>
 <% content_for(:right_sidebar) do %>
-  <% 
-    if @related_articles.present? && @related_articles.is_a?(Array)
-      articles_data = @related_articles.map do |article|
-        {
-          path: article.try(:path) || post_path(article),
-          image_url: article.try(:image_url) || "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=900&q=85",
-          category: article.try(:category) || "Article",
-          title: article.try(:title) || "Article Title",
-          summary: article.try(:summary) || "Read more about this topic."
-        }
-      end
-    else
-      articles_data = [
-        {
-          path: "#",
-          image_url: "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=900&q=85",
-          category: "Market",
-          title: "Global Bitumen Market Developments",
-          summary: "Latest pricing, supply conditions and international shipping movements."
-        },
-        {
-          path: "#",
-          image_url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=900&q=85",
-          category: "Supply",
-          title: "Understanding Bitumen Supply Chains",
-          summary: "Key factors affecting bitumen availability and international trade."
-        }
-      ]
-    end
-  %>
-  
   <%= render "shared/right_sidebar",
     label: "INSIGHTS",
     title: "Related Articles",
     description: "Latest insights related to #{@grade.name}, specifications, supply and market developments.",
-    articles: articles_data
+    articles: @articles_data || []
   %>
 <% end %>
 

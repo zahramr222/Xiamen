@@ -1,20 +1,18 @@
 class GradesController < ApplicationController
   before_action :set_grade, only: %i[show edit update destroy]
+  before_action :authenticate_user!, only: %i[new create edit update destroy]
 
   def index
     @grades = Grade.all
   end
 
   def show
-    # Permanently redirect old numeric URLs to the slug URL
     if params[:id].to_s != @grade.slug.to_s
       redirect_to grade_path(@grade), status: :moved_permanently
     end
     
-    # Get the product this grade belongs to
     @product = @grade.product
-    
-    # Set related articles to empty array to avoid nil errors
+    @articles_data = get_related_articles(@grade)
     @related_articles = []
   end
 
@@ -41,12 +39,8 @@ class GradesController < ApplicationController
 
   def update
     if @grade.update(grade_params)
-      # Remove old tags
       @grade.tags.clear
-
-      # Add new tags
       save_tags
-
       redirect_to @grade, notice: "Grade updated successfully."
     else
       @tag_names = params[:tag_names]
@@ -71,7 +65,8 @@ class GradesController < ApplicationController
       :slug,
       :content,
       :image,
-      :product_id,        # Add this for the new relationship
+      :msds_file,
+      :product_id,
       packing_ids: []
     )
   end
@@ -90,6 +85,43 @@ class GradesController < ApplicationController
                .first_or_create!(name: tag_name)
 
       @grade.tags << tag unless @grade.tags.include?(tag)
+    end
+  end
+
+  def get_related_articles(grade, limit: 3)
+    # If grade has tags, find posts with same tags
+    if grade.tags.any?
+      tag_ids = grade.tags.pluck(:id)
+      
+      related_posts = Post.joins(:tags)
+                          .where(tags: { id: tag_ids })
+                          .group("posts.id")
+                          .select("posts.*, COUNT(tags.id) as match_count")
+                          .order("match_count DESC")
+                          .limit(limit)
+      
+      if related_posts.any?
+        return related_posts.map do |post|
+          {
+            path: post_path(post),
+            image_url: post.image.attached? ? url_for(post.image) : "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=900&q=85",
+            category: post.post_type || "Article",
+            title: post.title,
+            summary: post.summery.present? ? post.summery[0..117] + "..." : (post.content.present? ? post.content[0..117] + "..." : "Read more")
+          }
+        end
+      end
+    end
+
+    # Fallback: Get latest posts
+    Post.limit(limit).order(created_at: :desc).map do |post|
+      {
+        path: post_path(post),
+        image_url: post.image.attached? ? url_for(post.image) : "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=900&q=85",
+        category: post.post_type || "Article",
+        title: post.title,
+        summary: post.summery.present? ? post.summery[0..117] + "..." : (post.content.present? ? post.content[0..117] + "..." : "Read more")
+      }
     end
   end
 end

@@ -1,8 +1,11 @@
 class SpecificationsController < ApplicationController
-  before_action :set_specification, only: [:edit, :update, :destroy]
+  before_action :set_specification, only: [:show, :edit, :update, :destroy]
 
   def index
-    @specifications = Specification.all
+    @specifications = Specification.all.order(created_at: :desc)
+  end
+
+  def show
   end
 
   def new
@@ -45,7 +48,7 @@ class SpecificationsController < ApplicationController
     params.require(:specification).permit(
       :title,
       :content,
-      :grade_id  # ADD THIS - allows assigning to a grade
+      :grade_id
     )
   end
 end
