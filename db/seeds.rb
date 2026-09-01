@@ -1,18 +1,15 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
-
 # db/seeds.rb
 
-# db/seeds.rb
+puts "========================================"
+puts "STARTING DATABASE SEED"
+puts "========================================"
 
-puts "Cleaning database..."
+
+# ============================================================
+# CLEAN DATABASE
+# ============================================================
+
+puts "\nCleaning database..."
 
 PostTag.destroy_all
 Post.destroy_all
@@ -23,7 +20,14 @@ Grade.destroy_all
 Packing.destroy_all
 Specification.destroy_all
 
-puts "Creating Specifications..."
+puts "Database cleaned."
+
+
+# ============================================================
+# SPECIFICATIONS
+# ============================================================
+
+puts "\nCreating Specifications..."
 
 specifications = []
 
@@ -37,46 +41,66 @@ end
 puts "Created #{specifications.count} specifications."
 
 
-puts "Creating Grades..."
+# ============================================================
+# GRADES
+# ============================================================
+
+puts "\nCreating Grades..."
 
 grades = []
 
 20.times do
   name = "#{Faker::Commerce.product_name} Grade"
 
-  grades << Grade.create!(
+  grade = Grade.create!(
     name: name,
     slug: name.parameterize,
-    content: Faker::Lorem.paragraphs(number: 2).join("\n\n"),
-    specification: specifications.sample
+    content: Faker::Lorem.paragraphs(number: 2).join("\n\n")
   )
+
+  # Grade has_many :specifications
+  grade.specifications << specifications.sample
+
+  grades << grade
 end
 
 puts "Created #{grades.count} grades."
 
 
-puts "Creating Packings..."
+# ============================================================
+# PACKINGS
+# ============================================================
+
+puts "\nCreating Packings..."
 
 packings = []
 
 20.times do
   name = "#{Faker::Commerce.product_name} Packing"
 
-  packings << Packing.create!(
+  packing = Packing.create!(
     name: name,
     slug: name.parameterize,
     content: Faker::Lorem.paragraphs(number: 2).join("\n\n"),
     specification: specifications.sample
   )
+
+  packings << packing
 end
 
 puts "Created #{packings.count} packings."
 
 
-puts "Creating Grade ↔ Packing relationships..."
+# ============================================================
+# GRADE ↔ PACKING
+# ============================================================
+
+puts "\nCreating Grade ↔ Packing relationships..."
 
 grades.each do |grade|
-  packings.sample(rand(1..4)).each do |packing|
+  selected_packings = packings.sample(rand(1..4))
+
+  selected_packings.each do |packing|
     grade.packings << packing unless grade.packings.include?(packing)
   end
 end
@@ -84,28 +108,38 @@ end
 puts "Grade ↔ Packing relationships created."
 
 
-puts "Creating Products..."
+# ============================================================
+# PRODUCTS
+# ============================================================
+
+puts "\nCreating Products..."
 
 products = []
 
 30.times do
   name = Faker::Commerce.product_name
 
-  products << Product.create!(
+  product = Product.create!(
     name: name,
     slug: name.parameterize,
     content: Faker::Lorem.paragraphs(number: 3).join("\n\n"),
-    specification: specifications.sample,
-    grade: grades.sample
+    specification: specifications.sample
   )
+
+  # Product has_many :grades
+  product.grades << grades.sample
+
+  products << product
 end
 
 puts "Created #{products.count} products."
 
 
+# ============================================================
+# TAGS
+# ============================================================
 
-
-puts "Creating Tags..."
+puts "\nCreating Tags..."
 
 tag_names = [
   "wax",
@@ -149,7 +183,11 @@ end
 puts "Created #{tags.count} tags."
 
 
-puts "Creating Posts..."
+# ============================================================
+# POSTS
+# ============================================================
+
+puts "\nCreating Posts..."
 
 post_types = [
   "News",
@@ -177,7 +215,11 @@ end
 puts "Created #{posts.count} posts."
 
 
-puts "Creating Post ↔ Tag relationships..."
+# ============================================================
+# POST ↔ TAG
+# ============================================================
+
+puts "\nCreating Post ↔ Tag relationships..."
 
 posts.each do |post|
   selected_tags = tags.sample(rand(2..6))
@@ -193,9 +235,13 @@ end
 puts "Post ↔ Tag relationships created."
 
 
-puts "----------------------------------------"
+# ============================================================
+# SUMMARY
+# ============================================================
+
+puts "\n========================================"
 puts "SEED COMPLETED"
-puts "----------------------------------------"
+puts "========================================"
 
 puts "Specifications: #{Specification.count}"
 puts "Grades:         #{Grade.count}"
@@ -205,5 +251,5 @@ puts "Posts:          #{Post.count}"
 puts "Tags:           #{Tag.count}"
 puts "PostTags:       #{PostTag.count}"
 puts "GradePackings:  #{GradePacking.count}"
-puts "----------------------------------------"
 
+puts "========================================"

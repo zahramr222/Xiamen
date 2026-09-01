@@ -4474,6 +4474,118 @@ button, input, textarea {
 }
 
 
+/* Product Show Details - Image + Info */
+.product-show-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin: 40px 0 60px;
+  align-items: start;
+}
+
+.product-show-image-wrapper {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f8f9fa;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.product-show-main-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.product-show-main-image:hover {
+  transform: scale(1.02);
+}
+
+.product-show-info {
+  padding: 20px 0;
+}
+
+.product-show-info-content h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 16px;
+}
+
+.product-show-info-content p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #4a4a5a;
+  margin-bottom: 24px;
+}
+
+.product-show-specs {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+.product-show-specs h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 12px;
+}
+
+.product-show-specs ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.product-show-specs ul li {
+  padding: 6px 0;
+  font-size: 14px;
+  color: #4a4a5a;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.product-show-specs ul li:last-child {
+  border-bottom: none;
+}
+
+.product-show-specs ul li strong {
+  color: #1a1a2e;
+  font-weight: 600;
+}
+
+.product-show-supply {
+  margin-top: 20px;
+}
+
+.supply-badge {
+  display: inline-block;
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+/* Responsive */
+@media (max-width: 992px) {
+  .product-show-details {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .product-show-image-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
 /* =====================================================
    BITUMEN LANDING PAGE
 ===================================================== */

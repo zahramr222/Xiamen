@@ -1,3 +1,5 @@
+
+
 <%# BREADCRUMBS %>
 <% @breadcrumbs = [
   { label: "Products", path: products_path },
@@ -8,6 +10,7 @@
 <% content_for(:left_sidebar) do %>
   <% 
     nav_items = []
+    nav_items << { id: "about", label: "About" } 
     nav_items << { id: "grades", label: "Grades" } if @grades.present?
     nav_items << { id: "packings", label: "Packings" } if @packings.present?
   %>
@@ -20,12 +23,12 @@
 <% end %>
 
 <%# PAGE TITLE %>
-<% content_for(:page_title, "#{@product.name} | Infinity Galaxy") %>
+<% content_for(:page_title, "#{@product.name} | Xiamen") %>
 
 <div class="product-show">
 
   <!-- Header -->
-  <header class="product-show-header">
+  <header class="product-show-header" id="about">
     <div class="product-show-header-content">
       <span class="section-label">
         <span class="section-label-line"></span>
@@ -35,11 +38,42 @@
         <span><%= @product.name %></span>
       </h1>
       <p class="product-show-subtitle">
-        Explore our comprehensive range of <%= @product.name.downcase %> grades, 
-        each designed to meet specific industry requirements and standards.
+        <%= @product.try(:description) || "Explore our comprehensive range of #{@product.name.downcase} grades, each designed to meet specific industry requirements and standards." %>
       </p>
     </div>
   </header>
+
+  <!-- Product Image & Details -->
+  <div class="product-show-details" >
+    <div class="product-show-image-wrapper">
+      <% if @product.image.attached? %>
+        <%= image_tag @product.image, alt: @product.name, class: "product-show-main-image" %>
+      <% else %>
+        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80" alt="<%= @product.name %>" class="product-show-main-image">
+      <% end %>
+    </div>
+    <div class="product-show-info">
+      <div class="product-show-info-content">
+        <h2>About <%= @product.name %></h2>
+        <p><%= @product.try(:description) || "Premium quality #{@product.name} for industrial applications." %></p>
+        <% if @product.try(:specifications).present? %>
+          <div class="product-show-specs">
+            <h3>Specifications</h3>
+            <ul>
+              <% @product.specifications.each do |key, value| %>
+                <li><strong><%= key %>:</strong> <%= value %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <% if @product.try(:supply_capacity).present? %>
+          <div class="product-show-supply">
+            <span class="supply-badge">Supply Capacity: <%= @product.supply_capacity %> MT / Month</span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
   <!-- Product Stats -->
   <div class="product-stats">
@@ -111,7 +145,7 @@
     </div>
   </section>
 
-
+  <!-- Features Section -->
   <section class="product-features">
     <div class="product-features-header">
       <span class="section-label">
@@ -157,63 +191,64 @@
   </section>
 
   <!-- Packings Section -->
-<% if @packings.present? %>
-  <section class="product-packings" id="packings">
-    <div class="product-packings-header">
-      <span class="section-label">
-        <span class="section-label-line"></span>
-        PACKING OPTIONS
-      </span>
-      <h2>Available <span>Packings</span></h2>
-      <p>
-        Explore the packing options available for <%= @product.name.downcase %> grades.
-        Each grade may offer different packing solutions.
-      </p>
-    </div>
+  <% if @packings.present? %>
+    <section class="product-packings" id="packings">
+      <div class="product-packings-header">
+        <span class="section-label">
+          <span class="section-label-line"></span>
+          PACKING OPTIONS
+        </span>
+        <h2>Available <span>Packings</span></h2>
+        <p>
+          Explore the packing options available for <%= @product.name.downcase %> grades.
+          Each grade may offer different packing solutions.
+        </p>
+      </div>
 
-    <div class="product-packings-grid">
-      <% @packings.each do |packing| %>
-        <article class="product-packing-card">
-          <% if packing.image.attached? %>
-            <div class="product-packing-image">
-              <%= image_tag packing.image, alt: packing.name %>
-            </div>
-          <% end %>
-          <div class="product-packing-content">
-            <span class="product-packing-label">PACKING TYPE</span>
-            <h3><%= packing.name %></h3>
-            <% if packing.content.present? %>
-              <div class="product-packing-description">
-                <%= truncate(strip_tags(packing.content), length: 120) %>
+      <div class="product-packings-grid">
+        <% @packings.each do |packing| %>
+          <article class="product-packing-card">
+            <% if packing.image.attached? %>
+              <div class="product-packing-image">
+                <%= image_tag packing.image, alt: packing.name %>
               </div>
             <% end %>
-            
-            <!-- Grades that use this packing -->
-            <div class="product-packing-grades">
-              <span>Used in:</span>
-              <% packing.grades.where(id: @grades.pluck(:id)).each do |grade| %>
-                <%= link_to grade.name, grade_path(grade), class: "product-packing-grade-tag" %>
+            <div class="product-packing-content">
+              <span class="product-packing-label">PACKING TYPE</span>
+              <h3><%= packing.name %></h3>
+              <% if packing.content.present? %>
+                <div class="product-packing-description">
+                  <%= truncate(strip_tags(packing.content), length: 120) %>
+                </div>
               <% end %>
+              
+              <!-- Grades that use this packing -->
+              <div class="product-packing-grades">
+                <span>Used in:</span>
+                <% packing.grades.where(id: @grades.pluck(:id)).each do |grade| %>
+                  <%= link_to grade.name, grade_path(grade), class: "product-packing-grade-tag" %>
+                <% end %>
+              </div>
+              
+              <!-- View Packing Link -->
+              <div class="product-packing-actions">
+                <%= link_to packing_path(packing), class: "product-packing-link" do %>
+                  <i class="fa-solid fa-box"></i>
+                  View Packing Details
+                  <i class="fa-solid fa-arrow-right"></i>
+                <% end %>
+              </div>
             </div>
-            
-            <!-- ✅ View Packing Link -->
-            <div class="product-packing-actions">
-              <%= link_to packing_path(packing), class: "product-packing-link" do %>
-                <i class="fa-solid fa-box"></i>
-                View Packing Details
-                <i class="fa-solid fa-arrow-right"></i>
-              <% end %>
-            </div>
-          </div>
-        </article>
-      <% end %>
-    </div>
-  </section>
-<% end %>
+          </article>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
 
   <!-- Inquiry Partial -->
   <%= render 'shared/inquiry', product_name: @product.name %>
-<%# RIGHT SIDEBAR %>
+
+ <%# RIGHT SIDEBAR %>
 <% content_for(:right_sidebar) do %>
   <% if @articles_data.present? %>
     <%= render "shared/right_sidebar",
@@ -249,12 +284,16 @@
 
 </div>
 
+
+
+
 <%# JAVASCRIPT %>
 <% content_for(:javascript) do %>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const navLinks = document.querySelectorAll(".grade-nav-link");
       const sections = [
+        document.getElementById("about"),
         document.getElementById("grades"),
         document.getElementById("packings")
       ];
@@ -264,19 +303,26 @@
           const targetId = link.getAttribute("href");
           const target = document.querySelector(targetId);
           if (!target) return;
+
           event.preventDefault();
-          target.scrollIntoView({ behavior: "smooth", block: "start" });
+          target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
         });
       });
 
       function updateActiveNavigation() {
         const scrollPosition = window.scrollY + 150;
-        let currentSection = "grades";
+        let currentSection = "about";
+
         sections.forEach(function (section) {
-          if (section && scrollPosition >= section.offsetTop) {
+          if (!section) return;
+          if (scrollPosition >= section.offsetTop) {
             currentSection = section.id;
           }
         });
+
         navLinks.forEach(function (link) {
           const sectionName = link.dataset.section;
           link.classList.toggle("active", sectionName === currentSection);
