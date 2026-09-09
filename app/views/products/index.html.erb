@@ -1,75 +1,139 @@
-<%# BREADCRUMBS %>
+<%# =========================================================
+   BREADCRUMBS
+========================================================= %>
+
 <% @breadcrumbs = [
   { label: "Products" }
 ] %>
 
-<%# PAGE TITLE %>
-<% content_for(:page_title, "Products | Infinity Galaxy") %>
 
 <div class="products-index">
 
-  <!-- Header -->
+  <%# =========================================================
+     HEADER
+  ========================================================= %>
+
   <header class="products-header">
     <div class="products-header-content">
+
       <span class="section-label">
         <span class="section-label-line"></span>
         OUR PRODUCTS
       </span>
+
       <h1 class="section-title">
-        Premium <span>Products</span>
+        Bitumen & <span>Petroleum Products</span>
       </h1>
+
       <p class="products-subtitle">
-        Explore our comprehensive range of high-quality petroleum and industrial products, 
-        trusted by clients in 60+ countries worldwide.
+        Explore our comprehensive range of high-quality petroleum and industrial products,
+        trusted by clients across international markets.
       </p>
+
     </div>
   </header>
 
-  <!-- Featured Products: Bitumen & Paraffin Wax -->
+
+  <%# =========================================================
+     FEATURED PRODUCTS
+  ========================================================= %>
+
   <section class="featured-products">
     <div class="featured-products-grid">
 
-      <!-- Bitumen - Large Card -->
+      <%# -------------------------------------------------------
+         BITUMEN LANDING PAGE
+      ------------------------------------------------------- %>
+
       <article class="featured-product-card featured-product-card--large">
+
         <div class="featured-product-image">
-          <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1000&q=85" alt="Bitumen">
+
+          <img
+            src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1000&q=85"
+            alt="Bitumen products for road construction and industrial applications"
+          >
+
           <div class="featured-product-overlay">
-            <span class="featured-product-badge">FEATURED</span>
+            <span class="featured-product-badge">
+              FEATURED
+            </span>
           </div>
+
         </div>
+
+
         <div class="featured-product-content">
+
           <div class="featured-product-icon">
             <i class="fa-solid fa-road"></i>
           </div>
+
           <h2>Bitumen</h2>
-          <p>A vital component in road construction, holding our transportation network's logistical specialization in providing top-quality bitumen for sturdy and reliable road surfaces.</p>
+
+          <p>
+            Explore our range of bitumen products for road construction,
+            infrastructure, waterproofing and industrial applications.
+          </p>
+
+
           <div class="featured-product-variants">
             <span class="variant-tag">Oxidized Bitumen</span>
             <span class="variant-tag">Penetration Bitumen</span>
             <span class="variant-tag">Cutback Bitumen</span>
             <span class="variant-tag">Emulsion Bitumen</span>
           </div>
-          <%= link_to "/products/bitumen", class: "other-product-link" do %>
+
+
+          <%= link_to bitumen_products_path,
+              class: "other-product-link" do %>
+
             Explore Bitumen
             <i class="fa-solid fa-arrow-right"></i>
+
           <% end %>
+
         </div>
+
       </article>
 
-      <!-- Paraffin Wax - Large Card -->
+
+      <%# -------------------------------------------------------
+         PARAFFIN WAX PRODUCT
+      ------------------------------------------------------- %>
+
       <article class="featured-product-card featured-product-card--large">
+
         <div class="featured-product-image">
-          <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=85" alt="Paraffin Wax">
+
+          <img
+            src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=85"
+            alt="Paraffin wax products for industrial and commercial applications"
+          >
+
           <div class="featured-product-overlay">
-            <span class="featured-product-badge">FEATURED</span>
+            <span class="featured-product-badge">
+              FEATURED
+            </span>
           </div>
+
         </div>
+
+
         <div class="featured-product-content">
+
           <div class="featured-product-icon">
             <i class="fa-solid fa-cube"></i>
           </div>
+
           <h2>Paraffin Wax</h2>
-          <p>A comprehensive range of Semi-Refined Paraffin Wax products, meticulously crafted to meet the diverse needs of various industries.</p>
+
+          <p>
+            Explore paraffin wax products for industrial, commercial
+            and manufacturing applications.
+          </p>
+
+
           <div class="featured-product-variants">
             <span class="variant-tag">Microcrystalline</span>
             <span class="variant-tag">1-3% Oil Content</span>
@@ -77,166 +141,345 @@
             <span class="variant-tag">Emulsion Wax</span>
             <span class="variant-tag">Liquid Paraffin</span>
           </div>
-          <%= link_to "/products/paraffin_wax", class: "other-product-link" do %>
-            Explore Paraffin Wax
-            <i class="fa-solid fa-arrow-right"></i>
+
+
+          <% if @paraffin_wax.present? %>
+
+            <%= link_to product_path(@paraffin_wax),
+                class: "other-product-link" do %>
+
+              Explore Paraffin Wax
+              <i class="fa-solid fa-arrow-right"></i>
+
+            <% end %>
+
           <% end %>
+
         </div>
 
-      
       </article>
 
     </div>
   </section>
 
-  <!-- Other Products Grid -->
+
+  <%# =========================================================
+     OTHER PRODUCTS
+  ========================================================= %>
+
   <section class="other-products">
+
     <div class="other-products-header">
+
       <span class="section-label">
         <span class="section-label-line"></span>
         MORE PRODUCTS
       </span>
-      <h3>Other <span>Products</span></h3>
+
+      <h2>
+        Other <span>Products</span>
+      </h2>
+
     </div>
+
 
     <div class="other-products-grid">
 
-      <!-- Slack Wax -->
+      <%# -------------------------------------------------------
+         SLACK WAX
+      ------------------------------------------------------- %>
+
       <article class="other-product-card">
+
         <div class="other-product-icon">
           <i class="fa-solid fa-layer-group"></i>
         </div>
-        <h4>Slack Wax</h4>
-        <p>High-quality slack wax for industrial applications and global exports.</p>
-        <%= link_to "/products/slack_wax", class: "other-product-link" do %>
-          Learn More
-          <i class="fa-solid fa-arrow-right"></i>
+
+        <h3>Slack Wax</h3>
+
+        <p>
+          High-quality slack wax for industrial applications and global exports.
+        </p>
+
+        <% if @slack_wax.present? %>
+
+          <%= link_to product_path(@slack_wax),
+              class: "other-product-link" do %>
+
+            Learn More
+            <i class="fa-solid fa-arrow-right"></i>
+
+          <% end %>
+
         <% end %>
+
       </article>
 
-      <!-- Footsoil -->
+
+      <%# -------------------------------------------------------
+         FOOTSOIL
+      ------------------------------------------------------- %>
+
       <article class="other-product-card">
+
         <div class="other-product-icon">
           <i class="fa-solid fa-droplet"></i>
         </div>
-        <h4>Footsoil</h4>
-        <p>Premium foots oil for global export with quality, reliability and efficiency.</p>
-        <%= link_to "/products/footsoil", class: "other-product-link" do %>
-          Learn More
-          <i class="fa-solid fa-arrow-right"></i>
+
+        <h3>Footsoil</h3>
+
+        <p>
+          Premium footsoil for international supply with reliable quality
+          and efficient delivery.
+        </p>
+
+        <% if @footsoil.present? %>
+
+          <%= link_to product_path(@footsoil),
+              class: "other-product-link" do %>
+
+            Learn More
+            <i class="fa-solid fa-arrow-right"></i>
+
+          <% end %>
+
         <% end %>
+
       </article>
 
-      <!-- Base Oil -->
+
+      <%# -------------------------------------------------------
+         BASE OIL
+      ------------------------------------------------------- %>
+
       <article class="other-product-card">
+
         <div class="other-product-icon">
           <i class="fa-solid fa-oil-can"></i>
         </div>
-        <h4>Base Oil</h4>
-        <p>Premium, versatile, sustainable base oil for global export excellence.</p>
-        <%= link_to "/products/base_oil", class: "other-product-link" do %>
-          Learn More
-          <i class="fa-solid fa-arrow-right"></i>
+
+        <h3>Base Oil</h3>
+
+        <p>
+          Quality base oil for lubricant production and industrial applications.
+        </p>
+
+        <% if @base_oil.present? %>
+
+          <%= link_to product_path(@base_oil),
+              class: "other-product-link" do %>
+
+            Learn More
+            <i class="fa-solid fa-arrow-right"></i>
+
+          <% end %>
+
         <% end %>
+
       </article>
 
-      <!-- RPO -->
+
+      <%# -------------------------------------------------------
+         RPO
+      ------------------------------------------------------- %>
+
       <article class="other-product-card">
+
         <div class="other-product-icon">
           <i class="fa-solid fa-flask"></i>
         </div>
-        <h4>RPO</h4>
-        <p>Premium RPO supplier with trusted quality and global exports.</p>
-        <%= link_to "/products/rpo", class: "other-product-link" do %>
-          Learn More
-          <i class="fa-solid fa-arrow-right"></i>
+
+        <h3>RPO</h3>
+
+        <p>
+          Reliable RPO supply for rubber manufacturing and industrial applications.
+        </p>
+
+        <% if @rpo.present? %>
+
+          <%= link_to product_path(@rpo),
+              class: "other-product-link" do %>
+
+            Learn More
+            <i class="fa-solid fa-arrow-right"></i>
+
+          <% end %>
+
         <% end %>
+
       </article>
 
     </div>
+
   </section>
 
-  
-  
-<%= render 'shared/inquiry' %>
 
-</div>
+  <%# =========================================================
+     INQUIRY
+  ========================================================= %>
+
+  <%= render "shared/inquiry" %>
 
 
+  <%# =========================================================
+     ADMIN PRODUCT MANAGEMENT
+  ========================================================= %>
+
+  <% if user_signed_in? %>
+
+    <section class="admin-products-section">
+
+      <div class="admin-products-header">
+
+        <span class="section-label">
+          <span class="section-label-line"></span>
+          ADMIN
+        </span>
+
+        <h3>
+          Product <span>Management</span>
+        </h3>
+
+        <p>
+          View, edit, or delete all products in the database.
+        </p>
+
+      </div>
 
 
-<!-- =========================================================
-       ADMIN: PRODUCT LIST WITH ACTIONS
-  ========================================================= -->
-  <section class="admin-products-section">
-    <div class="admin-products-header">
-      <span class="section-label">
-        <span class="section-label-line"></span>
-        ADMIN
-      </span>
-      <h3>Product <span>Management</span></h3>
-      <p>View, edit, or delete all products in the database.</p>
-    </div>
+      <div class="admin-products-table-wrapper">
 
-    <div class="admin-products-table-wrapper">
-      <table class="admin-products-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Slug</th>
-            <th>Grades</th>
-            <th>Created At</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% if @products.present? %>
-            <% @products.each do |product| %>
-              <tr>
-                <td><%= product.id %></td>
-                <td><strong><%= product.name %></strong></td>
-                <td><code><%= product.slug %></code></td>
-                <td><%= product.grades.count %></td>
-                <td><%= product.created_at.strftime("%b %d, %Y") %></td>
-                <td>
-                  <div class="admin-actions">
-                    <%= link_to product_path(product), class: "admin-btn admin-btn-show", title: "View" do %>
-                      <i class="fa-solid fa-eye"></i>
-                    <% end %>
-                    <%= link_to edit_product_path(product), class: "admin-btn admin-btn-edit", title: "Edit" do %>
-                      <i class="fa-solid fa-pencil"></i>
-                    <% end %>
-                    <%= link_to product_path(product), 
-                        data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this product?" }, 
-                        class: "admin-btn admin-btn-delete", 
-                        title: "Delete" do %>
-                      <i class="fa-solid fa-trash-can"></i>
-                    <% end %>
-                  </div>
-                </td>
-              </tr>
-            <% end %>
-          <% else %>
+        <table class="admin-products-table">
+
+          <thead>
             <tr>
-              <td colspan="6" class="admin-empty-state">
-                <i class="fa-regular fa-box-open"></i>
-                <p>No products found. Create your first product!</p>
-                <%= link_to "New Product", new_product_path, class: "btn-primary" %>
-              </td>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Slug</th>
+              <th>Grades</th>
+              <th>Created At</th>
+              <th>Actions</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+          </thead>
 
-    <div class="admin-actions-bottom">
-      <%= link_to new_product_path, class: "btn-primary" do %>
-        <i class="fa-solid fa-plus"></i>
-        New Product
-      <% end %>
-    </div>
-  </section>
-  
+
+          <tbody>
+
+            <% if @products.present? %>
+
+              <% @products.each do |product| %>
+
+                <tr>
+
+                  <td>
+                    <%= product.id %>
+                  </td>
+
+                  <td>
+                    <strong>
+                      <%= product.name %>
+                    </strong>
+                  </td>
+
+                  <td>
+                    <code>
+                      <%= product.slug %>
+                    </code>
+                  </td>
+
+                  <td>
+                    <%= product.grades.count %>
+                  </td>
+
+                  <td>
+                    <%= product.created_at.strftime("%b %d, %Y") %>
+                  </td>
+
+                  <td>
+
+                    <div class="admin-actions">
+
+                      <%= link_to product_path(product),
+                          class: "admin-btn admin-btn-show",
+                          title: "View" do %>
+
+                        <i class="fa-solid fa-eye"></i>
+
+                      <% end %>
+
+
+                      <%= link_to edit_product_path(product),
+                          class: "admin-btn admin-btn-edit",
+                          title: "Edit" do %>
+
+                        <i class="fa-solid fa-pencil"></i>
+
+                      <% end %>
+
+
+                      <%= link_to product_path(product),
+                          data: {
+                            turbo_method: :delete,
+                            turbo_confirm: "Are you sure you want to delete this product?"
+                          },
+                          class: "admin-btn admin-btn-delete",
+                          title: "Delete" do %>
+
+                        <i class="fa-solid fa-trash-can"></i>
+
+                      <% end %>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              <% end %>
+
+            <% else %>
+
+              <tr>
+
+                <td colspan="6" class="admin-empty-state">
+
+                  <i class="fa-regular fa-box-open"></i>
+
+                  <p>
+                    No products found. Create your first product!
+                  </p>
+
+                  <%= link_to "New Product",
+                      new_product_path,
+                      class: "btn-primary" %>
+
+                </td>
+
+              </tr>
+
+            <% end %>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <div class="admin-actions-bottom">
+
+        <%= link_to new_product_path,
+            class: "btn-primary" do %>
+
+          <i class="fa-solid fa-plus"></i>
+          New Product
+
+        <% end %>
+
+      </div>
+
+    </section>
+
+  <% end %>
 
 </div>

@@ -1,6 +1,7 @@
 class Grade < ApplicationRecord
   extend FriendlyId
   friendly_id :slug, use: :slugged
+  before_validation :normalize_slug
 
   has_many :specifications, dependent: :nullify
 

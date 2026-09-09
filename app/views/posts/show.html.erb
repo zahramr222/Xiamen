@@ -4,14 +4,6 @@
   { label: @post.title }
 ] %>
 
-<%# PAGE TITLE %>
-<% content_for(:page_title, "#{@post.title} | Infinity Galaxy") %>
-
-<%# HEAD META %>
-<% content_for(:head) do %>
-  <meta name="description" content="<%= truncate(@post.summery || @post.content, length: 160) %>">
-<% end %>
-
 <%# LEFT SIDEBAR - Table of Contents with custom nav items %>
 <% 
   nav_items = []

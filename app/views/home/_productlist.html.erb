@@ -1,11 +1,23 @@
 <!-- PRODUCTS LIST -->
 <div class="products-list">
-  <% @products.each do |product| %>
+  <!-- 1. Bitumen - Static va Link be landing page -->
+  <%= link_to bitumen_products_path, class: "product-item product-item-bitumen" do %>
+    <div class="product-icon bitumen-icon">
+      <i class="fa-solid fa-road"></i>
+    </div>
+    <span class="product-name bitumen-name">
+      Bitumen
+    </span>
+    <i class="fa-solid fa-arrow-up-right-from-square product-arrow"></i>
+  <% end %>
+  
+  <!-- 2. Other 5 Products -->
+  <% product_names = ["Slack Wax", "Footsoil", "Paraffin Wax", "Base Oil", "RPO"] %>
+  <% @products.select { |p| product_names.include?(p.name) }.each do |product| %>
     <%= link_to product_path(product), class: "product-item" do %>
       <div class="product-icon">
         <% 
           icon_class = case product.name
-          when "Bitumen" then "fa-solid fa-road"
           when "Slack Wax" then "fa-solid fa-layer-group"
           when "Footsoil" then "fa-solid fa-droplet"
           when "Paraffin Wax" then "fa-solid fa-cube"
@@ -16,7 +28,9 @@
         %>
         <i class="<%= icon_class %>"></i>
       </div>
-      <span class="product-name"><%= product.name %></span>
+      <span class="product-name">
+        <%= product.name %>
+      </span>
       <i class="fa-solid fa-arrow-up-right-from-square product-arrow"></i>
     <% end %>
   <% end %>

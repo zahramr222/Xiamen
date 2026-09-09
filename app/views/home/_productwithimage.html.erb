@@ -13,30 +13,29 @@
   </div>
 
   <div class="news-grid">
-    <!-- Product 1 -->
-    <article class="news-item">
-      <div class="news-image">
-        <% if @products[0]&.image&.attached? %>
-          <%= image_tag @products[0].image, alt: @products[0].name %>
-        <% else %>
-          <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=900&q=80" alt="<%= @products[0]&.name || 'Product' %>">
-        <% end %>
-        <span class="news-category"><%= @products[0]&.name&.upcase || "PRODUCT" %></span>
-      </div>
-      <div class="news-content">
-        <div class="news-meta">
-          <span>PRODUCT</span>
-          <span class="news-dot"></span>
-          <span>EXPORT</span>
-        </div>
-        <h3><%= @products[0]&.name || "Product" %></h3>
-        <p><%= @products[0]&.content.present? ? truncate(@products[0].content, length: 100) : "Premium product supplier for global projects" %></p>
-        <a href="<%= product_path(@products[0]) if @products[0] %>" class="news-read">
-          View product <i class="fas fa-arrow-right"></i>
-        </a>
-      </div>
-    </article>
-
+    <!-- Product 1 - Bitumen Landing Page -->
+<article class="news-item">
+  <div class="news-image">
+    <% if @bitumen_product&.image&.attached? %>
+      <%= image_tag @bitumen_product.image, alt: @bitumen_product.name %>
+    <% else %>
+      <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=900&q=80" alt="Bitumen">
+    <% end %>
+    <span class="news-category">BITUMEN</span>
+  </div>
+  <div class="news-content">
+    <div class="news-meta">
+      <span>PRODUCT</span>
+      <span class="news-dot"></span>
+      <span>EXPORT</span>
+    </div>
+    <h3>Bitumen</h3>
+    <p>Premium grade bitumen supplier for global construction and infrastructure projects</p>
+    <a href="<%= bitumen_products_path %>" class="news-read">
+      View product <i class="fas fa-arrow-right"></i>
+    </a>
+  </div>
+</article>
     <!-- Product 2 -->
     <article class="news-item">
       <div class="news-image">

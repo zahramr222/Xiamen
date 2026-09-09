@@ -1,360 +1,236 @@
-<%# BREADCRUMBS %>
-<% @breadcrumbs = [
-  { label: "Posts" }
-] %>
 
-<%# PAGE TITLE %>
-<% content_for(:page_title, "Posts | Infinity Galaxy") %>
+<section class="posts-page">
 
-<%# LEFT SIDEBAR %>
-<% content_for(:left_sidebar) do %>
-  <%= render "shared/left_sidebar",
-    title: "Posts",
-    nav_items: [
-      { id: "reports", label: "Reports" },
-      { id: "articles", label: "Articles" },
-      { id: "news", label: "News" },
-      { id: "applications", label: "Applications" }
-    ],
-    order_url: inquiry_path,
-    order_text: "Send Inquiry"
-  %>
-<% end %>
-<div class="posts-page">
+  <%# =====================================================
+      HERO
+  ====================================================== %>
 
-  <!-- =====================================================
-       REPORTS SECTION
-  ====================================================== -->
-  <% if @reports.present? %>
-    <section class="reports-section" id="reports">
-      <div class="reports-container">
-        <div class="reports-header">
-          <div class="reports-heading">
-            <div class="about-label">
-              <span class="about-label-line"></span> MARKET INTELIGENCE
-            </div>
-            <h2>Latest <span>Reports.</span></h2>
-          </div>
-          <p>Stay informed with the latest market insights, pricing trends and global trade developments from our experts.</p>
-        </div>
-        <div class="reports-layout">
-          <article class="featured-report">
-            <div class="featured-report-image">
-              <% if @reports.first.image.attached? %>
-                <%= image_tag @reports.first.image, alt: @reports.first.title %>
-              <% else %>
-                <img src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=1400&q=85" alt="Featured Report">
-              <% end %>
-              <div class="featured-report-overlay">
-                <span>WEEKLY REPORT</span>
-                <i class="fa-solid fa-arrow-up-right"></i>
-              </div>
-            </div>
-            <div class="featured-report-content">
-              <div class="report-meta">
-                <span class="report-category"><%= @reports.first.post_type || "Report" %></span>
-                <span class="report-date"><%= @reports.first.updated_at.strftime("%b %d, %Y") %></span>
-              </div>
-              <h3><%= @reports.first.title %></h3>
-              <p><%= truncate(@reports.first.summery || @reports.first.content, length: 135) %></p>
-              <%= link_to post_path(@reports.first), class: "report-read-link" do %>
-                Read Report <i class="fa-solid fa-arrow-right"></i>
-              <% end %>
-            </div>
-          </article>
-          
-          <div class="reports-list">
-            <% @reports.drop(1).each do |po| %>
-              <article class="report-item">
-                <div class="report-item-image">
-                  <% if po.image.attached? %>
-                    <%= image_tag po.image, alt: po.title %>
-                  <% else %>
-                    <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=700&q=85" alt="<%= po.title %>">
-                  <% end %>
-                </div>
-                <div class="report-item-content">
-                  <div class="report-item-top">
-                    <span><%= po.post_type&.upcase || "MARKET REPORT" %></span>
-                    <time><%= po.updated_at.strftime("%b %d, %Y") %></time>
-                  </div>
-                  <h3><%= po.title %></h3>
-                  <%= link_to post_path(po), class: "report-read-link" do %>
-                    Read Report <i class="fa-solid fa-arrow-right"></i>
-                  <% end %>
-                </div>
-              </article>
-            <% end %>
-          </div>
-        </div>
+  <section class="posts-hero-wrapper">
+    <div class="posts-hero">
+
+      <div class="posts-hero-content">
+
+        <span class="posts-eyebrow">
+          XIAMEN INSIGHTS
+        </span>
+
+        <h1>
+          Insights, Reports &
+          <span>Industry Updates</span>
+        </h1>
+
+        <p>
+          Market reports, industry articles, news and practical insights
+          covering bitumen, petroleum products and global trade.
+        </p>
+
       </div>
-    </section>
-  <% end %>
 
-  <!-- =====================================================
-       ARTICLES SECTION
-  ====================================================== -->
-  <% if @articles.present? %>
-  <section class="reports-section" id="articles">
-    <div class="reports-container">
-      <div class="reports-header">
-        <div class="reports-heading">
-          <div class="about-label">
-            <span class="about-label-line"></span> INSIGHTS
-          </div>
-          <h2>Latest <span>Articles.</span></h2>
-        </div>
-        <p>Read our latest articles on industry trends, expert insights, and market analysis.</p>
+      <div class="posts-hero-decoration" aria-hidden="true">
+        <div class="posts-hero-circle posts-hero-circle-one"></div>
+        <div class="posts-hero-circle posts-hero-circle-two"></div>
       </div>
-      <div class="reports-layout">
-          <article class="featured-report">
-            <div class="featured-report-image">
-              <% if @articles.first.image.attached? %>
-                <%= image_tag @articles.first.image, alt: @articles.first.title %>
-              <% else %>
-                <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1400&q=85" alt="Featured Article">
-              <% end %>
-              <div class="featured-report-overlay">
-                <span>FEATURED</span>
-                <i class="fa-solid fa-arrow-up-right"></i>
-              </div>
-            </div>
-            <div class="featured-report-content">
-              <div class="report-meta">
-                <span class="report-category"><%= @articles.first.post_type || "Article" %></span>
-                <span class="report-date"><%= @articles.first.updated_at.strftime("%b %d, %Y") %></span>
-              </div>
-              <h3><%= @articles.first.title %></h3>
-              <p><%= truncate(@articles.first.summery || @articles.first.content, length: 135) %></p>
-              <%= link_to post_path(@articles.first), class: "report-read-link" do %>
-                Read Article <i class="fa-solid fa-arrow-right"></i>
-              <% end %>
-            </div>
-          </article>
-          
-          <div class="reports-list">
-            <% @articles.drop(1).each do |po| %>
-              <article class="report-item">
-                <div class="report-item-image">
-                  <% if po.image.attached? %>
-                    <%= image_tag po.image, alt: po.title %>
-                  <% else %>
-                    <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=700&q=85" alt="<%= po.title %>">
-                  <% end %>
-                </div>
-                <div class="report-item-content">
-                  <div class="report-item-top">
-                    <span><%= po.post_type&.upcase || "ARTICLE" %></span>
-                    <time><%= po.updated_at.strftime("%b %d, %Y") %></time>
-                  </div>
-                  <h3><%= po.title %></h3>
-                  <%= link_to post_path(po), class: "report-read-link" do %>
-                    Read Article <i class="fa-solid fa-arrow-right"></i>
-                  <% end %>
-                </div>
-              </article>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </section>
-  <% end %>
 
-  <!-- =====================================================
-       NEWS SECTION
-  ====================================================== -->
-  <% if @news.present? %>
-    <section class="reports-section" id="news">
-      <div class="reports-container">
-        <div class="reports-header">
-          <div class="reports-heading">
-            <div class="about-label">
-                                <span class="about-label-line"></span> UPDATES
-                            </div>
-            <h2>Latest <span>News.</span></h2>
-          </div>
-          <p>Stay updated with the latest company news, industry announcements, and product updates.</p>
-        </div>
-        <div class="reports-layout">
-          <article class="featured-report">
-            <div class="featured-report-image">
-              <% if @news.first.image.attached? %>
-                <%= image_tag @news.first.image, alt: @news.first.title %>
-              <% else %>
-                <img src="https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=1400&q=85" alt="Featured News">
-              <% end %>
-              <div class="featured-report-overlay">
-                <span>BREAKING</span>
-                <i class="fa-solid fa-arrow-up-right"></i>
-              </div>
-            </div>
-            <div class="featured-report-content">
-              <div class="report-meta">
-                <span class="report-category"><%= @news.first.post_type || "News" %></span>
-                <span class="report-date"><%= @news.first.updated_at.strftime("%b %d, %Y") %></span>
-              </div>
-              <h3><%= @news.first.title %></h3>
-              <p><%= truncate(@news.first.summery || @news.first.content, length: 135) %></p>
-              <%= link_to post_path(@news.first), class: "report-read-link" do %>
-                Read News <i class="fa-solid fa-arrow-right"></i>
-              <% end %>
-            </div>
-          </article>
-          
-          <div class="reports-list">
-            <% @news.drop(1).each do |po| %>
-              <article class="report-item">
-                <div class="report-item-image">
-                  <% if po.image.attached? %>
-                    <%= image_tag po.image, alt: po.title %>
-                  <% else %>
-                    <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=700&q=85" alt="<%= po.title %>">
-                  <% end %>
-                </div>
-                <div class="report-item-content">
-                  <div class="report-item-top">
-                    <span><%= po.post_type&.upcase || "NEWS" %></span>
-                    <time><%= po.updated_at.strftime("%b %d, %Y") %></time>
-                  </div>
-                  <h3><%= po.title %></h3>
-                  <%= link_to post_path(po), class: "report-read-link" do %>
-                    Read News <i class="fa-solid fa-arrow-right"></i>
-                  <% end %>
-                </div>
-              </article>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </section>
-  <% end %>
-
-  <!-- =====================================================
-       APPLICATIONS SECTION
-  ====================================================== -->
-  <% if @applications.present? %>
-    <section class="reports-section" id="applications">
-      <div class="reports-container">
-        <div class="reports-header">
-          <div class="reports-heading">
-            <div class="about-label">
-                                <span class="about-label-line"></span> APPLICATIONS
-                            </div>
-            <h2>Industry <span>Applications.</span></h2>
-          </div>
-          <p>Explore how our products are used across various industries and applications worldwide.</p>
-        </div>
-        <div class="reports-layout">
-          <article class="featured-report">
-            <div class="featured-report-image">
-              <% if @applications.first.image.attached? %>
-                <%= image_tag @applications.first.image, alt: @applications.first.title %>
-              <% else %>
-                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=85" alt="Featured Application">
-              <% end %>
-              <div class="featured-report-overlay">
-                <span>APPLICATION</span>
-                <i class="fa-solid fa-arrow-up-right"></i>
-              </div>
-            </div>
-            <div class="featured-report-content">
-              <div class="report-meta">
-                <span class="report-category"><%= @applications.first.post_type || "Application" %></span>
-                <span class="report-date"><%= @applications.first.updated_at.strftime("%b %d, %Y") %></span>
-              </div>
-              <h3><%= @applications.first.title %></h3>
-              <p><%= truncate(@applications.first.summery || @applications.first.content, length: 135) %></p>
-              <%= link_to post_path(@applications.first), class: "report-read-link" do %>
-                Learn More <i class="fa-solid fa-arrow-right"></i>
-              <% end %>
-            </div>
-          </article>
-          
-          <div class="reports-list">
-            <% @applications.drop(1).each do |po| %>
-              <article class="report-item">
-                <div class="report-item-image">
-                  <% if po.image.attached? %>
-                    <%= image_tag po.image, alt: po.title %>
-                  <% else %>
-                    <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=700&q=85" alt="<%= po.title %>">
-                  <% end %>
-                </div>
-                <div class="report-item-content">
-                  <div class="report-item-top">
-                    <span><%= po.post_type&.upcase || "APPLICATION" %></span>
-                    <time><%= po.updated_at.strftime("%b %d, %Y") %></time>
-                  </div>
-                  <h3><%= po.title %></h3>
-                  <%= link_to post_path(po), class: "report-read-link" do %>
-                    Learn More <i class="fa-solid fa-arrow-right"></i>
-                  <% end %>
-                </div>
-              </article>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </section>
-  <% end %>
-
-  <!-- =====================================================
-       EMPTY STATE
-  ====================================================== -->
-  <% if @reports.empty? && @articles.empty? && @news.empty? && @applications.empty? %>
-    <div class="posts-empty">
-      <i class="fa-regular fa-newspaper"></i>
-      <h3>No Posts Yet</h3>
-      <p>Check back soon for our latest articles, reports, news, and applications.</p>
     </div>
-  <% end %>
+  </section>
 
-  <!-- =====================================================
-       ADMIN TABLE
-  ====================================================== -->
-  <div class="posts-admin" style="margin-top: 70px; padding-top: 40px; border-top: 2px solid #e9eaee;">
-    <h2>Manage Posts</h2>
-    <p><%= link_to "New Post", new_post_path, class: "btn-primary" %></p>
 
-    <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Slug</th>
-          <th>Type</th>
-          <th>Tags</th>
-          <th>Summary</th>
-          <th>Image</th>
-          <th colspan="3">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @posts.each do |post| %>
-          <tr>
-            <td><%= post.title %></td>
-            <td><%= post.slug %></td>
-            <td><%= post.post_type %></td>
-            <td><%= post.tags.pluck(:name).join(", ") %></td>
-            <td><%= truncate(post.summery || post.content, length: 50) %></td>
-            <td>
-              <% if post.image.attached? %>
-                <%= image_tag post.image, width: 50 %>
-              <% end %>
-            </td>
-            <td><%= link_to "Show", post %></td>
-            <td><%= link_to "Edit", edit_post_path(post) %></td>
-            <td>
-              <%= link_to "Delete",
-                          post,
-                          data: {
-                            turbo_method: :delete,
-                            turbo_confirm: "Are you sure?"
-                          } %>
-            </td>
-          </tr>
+  <%# =====================================================
+      EXPLORE / ALL CONTENT
+  ====================================================== %>
+
+  <section class="posts-all" id="posts-explore">
+
+    <div class="posts-section-heading">
+
+      <span class="posts-section-label">
+        EXPLORE
+      </span>
+
+      <h2>
+        <% if @current_type.present? %>
+          <%= @current_type.titleize %>
+        <% else %>
+          All <span>Content</span>
         <% end %>
-      </tbody>
-    </table>
-  </div>
+      </h2>
 
-</div>
+      <p class="posts-section-description">
+        Browse our latest reports, articles, industry news and product application insights.
+      </p>
+
+    </div>
+
+
+    <%# =====================================================
+        FILTERS
+    ====================================================== %>
+
+    <nav class="posts-filters" aria-label="Post categories">
+
+      <%= link_to "#{posts_path}#posts-explore",
+          class: "posts-filter #{'active' if @current_type.blank?}" do %>
+        All
+      <% end %>
+
+      <%= link_to "#{posts_path(type: 'reports')}#posts-explore",
+          class: "posts-filter #{'active' if @current_type == 'reports'}" do %>
+        Reports
+      <% end %>
+
+      <%= link_to "#{posts_path(type: 'articles')}#posts-explore",
+          class: "posts-filter #{'active' if @current_type == 'articles'}" do %>
+        Articles
+      <% end %>
+
+      <%= link_to "#{posts_path(type: 'news')}#posts-explore",
+          class: "posts-filter #{'active' if @current_type == 'news'}" do %>
+        News
+      <% end %>
+
+      <%= link_to "#{posts_path(type: 'applications')}#posts-explore",
+          class: "posts-filter #{'active' if @current_type == 'applications'}" do %>
+        Applications
+      <% end %>
+
+    </nav>
+
+
+    <%# =====================================================
+        POSTS GRID
+    ====================================================== %>
+
+    <% if @posts.any? %>
+
+      <div class="posts-grid">
+
+        <% @posts.each do |post| %>
+
+          <article class="post-card">
+
+            <%= link_to post_path(post),
+                class: "post-card-image",
+                aria: { label: post.title } do %>
+
+              <% if post.image.attached? %>
+
+                <%= image_tag post.image,
+                    alt: post.title,
+                    loading: "lazy" %>
+
+              <% else %>
+
+                <div class="post-card-image-placeholder">
+                  <i class="fa-regular fa-image"></i>
+                </div>
+
+              <% end %>
+
+              <span class="post-card-type">
+                <%= post.post_type %>
+              </span>
+
+            <% end %>
+
+
+            <div class="post-card-content">
+
+              <div class="post-card-meta">
+
+                <span>
+                  <%= post.post_type %>
+                </span>
+
+                <time datetime="<%= post.created_at.to_date %>">
+                  <%= post.created_at.strftime("%b %d, %Y") %>
+                </time>
+
+              </div>
+
+
+              <h3>
+                <%= link_to post.title, post_path(post) %>
+              </h3>
+
+
+              <% if post.summery.present? %>
+
+                <p>
+                  <%= truncate(post.summery, length: 135) %>
+                </p>
+
+              <% elsif post.content.present? %>
+
+                <p>
+                  <%= truncate(
+                    strip_tags(post.content),
+                    length: 135
+                  ) %>
+                </p>
+
+              <% end %>
+
+
+              <%= link_to post_path(post),
+                  class: "post-read-more" do %>
+
+                <span>Read More</span>
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+              <% end %>
+
+            </div>
+
+          </article>
+
+        <% end %>
+
+      </div>
+
+
+      <%# =====================================================
+          PAGINATION
+      ====================================================== %>
+
+      <% if @pagy.pages > 1 %>
+
+        <div class="posts-pagination-wrapper">
+
+          <nav
+            class="posts-pagination"
+            aria-label="Posts pagination"
+          >
+            <%== @pagy.series_nav %>
+          </nav>
+
+        </div>
+
+      <% end %>
+
+
+    <% else %>
+
+      <div class="posts-empty">
+
+        <div class="posts-empty-icon">
+          <i class="fa-regular fa-file-lines"></i>
+        </div>
+
+        <h3>No Content Available</h3>
+
+        <p>
+          There are currently no posts available in this category.
+        </p>
+
+        <%= link_to "View All Content",
+            "#{posts_path}#posts-explore",
+            class: "posts-empty-button" %>
+
+      </div>
+
+    <% end %>
+
+  </section>
+
+</section>

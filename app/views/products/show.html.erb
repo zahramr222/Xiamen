@@ -1,336 +1,337 @@
 
 
-<%# BREADCRUMBS %>
-<% @breadcrumbs = [
-  { label: "Products", path: products_path },
-  { label: @product.name }
-] %>
+  <%# BREADCRUMBS %>
+  <% @breadcrumbs = [
+    { label: "Products", path: products_path },
+    { label: @product.name }
+  ] %>
 
-<%# LEFT SIDEBAR %>
-<% content_for(:left_sidebar) do %>
-  <% 
-    nav_items = []
-    nav_items << { id: "about", label: "About" } 
-    nav_items << { id: "grades", label: "Grades" } if @grades.present?
-    nav_items << { id: "packings", label: "Packings" } if @packings.present?
-  %>
-  
-  <%= render "shared/left_sidebar",
-    title: @product.name,
-    nav_items: nav_items,
-    show_order_button: false
-  %>
-<% end %>
+  <%# LEFT SIDEBAR %>
+  <% content_for(:left_sidebar) do %>
+    <% 
+      nav_items = []
+      nav_items << { id: "about", label: "About" } 
+      nav_items << { id: "grades", label: "Grades" } if @grades.present?
+      nav_items << { id: "packings", label: "Packings" } if @packings.present?
+    %>
+    
+    <%= render "shared/left_sidebar",
+      title: @product.name,
+      nav_items: nav_items,
+      show_order_button: false
+    %>
+  <% end %>
 
-<%# PAGE TITLE %>
-<% content_for(:page_title, "#{@product.name} | Xiamen") %>
+  <%# PAGE TITLE %>
+  <% content_for(:page_title, "#{@product.name} | Xiamen") %>
 
-<div class="product-show">
+  <div class="product-show">
 
-  <!-- Header -->
-  <header class="product-show-header" id="about">
-    <div class="product-show-header-content">
-      <span class="section-label">
-        <span class="section-label-line"></span>
-        <%= @product.name.upcase %>
-      </span>
-      <h1 class="section-title">
-        <span><%= @product.name %></span>
-      </h1>
-      <p class="product-show-subtitle">
-        <%= @product.try(:description) || "Explore our comprehensive range of #{@product.name.downcase} grades, each designed to meet specific industry requirements and standards." %>
-      </p>
-    </div>
-  </header>
-
-  <!-- Product Image & Details -->
-  <div class="product-show-details" >
-    <div class="product-show-image-wrapper">
-      <% if @product.image.attached? %>
-        <%= image_tag @product.image, alt: @product.name, class: "product-show-main-image" %>
-      <% else %>
-        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80" alt="<%= @product.name %>" class="product-show-main-image">
-      <% end %>
-    </div>
-    <div class="product-show-info">
-      <div class="product-show-info-content">
-        <h2>About <%= @product.name %></h2>
-        <p><%= @product.try(:description) || "Premium quality #{@product.name} for industrial applications." %></p>
-        <% if @product.try(:specifications).present? %>
-          <div class="product-show-specs">
-            <h3>Specifications</h3>
-            <ul>
-              <% @product.specifications.each do |key, value| %>
-                <li><strong><%= key %>:</strong> <%= value %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-        <% if @product.try(:supply_capacity).present? %>
-          <div class="product-show-supply">
-            <span class="supply-badge">Supply Capacity: <%= @product.supply_capacity %> MT / Month</span>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-
-  <!-- Product Stats -->
-  <div class="product-stats">
-    <div class="product-stat-item">
-      <span class="product-stat-number"><%= @product.grades.count %></span>
-      <span class="product-stat-label">Available Grades</span>
-    </div>
-    <div class="product-stat-item">
-      <span class="product-stat-number"><%= @product.try(:supply_capacity) || "30,000+" %></span>
-      <span class="product-stat-label">MT / Month Supply</span>
-    </div>
-    <div class="product-stat-item">
-      <span class="product-stat-number">60+</span>
-      <span class="product-stat-label">Countries Served</span>
-    </div>
-  </div>
-
-  <!-- Grades Display -->
-  <section class="product-grades" id="grades">
-    <div class="product-features-header">
-      <span class="section-label">
-        <span class="section-label-line"></span>
-        AVAILABLE GRADES
-      </span>
-      <h2>All <span><%= @product.name %></span> Grades</h2>
-      <p class="product-show-subtitle">
-        Choose from our wide selection of high-quality <%= @product.name.downcase %> grades, 
-        each rigorously tested to meet international standards.
-      </p>
-    </div>
-
-    <div class="product-grades-grid">
-      <% if @product.grades.present? %>
-        <% @product.grades.each do |grade| %>
-          <%= link_to grade_path(grade), class: "product-grade-card" do %>
-            <div class="product-grade-image-wrapper">
-              <% if grade.image.attached? %>
-                <%= image_tag grade.image, alt: grade.name, class: "product-grade-image" %>
-              <% else %>
-                <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=80" alt="<%= grade.name %>" class="product-grade-image">
-              <% end %>
-              <div class="product-grade-badge">
-                <span>Premium</span>
-              </div>
-            </div>
-            <div class="product-grade-content">
-              <h3><%= grade.name %></h3>
-              <p><%= grade.try(:summary) || "Premium quality #{grade.name} for industrial applications." %></p>
-              <div class="product-grade-meta">
-                <span class="product-grade-tag">
-                  <i class="fa-solid fa-check-circle"></i>
-                  Premium
-                </span>
-                <span class="product-grade-arrow">
-                  View Details
-                  <i class="fa-solid fa-arrow-right"></i>
-                </span>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
-      <% else %>
-        <div class="product-grades-empty">
-          <i class="fa-solid fa-box-open"></i>
-          <h3>No Grades Available</h3>
-          <p>Check back soon for <%= @product.name %> grades.</p>
-        </div>
-      <% end %>
-    </div>
-  </section>
-
-  <!-- Features Section -->
-  <section class="product-features">
-    <div class="product-features-header">
-      <span class="section-label">
-        <span class="section-label-line"></span>
-        WHY CHOOSE US
-      </span>
-      <h2>Why Choose Our <span><%= @product.name %></span>?</h2>
-    </div>
-
-    <div class="product-features-grid">
-      <div class="product-feature-card">
-        <div class="product-feature-icon">
-          <i class="fa-solid fa-medal"></i>
-        </div>
-        <h3>Premium Quality</h3>
-        <p>All products meet the highest international standards and are rigorously tested for quality assurance.</p>
-      </div>
-
-      <div class="product-feature-card">
-        <div class="product-feature-icon">
-          <i class="fa-solid fa-globe"></i>
-        </div>
-        <h3>Global Supply</h3>
-        <p>With strategic partnerships worldwide, we ensure fast and reliable delivery to any destination.</p>
-      </div>
-
-      <div class="product-feature-card">
-        <div class="product-feature-icon">
-          <i class="fa-solid fa-headset"></i>
-        </div>
-        <h3>Expert Support</h3>
-        <p>Our technical team provides comprehensive support to help you select the right product.</p>
-      </div>
-
-      <div class="product-feature-card">
-        <div class="product-feature-icon">
-          <i class="fa-solid fa-tag"></i>
-        </div>
-        <h3>Competitive Pricing</h3>
-        <p>We offer the best market prices without compromising on quality or service.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Packings Section -->
-  <% if @packings.present? %>
-    <section class="product-packings" id="packings">
-      <div class="product-packings-header">
+    <!-- Header -->
+    <header class="product-show-header" id="about">
+      <div class="product-show-header-content">
         <span class="section-label">
           <span class="section-label-line"></span>
-          PACKING OPTIONS
+          <%= @product.name.upcase %>
         </span>
-        <h2>Available <span>Packings</span></h2>
-        <p>
-          Explore the packing options available for <%= @product.name.downcase %> grades.
-          Each grade may offer different packing solutions.
+        <h1 class="section-title">
+          <span><%= @product.name %></span>
+        </h1>
+        <p class="product-show-subtitle">
+    Explore our comprehensive range of <%= @product.name.downcase %> grades, designed to meet specific industry requirements and standards.
+  </p>
+      </div>
+    </header>
+
+    <!-- Product Image & Details -->
+    <div class="product-show-details" >
+      <div class="product-show-image-wrapper">
+        <% if @product.image.attached? %>
+          <%= image_tag @product.image, alt: @product.name, class: "product-show-main-image" %>
+        <% else %>
+          <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80" alt="<%= @product.name %>" class="product-show-main-image">
+        <% end %>
+      </div>
+      <div class="product-show-info">
+        <div class="product-show-info-content">
+          <h2>About <%= @product.name %></h2>
+          <p><%= @product.try(:description) || "Premium quality #{@product.name} for industrial applications." %></p>
+          <% if @product.try(:specifications).present? %>
+            <div class="product-show-specs">
+              <h3>Specifications</h3>
+              <ul>
+                <% @product.specifications.each do |key, value| %>
+                  <li><strong><%= key %>:</strong> <%= value %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <% if @product.try(:supply_capacity).present? %>
+            <div class="product-show-supply">
+              <span class="supply-badge">Supply Capacity: <%= @product.supply_capacity %> MT / Month</span>
+            </div>
+          <% end %>
+        </div>
+        
+      </div>
+    </div>
+
+    <!-- Product Stats -->
+    <div class="product-stats">
+      <div class="product-stat-item">
+        <span class="product-stat-number"><%= @product.grades.count %></span>
+        <span class="product-stat-label">Available Grades</span>
+      </div>
+      <div class="product-stat-item">
+        <span class="product-stat-number"><%= @product.try(:supply_capacity) || "30,000+" %></span>
+        <span class="product-stat-label">MT / Month Supply</span>
+      </div>
+      <div class="product-stat-item">
+        <span class="product-stat-number">60+</span>
+        <span class="product-stat-label">Countries Served</span>
+      </div>
+    </div>
+
+    <!-- Grades Display -->
+    <section class="product-grades" id="grades">
+      <div class="product-features-header">
+        <span class="section-label">
+          <span class="section-label-line"></span>
+          AVAILABLE GRADES
+        </span>
+        <h2>All <span><%= @product.name %></span> Grades</h2>
+        <p class="product-show-subtitle">
+          Choose from our wide selection of high-quality <%= @product.name.downcase %> grades, 
+          each rigorously tested to meet international standards.
         </p>
       </div>
 
-      <div class="product-packings-grid">
-        <% @packings.each do |packing| %>
-          <article class="product-packing-card">
-            <% if packing.image.attached? %>
-              <div class="product-packing-image">
-                <%= image_tag packing.image, alt: packing.name %>
+      <div class="product-grades-grid">
+        <% if @product.grades.present? %>
+          <% @product.grades.each do |grade| %>
+            <%= link_to grade_path(grade), class: "product-grade-card" do %>
+              <div class="product-grade-image-wrapper">
+                <% if grade.image.attached? %>
+                  <%= image_tag grade.image, alt: grade.name, class: "product-grade-image" %>
+                <% else %>
+                  <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=80" alt="<%= grade.name %>" class="product-grade-image">
+                <% end %>
+                <div class="product-grade-badge">
+                  <span>Premium</span>
+                </div>
+              </div>
+              <div class="product-grade-content">
+                <h3><%= grade.name %></h3>
+                <p><%= grade.try(:summary) || "Premium quality #{grade.name} for industrial applications." %></p>
+                <div class="product-grade-meta">
+                  <span class="product-grade-tag">
+                    <i class="fa-solid fa-check-circle"></i>
+                    Premium
+                  </span>
+                  <span class="product-grade-arrow">
+                    View Details
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </span>
+                </div>
               </div>
             <% end %>
-            <div class="product-packing-content">
-              <span class="product-packing-label">PACKING TYPE</span>
-              <h3><%= packing.name %></h3>
-              <% if packing.content.present? %>
-                <div class="product-packing-description">
-                  <%= truncate(strip_tags(packing.content), length: 120) %>
-                </div>
-              <% end %>
-              
-              <!-- Grades that use this packing -->
-              <div class="product-packing-grades">
-                <span>Used in:</span>
-                <% packing.grades.where(id: @grades.pluck(:id)).each do |grade| %>
-                  <%= link_to grade.name, grade_path(grade), class: "product-packing-grade-tag" %>
-                <% end %>
-              </div>
-              
-              <!-- View Packing Link -->
-              <div class="product-packing-actions">
-                <%= link_to packing_path(packing), class: "product-packing-link" do %>
-                  <i class="fa-solid fa-box"></i>
-                  View Packing Details
-                  <i class="fa-solid fa-arrow-right"></i>
-                <% end %>
-              </div>
-            </div>
-          </article>
+          <% end %>
+        <% else %>
+          <div class="product-grades-empty">
+            <i class="fa-solid fa-box-open"></i>
+            <h3>No Grades Available</h3>
+            <p>Check back soon for <%= @product.name %> grades.</p>
+          </div>
         <% end %>
       </div>
     </section>
-  <% end %>
 
-  <!-- Inquiry Partial -->
-  <%= render 'shared/inquiry', product_name: @product.name %>
+    <!-- Features Section -->
+    <section class="product-features">
+      <div class="product-features-header">
+        <span class="section-label">
+          <span class="section-label-line"></span>
+          WHY CHOOSE US
+        </span>
+        <h2>Why Choose Our <span><%= @product.name %></span>?</h2>
+      </div>
 
- <%# RIGHT SIDEBAR %>
-<% content_for(:right_sidebar) do %>
-  <% if @articles_data.present? %>
-    <%= render "shared/right_sidebar",
-      label: "INSIGHTS",
-      title: "Related Articles",
-      description: "Latest insights related to #{@product.name}, specifications, supply and market developments.",
-      articles: @articles_data
-    %>
-  <% else %>
-    <%= render "shared/right_sidebar",
-      label: "INSIGHTS",
-      title: "Related Articles",
-      description: "Latest insights related to #{@product.name}, specifications, supply and market developments.",
-      articles: [
-        {
-          path: "#",
-          image_url: "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=900&q=85",
-          category: "Market",
-          title: "Global Bitumen Market Developments",
-          summary: "Latest pricing, supply conditions and international shipping movements."
-        },
-        {
-          path: "#",
-          image_url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=900&q=85",
-          category: "Supply",
-          title: "Understanding Bitumen Supply Chains",
-          summary: "Key factors affecting bitumen availability and international trade."
-        }
-      ]
-    %>
-  <% end %>
-<% end %>
+      <div class="product-features-grid">
+        <div class="product-feature-card">
+          <div class="product-feature-icon">
+            <i class="fa-solid fa-medal"></i>
+          </div>
+          <h3>Premium Quality</h3>
+          <p>All products meet the highest international standards and are rigorously tested for quality assurance.</p>
+        </div>
 
-</div>
+        <div class="product-feature-card">
+          <div class="product-feature-icon">
+            <i class="fa-solid fa-globe"></i>
+          </div>
+          <h3>Global Supply</h3>
+          <p>With strategic partnerships worldwide, we ensure fast and reliable delivery to any destination.</p>
+        </div>
 
+        <div class="product-feature-card">
+          <div class="product-feature-icon">
+            <i class="fa-solid fa-headset"></i>
+          </div>
+          <h3>Expert Support</h3>
+          <p>Our technical team provides comprehensive support to help you select the right product.</p>
+        </div>
 
+        <div class="product-feature-card">
+          <div class="product-feature-icon">
+            <i class="fa-solid fa-tag"></i>
+          </div>
+          <h3>Competitive Pricing</h3>
+          <p>We offer the best market prices without compromising on quality or service.</p>
+        </div>
+      </div>
+    </section>
 
+    <!-- Packings Section -->
+    <% if @packings.present? %>
+      <section class="product-packings" id="packings">
+        <div class="product-packings-header">
+          <span class="section-label">
+            <span class="section-label-line"></span>
+            PACKING OPTIONS
+          </span>
+          <h2>Available <span>Packings</span></h2>
+          <p>
+            Explore the packing options available for <%= @product.name.downcase %> grades.
+            Each grade may offer different packing solutions.
+          </p>
+        </div>
 
-<%# JAVASCRIPT %>
-<% content_for(:javascript) do %>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const navLinks = document.querySelectorAll(".grade-nav-link");
-      const sections = [
-        document.getElementById("about"),
-        document.getElementById("grades"),
-        document.getElementById("packings")
-      ];
+        <div class="product-packings-grid">
+          <% @packings.each do |packing| %>
+            <article class="product-packing-card">
+              <% if packing.image.attached? %>
+                <div class="product-packing-image">
+                  <%= image_tag packing.image, alt: packing.name %>
+                </div>
+              <% end %>
+              <div class="product-packing-content">
+                <span class="product-packing-label">PACKING TYPE</span>
+                <h3><%= packing.name %></h3>
+                <% if packing.content.present? %>
+                  <div class="product-packing-description">
+                    <%= truncate(strip_tags(packing.content), length: 120) %>
+                  </div>
+                <% end %>
+                
+                <!-- Grades that use this packing -->
+                <div class="product-packing-grades">
+                  <span>Used in:</span>
+                  <% packing.grades.where(id: @grades.pluck(:id)).each do |grade| %>
+                    <%= link_to grade.name, grade_path(grade), class: "product-packing-grade-tag" %>
+                  <% end %>
+                </div>
+                
+                <!-- View Packing Link -->
+                <div class="product-packing-actions">
+                  <%= link_to packing_path(packing), class: "product-packing-link" do %>
+                    <i class="fa-solid fa-box"></i>
+                    View Packing Details
+                    <i class="fa-solid fa-arrow-right"></i>
+                  <% end %>
+                </div>
+              </div>
+            </article>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
 
-      navLinks.forEach(function (link) {
-        link.addEventListener("click", function (event) {
-          const targetId = link.getAttribute("href");
-          const target = document.querySelector(targetId);
-          if (!target) return;
+    <!-- Inquiry Partial -->
+    <%= render 'shared/inquiry', product_name: @product.name %>
 
-          event.preventDefault();
-          target.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-          });
-        });
-      });
-
-      function updateActiveNavigation() {
-        const scrollPosition = window.scrollY + 150;
-        let currentSection = "about";
-
-        sections.forEach(function (section) {
-          if (!section) return;
-          if (scrollPosition >= section.offsetTop) {
-            currentSection = section.id;
+   <%# RIGHT SIDEBAR %>
+  <% content_for(:right_sidebar) do %>
+    <% if @articles_data.present? %>
+      <%= render "shared/right_sidebar",
+        label: "INSIGHTS",
+        title: "Related Articles",
+        description: "Latest insights related to #{@product.name}, specifications, supply and market developments.",
+        articles: @articles_data
+      %>
+    <% else %>
+      <%= render "shared/right_sidebar",
+        label: "INSIGHTS",
+        title: "Related Articles",
+        description: "Latest insights related to #{@product.name}, specifications, supply and market developments.",
+        articles: [
+          {
+            path: "#",
+            image_url: "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=900&q=85",
+            category: "Market",
+            title: "Global Bitumen Market Developments",
+            summary: "Latest pricing, supply conditions and international shipping movements."
+          },
+          {
+            path: "#",
+            image_url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=900&q=85",
+            category: "Supply",
+            title: "Understanding Bitumen Supply Chains",
+            summary: "Key factors affecting bitumen availability and international trade."
           }
-        });
+        ]
+      %>
+    <% end %>
+  <% end %>
+
+  </div>
+
+
+
+
+  <%# JAVASCRIPT %>
+  <% content_for(:javascript) do %>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const navLinks = document.querySelectorAll(".grade-nav-link");
+        const sections = [
+          document.getElementById("about"),
+          document.getElementById("grades"),
+          document.getElementById("packings")
+        ];
 
         navLinks.forEach(function (link) {
-          const sectionName = link.dataset.section;
-          link.classList.toggle("active", sectionName === currentSection);
-        });
-      }
+          link.addEventListener("click", function (event) {
+            const targetId = link.getAttribute("href");
+            const target = document.querySelector(targetId);
+            if (!target) return;
 
-      window.addEventListener("scroll", updateActiveNavigation, { passive: true });
-      updateActiveNavigation();
-    });
-  </script>
-<% end %>
+            event.preventDefault();
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
+          });
+        });
+
+        function updateActiveNavigation() {
+          const scrollPosition = window.scrollY + 150;
+          let currentSection = "about";
+
+          sections.forEach(function (section) {
+            if (!section) return;
+            if (scrollPosition >= section.offsetTop) {
+              currentSection = section.id;
+            }
+          });
+
+          navLinks.forEach(function (link) {
+            const sectionName = link.dataset.section;
+            link.classList.toggle("active", sectionName === currentSection);
+          });
+        }
+
+        window.addEventListener("scroll", updateActiveNavigation, { passive: true });
+        updateActiveNavigation();
+      });
+    </script>
+  <% end %>

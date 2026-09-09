@@ -4,13 +4,6 @@
   { label: @packing.name }
 ] %>
 
-<%# PAGE TITLE %>
-<% content_for(:page_title, "#{@packing.name} | Infinity Galaxy") %>
-
-<%# HEAD META %>
-<% content_for(:head) do %>
-  <meta name="description" content="<%= truncate(strip_tags(@packing.content), length: 160) %>">
-<% end %>
 
 <div class="packing-show">
 

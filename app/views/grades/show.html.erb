@@ -4,14 +4,6 @@
   { label: @grade.name }
 ] %>
 
-<%# PAGE TITLE %>
-<% content_for(:page_title, "#{@grade.name} | Infinity Galaxy") %>
-
-<%# HEAD META %>
-<% content_for(:head) do %>
-  <meta name="description" content="<%= @grade.try(:meta_description) || "#{@grade.name} grade supplied by Infinity Galaxy for road construction, industrial and infrastructure applications." %>">
-<% end %>
-
 <%# LEFT SIDEBAR %>
 <% content_for(:left_sidebar) do %>
   <% 

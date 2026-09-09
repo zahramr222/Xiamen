@@ -73,3 +73,6 @@ gem "devise"
 gem "faker"
 gem "ransack"
 gem 'country_select'
+gem 'meta-tags'
+gem 'sitemap_generator'
+gem "pagy"

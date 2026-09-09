@@ -1,98 +1,119 @@
 
 <%= form_with(model: @packing, local: true) do |form| %>
 
-  <% if @packing.errors.any? %>
-    <div style="color: red;">
-      <h2>
-        <%= pluralize(@packing.errors.count, "error") %>
-        prohibited this packing from being saved:
-      </h2>
+<% if @packing.errors.any? %>
+  <div style="color: red;">
+    <h2>
+      <%= pluralize(@packing.errors.count, "error") %>
+      prohibited this packing from being saved:
+    </h2>
 
-      <ul>
-        <% @packing.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <!-- Packing Name -->
-  <div>
-    <%= form.label :name, "Packing Name" %><br>
-    <%= form.text_field :name, class: "form-control" %>
+    <ul>
+      <% @packing.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
   </div>
+<% end %>
+
+<!-- Packing Name -->
+<div>
+  <%= form.label :name, "Packing Name" %><br>
+  <%= form.text_field :name, class: "form-control" %>
+</div>
+
+<br>
+
+<!-- Slug -->
+<div>
+  <%= form.label :slug, "Slug" %><br>
+  <%= form.text_field :slug, class: "form-control" %>
+</div>
+
+<br>
+
+<div>
+<%= form.label :meta_title, "SEO Meta Title" %>
+<%= form.text_field :meta_title,
+maxlength: 60,
+placeholder: "SEO title for this page" %>
+<small>Recommended: 50–60 characters.</small>
+</div> 
+
+<br> 
+
+<div>
+<%= form.label :meta_description, "SEO Meta Description" %>
+<%= form.text_area :meta_description,
+maxlength: 160,
+rows: 4,
+placeholder: "SEO description for this page" %>
+<small>Recommended: 140–160 characters.</small>
+</div>
+
+<br>
+
+<!-- Specification -->
+<div>
+  <%= form.label :specification_id, "Specification" %><br>
+
+  <%= form.collection_select(
+    :specification_id,
+    Specification.order(:title),
+    :id,
+    :title,
+    { include_blank: "Select a specification" },
+    { class: "form-select" }
+  ) %>
+
+  <%= link_to "+ New",
+              new_specification_path,
+              class: "btn btn-success" %>
+</div>
+
+<br>
+
+<!-- Content -->
+<div>
+  <%= form.label :content, "Content" %><br>
+
+  <%= form.text_area :content,
+                     rows: 15,
+                     class: "form-control",
+                     placeholder: "Write packing content here..." %>
+</div>
+
+<br>
+
+<!-- Image -->
+<div>
+  <%= form.label :image, "Packing Image" %><br>
+  <%= form.file_field :image, class: "form-control" %>
+</div>
+
+<br>
+
+<!-- Tags -->
+<div>
+  <%= label_tag :tag_names, "Tags" %><br>
+
+  <%= text_field_tag :tag_names,
+                     @tag_names,
+                     class: "form-control",
+                     placeholder: "25kg, bag, industrial, bulk" %>
 
   <br>
 
-  <!-- Slug -->
-  <div>
-    <%= form.label :slug, "Slug" %><br>
-    <%= form.text_field :slug, class: "form-control" %>
-  </div>
+  <small>
+    Separate tags with commas (,)
+  </small>
+</div>
 
-  <br>
+<br>
 
-  <!-- Specification -->
-  <div>
-    <%= form.label :specification_id, "Specification" %><br>
-
-    <%= form.collection_select(
-      :specification_id,
-      Specification.order(:title),
-      :id,
-      :title,
-      { include_blank: "Select a specification" },
-      { class: "form-select" }
-    ) %>
-
-    <%= link_to "+ New",
-                new_specification_path,
-                class: "btn btn-success" %>
-  </div>
-
-  <br>
-
-  <!-- Content -->
-  <div>
-    <%= form.label :content, "Content" %><br>
-
-    <%= form.text_area :content,
-                       rows: 15,
-                       class: "form-control",
-                       placeholder: "Write packing content here..." %>
-  </div>
-
-  <br>
-
-  <!-- Image -->
-  <div>
-    <%= form.label :image, "Packing Image" %><br>
-    <%= form.file_field :image, class: "form-control" %>
-  </div>
-
-  <br>
-
-  <!-- Tags -->
-  <div>
-    <%= label_tag :tag_names, "Tags" %><br>
-
-    <%= text_field_tag :tag_names,
-                       @tag_names,
-                       class: "form-control",
-                       placeholder: "25kg, bag, industrial, bulk" %>
-
-    <br>
-
-    <small>
-      Separate tags with commas (,)
-    </small>
-  </div>
-
-  <br>
-
-  <!-- Submit -->
-  <div>
-    <%= form.submit class: "btn btn-primary" %>
-  </div>
+<!-- Submit -->
+<div>
+  <%= form.submit class: "btn btn-primary" %>
+</div>
 
 <% end %>

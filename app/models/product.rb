@@ -1,7 +1,9 @@
 class Product < ApplicationRecord
   extend FriendlyId
-  friendly_id :slug, use: :slugged
+  before_validation :normalize_slug
   
+  friendly_id :slug, use: :slugged
+  before_validation :normalize_slug
 
   has_many :grades, dependent: :nullify
 

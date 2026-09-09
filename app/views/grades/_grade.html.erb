@@ -11,7 +11,7 @@
   </div>
 
   <div class="grade-introduction">
-    <div class="grade-eyebrow">BITUMEN GRADE</div>
+    <div class="section-label">PRODUCT GRADE</div>
     <h1><%= grade.name %></h1>
     <p class="grade-summary"><%= grade.try(:summary) || "High-quality petroleum bitumen grade supplied for industrial, road construction and infrastructure applications with reliable international delivery and flexible packing options." %></p>
   </div>
@@ -20,10 +20,9 @@
 <!-- OVERVIEW -->
 <section class="grade-section">
   <div class="grade-section-heading">
-    <span class="grade-section-number">01</span>
     <div>
-      <span class="grade-section-label">OVERVIEW</span>
-      <h2><%= grade.name %></h2>
+      <span class="section-label">PRODUCT OVERVIEW</span>
+      <h2><%= grade.name %> Overview</h2>
     </div>
   </div>
 
@@ -32,13 +31,13 @@
   <% end %>
 </section>
 
+
 <!-- SPECIFICATION -->
 <section class="grade-section" id="specification">
   <div class="grade-section-heading">
-    <span class="grade-section-number">02</span>
     <div>
-      <span class="grade-section-label">SPECIFICATION</span>
-      <h2><%= grade.name %> Specifications</h2>
+      <span class="grade-section-label">TECHNICAL DATA</span>
+      <h2>Technical Specifications</h2>
     </div>
   </div>
 
@@ -51,13 +50,13 @@
   <% end %>
 </section>
 
+
 <!-- MSDS -->
 <section class="grade-section" id="msds">
   <div class="grade-section-heading">
-    <span class="grade-section-number">03</span>
     <div>
-      <span class="grade-section-label">DOCUMENTATION</span>
-      <h2>Material Safety Data Sheet</h2>
+      <span class="grade-section-label">SAFETY & DOCUMENTATION</span>
+      <h2>Safety Information</h2>
     </div>
   </div>
 
@@ -65,95 +64,146 @@
     <div class="grade-msds-icon">
       <i class="fa-regular fa-file-pdf"></i>
     </div>
+
     <div class="grade-msds-content">
       <span>PDF DOCUMENT</span>
       <h3><%= grade.name %> MSDS</h3>
-      <p>Material Safety Data Sheet for <%= grade.name %>.</p>
+      <p>Material Safety Data Sheet and product safety information.</p>
     </div>
+
     <% if grade.try(:msds_file).present? && grade.msds_file.attached? %>
       <div class="grade-msds-actions">
-        <%= link_to grade.msds_file, 
-                    class: "grade-msds-download", 
-                    aria_label: "Download MSDS", 
+        <%= link_to grade.msds_file,
+                    class: "grade-msds-download",
+                    aria_label: "Download MSDS",
                     target: "_blank" do %>
-          <i class="fa-solid fa-download"></i> Download
+          <i class="fa-solid fa-download"></i>
+          Download
         <% end %>
-        <%= link_to rails_blob_path(grade.msds_file, disposition: "inline"), 
-                    class: "grade-msds-view", 
-                    aria_label: "View MSDS", 
+
+        <%= link_to rails_blob_path(grade.msds_file, disposition: "inline"),
+                    class: "grade-msds-view",
+                    aria_label: "View MSDS",
                     target: "_blank" do %>
-          <i class="fa-regular fa-eye"></i> View
+          <i class="fa-regular fa-eye"></i>
+          View
         <% end %>
       </div>
     <% else %>
-      <span class="grade-msds-not-available">No MSDS uploaded yet</span>
+      <span class="grade-msds-not-available">
+        No MSDS uploaded yet
+      </span>
     <% end %>
   </div>
 </section>
 
+
 <!-- PACKING -->
 <section class="grade-section" id="packing">
   <div class="grade-section-heading">
-    <span class="grade-section-number">04</span>
     <div>
-      <span class="grade-section-label">PACKING</span>
-      <h2><%= grade.name %> Packing</h2>
+      <span class="grade-section-label">PACKAGING</span>
+      <h2>Flexible Packing Solutions</h2>
     </div>
   </div>
 
   <div class="grade-packing-grid">
+
     <% if grade.packings.present? %>
+
       <% grade.packings.each do |packing| %>
+
         <article class="grade-packing-card">
+
           <div class="grade-packing-image">
             <% if packing.image.attached? %>
-              <%= image_tag packing.image, alt: packing.name, loading: "lazy" %>
+              <%= image_tag packing.image,
+                            alt: packing.name,
+                            loading: "lazy" %>
             <% else %>
-              <img src="https://images.unsplash.com/photo-1586528116493-da8b6e2e7c43?auto=format&fit=crop&w=1000&q=85" alt="<%= packing.name %>" loading="lazy">
+              <img
+                src="https://images.unsplash.com/photo-1586528116493-da8b6e2e7c43?auto=format&fit=crop&w=1000&q=85"
+                alt="<%= packing.name %>"
+                loading="lazy">
             <% end %>
           </div>
+
           <div class="grade-packing-content">
-            <span class="grade-packing-label">PACKING TYPE</span>
+
+            <span class="grade-packing-label">
+              PACKING TYPE
+            </span>
+
             <h3><%= packing.name %></h3>
+
             <% if packing.content.present? %>
               <%= packing.content.html_safe %>
             <% end %>
-            
-            <!-- ✅ Added: View Packing Details Link -->
+
             <div class="grade-packing-link-wrapper">
-              <%= link_to packing_path(packing), class: "grade-packing-link" do %>
+              <%= link_to packing_path(packing),
+                          class: "grade-packing-link" do %>
+
                 <i class="fa-solid fa-arrow-right"></i>
                 View Packing Details
+
               <% end %>
             </div>
+
           </div>
+
         </article>
+
       <% end %>
+
     <% elsif grade.try(:packing_options).present? %>
+
       <% grade.packing_options.each do |packing| %>
+
         <article class="grade-packing-card">
+
           <div class="grade-packing-image">
-            <img src="https://images.unsplash.com/photo-1586528116493-da8b6e2e7c43?auto=format&fit=crop&w=1000&q=85" alt="<%= packing[:name] %>" loading="lazy">
+            <img
+              src="https://images.unsplash.com/photo-1586528116493-da8b6e2e7c43?auto=format&fit=crop&w=1000&q=85"
+              alt="<%= packing[:name] %>"
+              loading="lazy">
           </div>
+
           <div class="grade-packing-content">
-            <span class="grade-packing-label">PACKING TYPE</span>
+
+            <span class="grade-packing-label">
+              PACKING TYPE
+            </span>
+
             <h3><%= packing[:name] %></h3>
+
             <p><%= packing[:description] %></p>
-            
-            <!-- ✅ Added: View Packing Details Link for packing_options -->
+
             <div class="grade-packing-link-wrapper">
+
               <% if packing[:id].present? %>
-                <%= link_to packing_path(packing[:id]), class: "grade-packing-link" do %>
+
+                <%= link_to packing_path(packing[:id]),
+                            class: "grade-packing-link" do %>
+
                   <i class="fa-solid fa-box"></i>
-                View Packing Details
-                <i class="fa-solid fa-arrow-right"></i>
+                  View Packing Details
+                  <i class="fa-solid fa-arrow-right"></i>
+
                 <% end %>
+
               <% end %>
+
             </div>
+
           </div>
+
         </article>
+
       <% end %>
+
     <% end %>
+
   </div>
 </section>
 

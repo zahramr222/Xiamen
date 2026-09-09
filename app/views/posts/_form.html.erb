@@ -27,6 +27,24 @@
   </div>
 
   <br>
+
+  <div>
+  <%= form.label :meta_title, "SEO Meta Title" %>
+  <%= form.text_field :meta_title,
+      maxlength: 60,
+      placeholder: "SEO title for this page" %>
+  <small>Recommended: 50–60 characters.</small>
+</div>
+
+<div>
+  <%= form.label :meta_description, "SEO Meta Description" %>
+  <%= form.text_area :meta_description,
+      maxlength: 160,
+      rows: 4,
+      placeholder: "SEO description for this page" %>
+  <small>Recommended: 140–160 characters.</small>
+</div>
+
 <div>
   <%= form.label :post_type, "Post Type" %><br>
 

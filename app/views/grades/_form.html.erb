@@ -1,110 +1,129 @@
 
 <%= form_with model: grade do |form| %>
 
-  <% if grade.errors.any? %>
-    <div style="color: red;">
-      <h2>
-        <%= pluralize(grade.errors.count, "error") %>
-        prohibited this grade from being saved:
-      </h2>
+<% if grade.errors.any? %>
+<div style="color: red;">
+  <h2>
+    <%= pluralize(grade.errors.count, "error") %>
+    prohibited this grade from being saved:
+  </h2>
 
-      <ul>
-        <% grade.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <!-- Grade Name -->
-  <div>
-    <%= form.label :name, "Grade Name" %><br>
-    <%= form.text_field :name %>
-  </div>
-
-  <br>
-
-  <!-- Slug -->
-  <div>
-    <%= form.label :slug, "Slug" %><br>
-    <%= form.text_field :slug %>
-  </div>
-
-  <br>
-
-  
-
-  <!-- Packings -->
-  <div>
-    <%= form.label :packing_ids, "Packings" %><br>
-
-    <%= form.collection_select :packing_ids,
-                              Packing.all,
-                              :id,
-                              :name,
-                              {},
-                              { multiple: true } %>
-
-    <br>
-
-    <%= link_to "New Packing",
-                new_packing_path,
-                class: "btn btn-primary" %>
-  </div>
-
-  <br>
-
-  <!-- Content -->
-  <div>
-    <%= form.label :content, "Content" %><br>
-
-    <%= form.text_area :content,
-                       rows: 15,
-                       placeholder: "Write grade content here..." %>
-  </div>
-
-  <br>
-
-  <!-- Image -->
-  <div>
-    <%= form.label :image, "Grade Image" %><br>
-    <%= form.file_field :image %>
-  </div>
-
-  <br>
-
-
-   <!-- MSDS File Upload -->
-  <div>
-    <%= form.label :msds_file, "MSDS File (PDF only)" %><br>
-    <%= form.file_field :msds_file, accept: "application/pdf" %>
-    <% if grade.msds_file.attached? %>
-      <p>Current MSDS: <%= link_to grade.msds_file.filename, grade.msds_file, target: "_blank" %></p>
-      <p><%= check_box_tag :remove_msds %> Remove MSDS</p>
+  <ul>
+    <% grade.errors.each do |error| %>
+    <li><%= error.full_message %></li>
     <% end %>
-  </div>
-  
-  <!-- Tags -->
-  <div>
-    <%= label_tag :tag_names, "Tags" %><br>
+  </ul>
+</div>
+<% end %>
 
-    <%= text_field_tag :tag_names,
-                       @tag_names,
-                       placeholder: "premium, industrial, chemical" %>
+<!-- Grade Name -->
+<div>
+  <%= form.label :name, "Grade Name" %><br>
+  <%= form.text_field :name %>
+</div>
 
-    <br>
+<br>
 
-    <small>
-      Separate tags with commas (,)
-    </small>
-  </div>
+<!-- Slug -->
+<div>
+  <%= form.label :slug, "Slug" %><br>
+  <%= form.text_field :slug %>
+</div>
+
+<br>
+
+<div>
+  <%= form.label :meta_title, "SEO Meta Title" %>
+  <%= form.text_field :meta_title,
+  maxlength: 60,
+  placeholder: "SEO title for this page" %>
+  <small>Recommended: 50–60 characters.</small>
+</div> 
+
+<br> 
+
+<div>
+  <%= form.label :meta_description, "SEO Meta Description" %>
+  <%= form.text_area :meta_description,
+  maxlength: 160,
+  rows: 4,
+  placeholder: "SEO description for this page" %>
+  <small>Recommended: 140–160 characters.</small>
+</div>
+
+<br>
+
+<!-- Packings -->
+<div>
+  <%= form.label :packing_ids, "Packings" %><br>
+
+  <%= form.collection_select :packing_ids,
+  Packing.all,
+  :id,
+  :name,
+  {},
+  { multiple: true } %>
 
   <br>
 
-  <!-- Submit -->
-  <div>
-    <%= form.submit %>
-  </div>
+  <%= link_to "New Packing",
+  new_packing_path,
+  class: "btn btn-primary" %>
+</div>
+
+<br>
+
+<!-- Content -->
+<div>
+  <%= form.label :content, "Content" %><br>
+
+  <%= form.text_area :content,
+  rows: 15,
+  placeholder: "Write grade content here..." %>
+</div>
+
+<br>
+
+<!-- Image -->
+<div>
+  <%= form.label :image, "Grade Image" %><br>
+  <%= form.file_field :image %>
+</div>
+
+<br>
+
+
+<!-- MSDS File Upload -->
+<div>
+  <%= form.label :msds_file, "MSDS File (PDF only)" %><br>
+  <%= form.file_field :msds_file, accept: "application/pdf" %>
+  <% if grade.msds_file.attached? %>
+  <p>Current MSDS: <%= link_to grade.msds_file.filename, grade.msds_file, target: "_blank" %></p>
+  <p><%= check_box_tag :remove_msds %> Remove MSDS</p>
+  <% end %>
+</div>
+
+<!-- Tags -->
+<div>
+  <%= label_tag :tag_names, "Tags" %><br>
+
+  <%= text_field_tag :tag_names,
+  @tag_names,
+  placeholder: "premium, industrial, chemical" %>
+
+  <br>
+
+  <small>
+    Separate tags with commas (,)
+  </small>
+</div>
+
+<br>
+
+<!-- Submit -->
+<div>
+  <%= form.submit %>
+</div>
 
 <% end %>
 

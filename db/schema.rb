@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_22_054455) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_08_080623) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_trgm"
@@ -64,6 +64,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_22_054455) do
   create_table "grades", force: :cascade do |t|
     t.text "content"
     t.datetime "created_at", null: false
+    t.text "meta_description"
+    t.string "meta_title"
     t.string "msds"
     t.string "name"
     t.integer "product_id"
@@ -99,6 +101,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_22_054455) do
   create_table "packings", force: :cascade do |t|
     t.text "content"
     t.datetime "created_at", null: false
+    t.text "meta_description"
+    t.string "meta_title"
     t.string "name"
     t.string "slug"
     t.integer "specification_id"
@@ -120,6 +124,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_22_054455) do
   create_table "posts", force: :cascade do |t|
     t.text "content"
     t.datetime "created_at", null: false
+    t.text "meta_description"
+    t.string "meta_title"
     t.string "post_type"
     t.string "slug"
     t.text "summery"
@@ -141,6 +147,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_22_054455) do
   create_table "products", force: :cascade do |t|
     t.text "content"
     t.datetime "created_at", null: false
+    t.text "meta_description"
+    t.string "meta_title"
     t.string "name"
     t.string "slug"
     t.integer "specification_id"

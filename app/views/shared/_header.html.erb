@@ -1,27 +1,586 @@
-<nav class="navbar">
-  <div class="container">
-    <%= link_to root_path, class: "navbar-brand" do %>
-      B<span>i</span>tumen.
+  <header class="site-header" id="site-header">
+
+    <div class="header-container">
+
+
+      <!-- =====================================================
+           LOGO
+      ====================================================== -->
+
+      <div class="header-logo">
+        <%= link_to root_path, class: "footer-logo" do %>
+        Xiamen<span>.</span>
+        <% end %>
+      </div>
+
+      <!-- =====================================================
+           DESKTOP NAVIGATION
+      ====================================================== -->
+
+      <nav class="main-navigation" aria-label="Main Navigation">
+
+        <!-- HOME -->
+
+        <%= link_to "Home",
+        root_path,
+        class: "nav-link" %>
+
+        <!-- =================================================
+             BITUMEN
+        ================================================== -->
+
+        <div class="nav-item has-mega-menu">
+
+          <%= link_to bitumen_products_path,
+          class: "nav-link nav-parent" do %>
+
+          <span>Bitumen</span>
+          <i class="fa-solid fa-chevron-down"></i>
+
+          <% end %>
+
+          <div class="mega-menu bitumen-mega-menu">
+
+            <div class="mega-menu-inner">
+
+              <div class="mega-menu-header">
+
+                <div>
+                  <span class="mega-menu-eyebrow">BITUMEN PRODUCTS</span>
+                </div>
+
+                <%= link_to bitumen_products_path,
+                class: "mega-menu-view-all" do %>
+
+                View All Bitumen
+                <i class="fa-solid fa-arrow-right"></i>
+
+                <% end %>
+
+              </div>
+
+              <div class="bitumen-menu-grid">
+
+                <% @nav_bitumen_products.each do |product| %>
+
+                <div class="bitumen-menu-column">
+
+                  <%= link_to product_path(product),
+                  class: "mega-product-title" do %>
+
+                  <span><%= product.name %></span>
+                  <i class="fa-solid fa-arrow-up-right"></i>
+
+                  <% end %>
+
+                  <% if product.grades.any? %>
+
+                  <ul class="mega-grade-list">
+
+                    <% product.grades.limit(5).each do |grade| %>
+
+                    <li>
+                      <%= link_to grade_path(grade),
+                      class: "mega-grade-link" do %>
+
+                      <span><%= grade.name %></span>
+                      <i class="fa-solid fa-arrow-right"></i>
+
+                      <% end %>
+                    </li>
+
+                    <% end %>
+
+                    <li class="mega-see-all">
+                      <%= link_to product_path(product) do %>
+                      <span>See All Grades</span>
+                      <i class="fa-solid fa-arrow-right"></i>
+                      <% end %>
+                    </li>
+
+                  </ul>
+
+                  <% else %>
+
+                  <div class="mega-no-grades">
+                    No grades available
+                  </div>
+
+                  <% end %>
+
+                </div>
+
+                <% end %>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+        <!-- =================================================
+          PRODUCTS
+         ================================================== -->
+
+<div class="nav-item has-dropdown">
+
+  <%= link_to products_path,
+      class: "nav-link nav-parent" do %>
+    <span>Products</span>
+    <i class="fa-solid fa-chevron-down"></i>
+  <% end %>
+
+  <div class="products-dropdown">
+
+    <div class="products-dropdown-inner">
+
+      <div class="products-dropdown-heading">
+        <span>OUR PRODUCTS</span>
+
+        <%= link_to products_path,
+            class: "mega-menu-view-all" do %>
+          View All
+          <i class="fa-solid fa-arrow-right"></i>
+        <% end %>
+      </div>
+
+      <div class="products-menu-list">
+
+        <!-- BITUMEN — KEEP AS IT IS -->
+        <%= link_to bitumen_products_path,
+            class: "product-menu-item" do %>
+          <span>Bitumen</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        <% end %>
+
+
+        <!-- PARAFFIN WAX -->
+        <%= link_to product_path(Product.find_by!(name: "Paraffin Wax")),
+            class: "product-menu-item" do %>
+          <span>Paraffin Wax</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        <% end %>
+
+
+        <!-- SLACK WAX -->
+        <%= link_to product_path(Product.find_by!(name: "Slack Wax")),
+            class: "product-menu-item" do %>
+          <span>Slack Wax</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        <% end %>
+
+
+        <!-- RPO -->
+        <%= link_to product_path(Product.find_by!(name: "RPO")),
+            class: "product-menu-item" do %>
+          <span>RPO</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        <% end %>
+
+
+        <!-- BASE OIL -->
+        <%= link_to product_path(Product.find_by!(name: "Base Oil")),
+            class: "product-menu-item" do %>
+          <span>Base Oil</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        <% end %>
+
+
+        <!-- FOOTS OIL -->
+        <%= link_to product_path(Product.find_by!(name: "Footsoil")),
+            class: "product-menu-item" do %>
+          <span>Foots Oil</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        <% end %>
+
+
+       
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+        
+        <!-- =================================================
+             REPORTS
+        ================================================== -->
+
+        <div class="nav-item has-dropdown">
+
+          <%= link_to "#",
+          class: "nav-link nav-parent" do %>
+
+          <span>Articles</span>
+          <i class="fa-solid fa-chevron-down"></i>
+
+          <% end %>
+
+          <div class="simple-dropdown">
+
+            <%= link_to posts_path + "#reports" do %>
+            <span>Reports</span>
+            <i class="fa-solid fa-arrow-right"></i>
+            <% end %>
+
+            <%= link_to posts_path + "#news" do %>
+            <span>News</span>
+            <i class="fa-solid fa-arrow-right"></i>
+            <% end %>
+
+            <%= link_to posts_path + "#articles" do %>
+            <span>Articles</span>
+            <i class="fa-solid fa-arrow-right"></i>
+            <% end %>
+
+            <%= link_to posts_path + "#applications" do %>
+            <span>Applications</span>
+            <i class="fa-solid fa-arrow-right"></i>
+            <% end %>
+
+          </div>
+
+        </div>
+        <!-- =================================================
+             ABOUT US
+        ================================================== -->
+
+        <%= link_to "About Us",
+        about_path,
+        class: "nav-link" %>
+
+        <!-- =================================================
+             CONTACT
+        ================================================== -->
+
+        <%= link_to "Contact",
+        contact_path,
+        class: "nav-link" %>
+
+      </nav>
+
+      <!-- =====================================================
+           HEADER ACTIONS
+      ====================================================== -->
+
+      <div class="header-actions">
+
+        <!-- SEARCH -->
+        <div class="search-dropdown-wrap" data-controller="search">
+
+          <button class="header-search-btn"
+          type="button"
+          aria-label="Search"
+          id="search-toggle">
+
+          <i class="fa-solid fa-magnifying-glass"></i>
+
+        </button>
+
+        <div class="header-search-dropdown" id="search-dropdown">
+
+          <form action="/search"
+          method="get"
+          class="header-search-form"
+          data-turbo="false">
+
+          <input type="text"
+          name="q"
+          placeholder="Search..."
+          autocomplete="off"
+          aria-label="Search"
+          id="search-input"
+          data-search-target="input"
+          data-action="input->search#search">
+
+          <button type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- INQUIRY -->
+
+    <%= link_to inquiry_path,
+    class: "header-inquiry-btn" do %>
+
+    <span>Inquiry</span>
+    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
     <% end %>
 
-    <div class="nav-menu">
-      <%= link_to "Home", root_path, class: "nav-link" %>
-      <%= link_to "Products", products_path, class: "nav-link" %>
-      <%= link_to "Articles", posts_path, class: "nav-link" %>
-      <%= link_to "Inquiry", "#{root_path}#inquiry", class: "nav-link" %>
-      <%= link_to "Contact", "#{root_path}#contact", class: "nav-link" %>
-      
-      <% if user_signed_in? %>
-        <%= link_to destroy_user_session_path, 
-            data: { turbo_method: :delete }, 
-            class: "nav-link auth-icon" do %>
-          <i class="fa-solid fa-right-from-bracket"></i>
-        <% end %>
-      <% else %>
-        <%= link_to new_user_session_path, class: "nav-link auth-icon" do %>
-          <i class="fa-regular fa-user"></i>
-        <% end %>
-      <% end %>
-    </div>
+    <!-- MOBILE MENU -->
+
+    <button class="mobile-menu-toggle"
+    type="button"
+    aria-label="Open menu"
+    aria-expanded="false"
+    aria-controls="mobile-navigation">
+
+    <span></span>
+    <span></span>
+    <span></span>
+
+  </button>
+
   </div>
-</nav>
+
+  </div>
+
+    <!-- =====================================================
+         MOBILE NAVIGATION
+    ====================================================== -->
+
+    <div class="mobile-navigation"
+    id="mobile-navigation">
+
+    <div class="mobile-navigation-inner">
+
+      <!-- HOME -->
+
+      <%= link_to "Home",
+      root_path,
+      class: "mobile-nav-link" %>
+
+        <!-- =================================================
+             BITUMEN - Mobile
+        ================================================== -->
+
+        <div class="mobile-nav-group">
+
+          <button class="mobile-nav-parent"
+          type="button"
+          aria-expanded="false">
+
+          <span>Bitumen</span>
+          <i class="fa-solid fa-chevron-down"></i>
+
+        </button>
+
+        <div class="mobile-nav-submenu">
+
+          <%= link_to bitumen_products_path, class: "mobile-product-title" do %>
+          View All Bitumen Products
+          <% end %>
+
+          <% @nav_bitumen_products.each do |product| %>
+
+          <div class="mobile-product-group">
+
+            <%= link_to product.name,
+            product_path(product),
+            class: "mobile-product-title" %>
+
+            <% if product.grades.any? %>
+
+            <div class="mobile-grade-list">
+
+              <% product.grades.limit(5).each do |grade| %>
+
+              <%= link_to grade.name, grade_path(grade) %>
+
+              <% end %>
+
+              <%= link_to "See All Grades",
+              product_path(product),
+              class: "mobile-see-all-grades" %>
+
+            </div>
+
+            <% end %>
+
+          </div>
+
+          <% end %>
+
+        </div>
+
+      </div>
+
+        <!-- =================================================
+             PRODUCTS - Mobile
+        ================================================== -->
+
+        <div class="mobile-nav-group">
+
+          <button class="mobile-nav-parent"
+          type="button"
+          aria-expanded="false">
+
+          <span>Products</span>
+          <i class="fa-solid fa-chevron-down"></i>
+
+        </button>
+
+        <div class="mobile-nav-submenu">
+
+          <%= link_to products_path do %>
+          <span>All Products</span>
+          <i class="fa-solid fa-arrow-right"></i>
+          <% end %>
+
+          <%= link_to bitumen_products_path do %>
+          <span>Bitumen</span>
+          <i class="fa-solid fa-arrow-right"></i>
+          <% end %>
+
+          <!-- PARAFFIN WAX -->
+        <%= link_to product_path(Product.find_by!(name: "Paraffin Wax")),
+            class: "product-menu-item" do %>
+          <span>Paraffin Wax</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        <% end %>
+
+
+        <!-- SLACK WAX -->
+        <%= link_to product_path(Product.find_by!(name: "Slack Wax")),
+            class: "product-menu-item" do %>
+          <span>Slack Wax</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        <% end %>
+
+
+        <!-- RPO -->
+        <%= link_to product_path(Product.find_by!(name: "RPO")),
+            class: "product-menu-item" do %>
+          <span>RPO</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        <% end %>
+
+
+        <!-- BASE OIL -->
+        <%= link_to product_path(Product.find_by!(name: "Base Oil")),
+            class: "product-menu-item" do %>
+          <span>Base Oil</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        <% end %>
+
+
+        <!-- FOOTS OIL -->
+        <%= link_to product_path(Product.find_by!(name: "Footsoil")),
+            class: "product-menu-item" do %>
+          <span>Foots Oil</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        <% end %>
+
+        </div>
+
+      </div>
+
+        <!-- =================================================
+             REPORTS - Mobile
+        ================================================== -->
+
+        <div class="mobile-nav-group">
+
+          <button class="mobile-nav-parent"
+          type="button"
+          aria-expanded="false">
+
+          <span>Reports</span>
+          <i class="fa-solid fa-chevron-down"></i>
+
+        </button>
+
+        <div class="mobile-nav-submenu">
+
+          <%= link_to posts_path(post_type: "Report") do %>
+          <span>Reports</span>
+          <i class="fa-solid fa-arrow-right"></i>
+          <% end %>
+
+          <%= link_to posts_path(post_type: "News") do %>
+          <span>News</span>
+          <i class="fa-solid fa-arrow-right"></i>
+          <% end %>
+
+          <%= link_to posts_path(post_type: "Article") do %>
+          <span>Articles</span>
+          <i class="fa-solid fa-arrow-right"></i>
+          <% end %>
+
+          <%= link_to posts_path(post_type: "Application") do %>
+          <span>Applications</span>
+          <i class="fa-solid fa-arrow-right"></i>
+          <% end %>
+
+        </div>
+
+      </div>
+
+      <!-- ABOUT -->
+
+      <%= link_to "About Us",
+      about_path,
+      class: "mobile-nav-link" %>
+
+      <!-- CONTACT -->
+
+      <%= link_to "contact",
+      contact_path,
+      class: "mobile-nav-link" %>
+
+      <!-- INQUIRY -->
+
+      <%= link_to inquiry_path,
+      class: "mobile-inquiry-btn" do %>
+
+      <span>Inquiry</span>
+      <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+      <% end %>
+
+    </div>
+
+  </div>
+
+  </header>
+
+  <script>
+    (function () {
+      function initSearch() {
+        const searchToggle = document.getElementById("search-toggle");
+        const searchDropdown = document.getElementById("search-dropdown");
+        const searchInput = document.getElementById("search-input");
+
+        if (!searchToggle || !searchDropdown) return;
+
+
+        if (searchToggle.dataset.searchInitialized === "true") return;
+
+        searchToggle.dataset.searchInitialized = "true";
+
+        searchToggle.addEventListener("click", function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+
+          searchDropdown.classList.toggle("active");
+
+          if (searchDropdown.classList.contains("active") && searchInput) {
+            setTimeout(function () {
+              searchInput.focus();
+            }, 50);
+          }
+        });
+
+        searchDropdown.addEventListener("click", function (event) {
+          event.stopPropagation();
+        });
+      }
+
+      document.addEventListener("turbo:load", initSearch);
+      document.addEventListener("DOMContentLoaded", initSearch);
+    })();
+  </script>
+
+

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Xiamen</title>
+    <%= display_meta_tags(default_meta_tags) %>
 
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
@@ -17,45 +17,32 @@
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <%= stylesheet_link_tag "fontawesome/all", "data-turbo-track": "reload" %>
   </head>
 
   <body>
     <div class="page">
 
-      <%= render 'shared/header' %>
+      <%= render "shared/header" %>
 
-      <%# CHECK IF SIDEBARS ARE PRESENT %>
       <% if content_for?(:left_sidebar) || content_for?(:right_sidebar) %>
 
-        <%# PAGE WITH SIDEBARS (Grade pages, etc.) %>
         <div class="grade-page">
 
-          <%# LEFT SIDEBAR %>
           <% if content_for?(:left_sidebar) %>
             <aside class="grade-sidebar">
               <%= yield(:left_sidebar) %>
             </aside>
           <% end %>
 
-          <%# MAIN CONTENT %>
           <main class="grade-main">
-            
-            <%# BREADCRUMBS - Show only if not home page %>
             <% unless current_page?(root_path) %>
-              <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
+              <%= render "shared/breadcrumbs", breadcrumbs: @breadcrumbs %>
             <% end %>
-            
+
             <%= yield %>
           </main>
 
-          <%# RIGHT SIDEBAR %>
           <% if content_for?(:right_sidebar) %>
             <aside class="grade-related-sidebar">
               <%= yield(:right_sidebar) %>
@@ -66,26 +53,23 @@
 
       <% else %>
 
-        <%# PAGE WITHOUT SIDEBARS (Home, etc.) %>
         <main class="main">
           <div class="content">
-            
-            <%# BREADCRUMBS - Show only if not home page %>
             <% unless current_page?(root_path) %>
-              <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
+              <%= render "shared/breadcrumbs", breadcrumbs: @breadcrumbs %>
             <% end %>
-            
+
             <%= yield %>
           </div>
         </main>
 
       <% end %>
 
-      <%= render 'shared/footer' %>
+      <%= render "shared/footer" %>
 
     </div>
 
     <%= yield(:javascript) %>
-
   </body>
 </html>
+

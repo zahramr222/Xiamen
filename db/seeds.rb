@@ -1,4 +1,5 @@
 # db/seeds.rb
+require "open-uri"
 
 puts "========================================"
 puts "STARTING DATABASE SEED"
@@ -58,9 +59,7 @@ grades = []
     content: Faker::Lorem.paragraphs(number: 2).join("\n\n")
   )
 
-  # Grade has_many :specifications
   grade.specifications << specifications.sample
-
   grades << grade
 end
 
@@ -126,9 +125,7 @@ products = []
     specification: specifications.sample
   )
 
-  # Product has_many :grades
   product.grades << grades.sample
-
   products << product
 end
 
@@ -142,77 +139,64 @@ puts "Created #{products.count} products."
 puts "\nCreating Tags..."
 
 tag_names = [
-  "wax",
-  "industrial",
-  "packaging",
-  "plastic",
-  "chemical",
-  "manufacturing",
-  "oil",
-  "paraffin",
-  "petrochemical",
-  "polymer",
-  "container",
-  "industrial materials",
-  "raw materials",
-  "production",
-  "export",
-  "import",
-  "B2B",
-  "factory",
-  "engineering",
-  "technology",
-  "quality",
-  "supply chain",
-  "materials",
-  "industry",
-  "product guide",
-  "technical",
-  "applications",
-  "market",
-  "research",
-  "innovation"
+  "wax", "industrial", "packaging", "plastic", "chemical",
+  "manufacturing", "oil", "paraffin", "petrochemical", "polymer",
+  "container", "industrial materials", "raw materials", "production",
+  "export", "import", "B2B", "factory", "engineering", "technology",
+  "quality", "supply chain", "materials", "industry", "product guide",
+  "technical", "applications", "market", "research", "innovation"
 ]
 
 tags = tag_names.map do |name|
-  Tag.create!(
-    name: name
-  )
+  Tag.create!(name: name)
 end
 
 puts "Created #{tags.count} tags."
 
 
 # ============================================================
-# POSTS
+# POSTS - FIXED VERSION
 # ============================================================
 
 puts "\nCreating Posts..."
 
-post_types = [
-  "News",
-  "Articles",
-  "Applications"
-]
+post_types = ["News", "Articles", "Applications"]
+all_posts = []  # Changed from 'posts' to 'all_posts' for clarity
 
-posts = []
-
+# Create regular posts
 20.times do
-  title = Faker::Lorem.sentence(
-    word_count: rand(4..8)
-  ).delete_suffix(".")
+  title = Faker::Lorem.sentence(word_count: rand(4..8)).delete_suffix(".")
 
-  posts << Post.create!(
+  all_posts << Post.create!(
     title: title,
     slug: title.parameterize,
     post_type: post_types.sample,
-    content: Faker::Lorem.paragraphs(
-      number: rand(3..6)
-    ).join("\n\n")
+    content: Faker::Lorem.paragraphs(number: rand(3..6)).join("\n\n")
   )
 end
 
-puts "Created #{posts.count} posts."
+# Create reports with images
+puts "\nCreating Reports..."
+
+5.times do |i|
+  title = "Weekly Industry Report #{i + 1}"
+  
+  # Create the report post
+  report = Post.create!(
+    title: title,
+    slug: title.parameterize,
+    post_type: "Report",
+    content: Faker::Lorem.paragraphs(number: rand(3..6)).join("\n\n"),
+    image: "report_placeholder.jpg"  # Add a placeholder image
+  )
+  
+  all_posts << report
+  puts "  Created report: #{title}"
+end
+
+# Verify posts were created
+puts "\nTotal posts created: #{all_posts.count}"
+puts "Reports created: #{all_posts.select { |p| p.post_type == "Report" }.count}"
 
 
 # ============================================================
@@ -221,9 +205,9 @@ puts "Created #{posts.count} posts."
 
 puts "\nCreating Post ↔ Tag relationships..."
 
-posts.each do |post|
+all_posts.each do |post|
   selected_tags = tags.sample(rand(2..6))
-
+  
   selected_tags.each do |tag|
     PostTag.create!(
       post: post,
@@ -247,7 +231,7 @@ puts "Specifications: #{Specification.count}"
 puts "Grades:         #{Grade.count}"
 puts "Packings:       #{Packing.count}"
 puts "Products:       #{Product.count}"
-puts "Posts:          #{Post.count}"
+puts "Posts:          #{Post.count}"  # This will now show the correct count
 puts "Tags:           #{Tag.count}"
 puts "PostTags:       #{PostTag.count}"
 puts "GradePackings:  #{GradePacking.count}"

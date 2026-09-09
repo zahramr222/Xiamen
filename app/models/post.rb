@@ -15,11 +15,11 @@ has_one_attached :image
 
 extend FriendlyId
 friendly_id :slug, use: :slugged  
-
+before_validation :normalize_slug
 
 
 validates :title, :slug, :post_type, presence: true
-validates :post_type, inclusion: { in: POST_TYPES }, inclusion: { in: ["News", "Articles", "Applications", "Reports"] }
+validates :post_type, inclusion: { in: POST_TYPES }
 
 
 

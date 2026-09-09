@@ -2,6 +2,7 @@ class Packing < ApplicationRecord
   extend FriendlyId
 
   friendly_id :slug, use: :slugged
+  before_validation :normalize_slug
 
   belongs_to :specification, optional: true
 

@@ -1,0 +1,68 @@
+<article class="post-card">
+
+  <%= link_to post_path(post), class: "post-card-image" do %>
+
+    <% if post.image.attached? %>
+
+      <%= image_tag post.image,
+          alt: post.title,
+          loading: "lazy" %>
+
+    <% else %>
+
+      <div class="post-card-image-placeholder">
+        <i class="fa-regular fa-image"></i>
+      </div>
+
+    <% end %>
+
+  <% end %>
+
+
+  <div class="post-card-content">
+
+    <div class="post-card-meta">
+
+      <span class="post-card-category">
+        <%= post.post_type %>
+      </span>
+
+      <time datetime="<%= post.created_at.to_date %>">
+        <%= post.created_at.strftime("%b %d, %Y") %>
+      </time>
+
+    </div>
+
+
+    <h3>
+      <%= link_to post.title, post_path(post) %>
+    </h3>
+
+
+    <% if post.summery.present? %>
+
+      <p>
+        <%= truncate(post.summery, length: 135) %>
+      </p>
+
+    <% elsif post.content.present? %>
+
+      <p>
+        <%= truncate(strip_tags(post.content), length: 135) %>
+      </p>
+
+    <% end %>
+
+
+    <%= link_to post_path(post),
+        class: "post-read-more" do %>
+
+      Read More
+
+      <i class="fa-solid fa-arrow-right"></i>
+
+    <% end %>
+
+  </div>
+
+</article>
