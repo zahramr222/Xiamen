@@ -68,7 +68,7 @@ end
 
 
 gem "cssbundling-rails", "~> 1.4"
-gem 'friendly_id', '~> 5.5.0'
+gem 'friendly_id', '~> 5.7.0'
 gem "devise"
 gem "faker"
 gem "ransack"
