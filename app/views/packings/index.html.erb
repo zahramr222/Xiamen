@@ -1,54 +1,204 @@
-<h1>Packings</h1>
+<% @breadcrumbs = [
+  { label: "Packings" }
+  ] %>
 
-<%= link_to "New Packing", new_packing_path %>
+  <div class="packings-index-page">
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Grades</th>
-    <th>Tags</th>
-    <th>Content Preview</th>
-    <th>Image</th>
-    <th>Actions</th>
-  </tr>
+    <section class="product-packings">
 
-  <% @packings.each do |packing| %>
-    <tr>
-      <td><%= packing.name %></td>
-      <td>
-        <% if packing.grades.present? %>
-          <%= packing.grades.pluck(:name).join(", ") %>
-        <% else %>
-          <span style="color: #999;">No grades</span>
+      <div class="product-packings-header">
+
+        <span class="section-label">
+          <span class="section-label-line"></span>
+          PACKING OPTIONS
+        </span>
+
+        <h1 class="packings-index-title">
+          Available <span>Packings</span>
+        </h1>
+
+        <p>
+          Explore Global Synergy's available packing solutions for bitumen and petroleum
+          products. Each product grade may offer different packing options based
+          on handling, storage and transportation requirements.
+        </p>
+
+      </div>
+
+
+      <% if @packings.present? %>
+
+      <div class="product-packings-grid">
+
+        <% @packings.each do |packing| %>
+
+        <article class="product-packing-card">
+
+          <%= link_to packing_path(packing),
+          class: "product-packing-image" do %>
+
+          <% if packing.image.attached? %>
+
+          <%= image_tag packing.image,
+          alt: packing.name,
+          loading: "lazy" %>
+
+          <% else %>
+
+          <img
+          src="https://images.unsplash.com/photo-1586528116493-da8b6e2e7c43?auto=format&fit=crop&w=1000&q=85"
+          alt="<%= packing.name %>"
+          loading="lazy">
+
+          <% end %>
+
+          <% end %>
+
+
+          <div class="product-packing-content">
+
+            <span class="product-packing-label">
+              PACKING TYPE
+            </span>
+
+
+            <h2 class="product-packing-title">
+
+              <%= link_to packing.name,
+              packing_path(packing) %>
+
+            </h2>
+
+
+            <div class="product-packing-description">
+
+              <% if packing.meta_description.present? %>
+
+              <%= truncate(
+                strip_tags(packing.meta_description),
+                length: 150
+                ) %>
+
+                <% elsif packing.content.present? %>
+
+                <%= truncate(
+                  strip_tags(packing.content),
+                  length: 150
+                  ) %>
+
+                  <% else %>
+
+                  Reliable packing solution designed for safe handling,
+                  storage and international transportation.
+
+                  <% end %>
+
+                </div>
+
+
+                <% if packing.grades.present? %>
+
+                <div class="product-packing-grades">
+
+                  <span>Used in:</span>
+
+                  <% packing.grades.limit(3).each do |grade| %>
+
+                  <%= link_to grade.name,
+                  grade_path(grade),
+                  class: "product-packing-grade-tag" %>
+
+                  <% end %>
+
+
+                  <% if packing.grades.size > 3 %>
+
+                  <span class="product-packing-more">
+                    +<%= packing.grades.size - 3 %>
+                  </span>
+
+                  <% end %>
+
+                </div>
+
+                <% end %>
+
+
+                <%= link_to packing_path(packing),
+                class: "product-packing-link" do %>
+
+                <i class="fa-solid fa-box"></i>
+
+                View Packing Details
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+                <% end %>
+
+              </div>
+
+            </article>
+
+            <% end %>
+
+          </div>
+
+
+          <% else %>
+
+          <div class="packings-index-empty">
+
+            <i class="fa-solid fa-box-open"></i>
+
+            <h2>No Packings Available</h2>
+
+            <p>
+              Packing options will be available here soon.
+            </p>
+
+          </div>
+
+          <% end %>
+
+          <% if @pagy.pages > 1 %>
+
+          <div class="posts-pagination-wrapper">
+
+            <nav
+            class="posts-pagination"
+            aria-label="Packings pagination"
+            >
+            <%== @pagy.series_nav %>
+          </nav>
+
+        </div>
+
         <% end %>
-      </td>
-      <td>
-        <% if packing.tags.present? %>
-          <%= packing.tags.pluck(:name).join(", ") %>
-        <% else %>
-          <span style="color: #999;">No tags</span>
+
+      </section>
+
+
+
+
+      <% if user_signed_in? %>
+
+      <div class="packings-index-admin">
+
+        <%= link_to new_packing_path,
+        class: "packings-index-new-btn" do %>
+
+        <i class="fa-solid fa-plus"></i>
+        New Packing
+
         <% end %>
-      </td>
-      <td>
-        <% if packing.content.present? %>
-          <%= truncate(strip_tags(packing.content), length: 80) %>
-        <% else %>
-          <span style="color: #999;">No content</span>
-        <% end %>
-      </td>
-      <td>
-        <% if packing.image.attached? %>
-          <%= image_tag packing.image, width: 50 %>
-        <% end %>
-      </td>
-      <td>
-        <%= link_to "Show", packing_path(packing) %>
-        <%= link_to "Edit", edit_packing_path(packing) %>
-        <%= link_to "Delete",
-                    packing_path(packing),
-                    data: { turbo_method: :delete,
-                            turbo_confirm: "Are you sure?" } %>
-      </td>
-    </tr>
-  <% end %>
-</table>
+
+      </div>
+
+      <% end %>
+
+
+    </div>
+
+    <style>
+
+</style>

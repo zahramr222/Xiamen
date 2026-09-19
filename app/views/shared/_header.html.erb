@@ -9,7 +9,7 @@
 
       <div class="header-logo">
         <%= link_to root_path, class: "footer-logo" do %>
-        Xiamen<span>.</span>
+        Global Synergy<span>.</span>
         <% end %>
       </div>
 
@@ -123,91 +123,106 @@
           PRODUCTS
          ================================================== -->
 
-<div class="nav-item has-dropdown">
+         <div class="nav-item has-dropdown">
 
-  <%= link_to products_path,
-      class: "nav-link nav-parent" do %>
-    <span>Products</span>
-    <i class="fa-solid fa-chevron-down"></i>
-  <% end %>
+          <%= link_to products_path,
+          class: "nav-link nav-parent" do %>
+          <span>Products</span>
+          <i class="fa-solid fa-chevron-down"></i>
+          <% end %>
 
-  <div class="products-dropdown">
+          <div class="products-dropdown">
 
-    <div class="products-dropdown-inner">
+            <div class="products-dropdown-inner">
 
-      <div class="products-dropdown-heading">
-        <span>OUR PRODUCTS</span>
+              <div class="products-dropdown-heading">
+                <span>OUR PRODUCTS</span>
 
-        <%= link_to products_path,
-            class: "mega-menu-view-all" do %>
-          View All
-          <i class="fa-solid fa-arrow-right"></i>
-        <% end %>
-      </div>
+                <%= link_to products_path,
+                class: "mega-menu-view-all" do %>
+                View All
+                <i class="fa-solid fa-arrow-right"></i>
+                <% end %>
+              </div>
 
-      <div class="products-menu-list">
+              <div class="products-menu-list">
 
-        <!-- BITUMEN — KEEP AS IT IS -->
-        <%= link_to bitumen_products_path,
-            class: "product-menu-item" do %>
-          <span>Bitumen</span>
-          <i class="fa-solid fa-arrow-right"></i>
-        <% end %>
-
-
-        <!-- PARAFFIN WAX -->
-        <%= link_to product_path(Product.find_by!(name: "Paraffin Wax")),
-            class: "product-menu-item" do %>
-          <span>Paraffin Wax</span>
-          <i class="fa-solid fa-arrow-right"></i>
-        <% end %>
+                <!-- BITUMEN — KEEP AS IT IS -->
+                <%= link_to bitumen_products_path,
+                class: "product-menu-item" do %>
+                <span>Bitumen</span>
+                <i class="fa-solid fa-arrow-right"></i>
+                <% end %>
 
 
-        <!-- SLACK WAX -->
-        <%= link_to product_path(Product.find_by!(name: "Slack Wax")),
-            class: "product-menu-item" do %>
-          <span>Slack Wax</span>
-          <i class="fa-solid fa-arrow-right"></i>
-        <% end %>
+                <!-- PARAFFIN WAX -->
+                <%= link_to product_path(Product.find_by!(name: "Paraffin Wax")),
+                class: "product-menu-item" do %>
+                <span>Paraffin Wax</span>
+                <i class="fa-solid fa-arrow-right"></i>
+                <% end %>
 
 
-        <!-- RPO -->
-        <%= link_to product_path(Product.find_by!(name: "RPO")),
-            class: "product-menu-item" do %>
-          <span>RPO</span>
-          <i class="fa-solid fa-arrow-right"></i>
-        <% end %>
+                <!-- SLACK WAX -->
+                <%= link_to product_path(Product.find_by!(name: "Slack Wax")),
+                class: "product-menu-item" do %>
+                <span>Slack Wax</span>
+                <i class="fa-solid fa-arrow-right"></i>
+                <% end %>
 
 
-        <!-- BASE OIL -->
-        <%= link_to product_path(Product.find_by!(name: "Base Oil")),
-            class: "product-menu-item" do %>
-          <span>Base Oil</span>
-          <i class="fa-solid fa-arrow-right"></i>
-        <% end %>
+                <!-- RPO -->
+                <%= link_to product_path(Product.find_by!(name: "RPO")),
+                class: "product-menu-item" do %>
+                <span>RPO</span>
+                <i class="fa-solid fa-arrow-right"></i>
+                <% end %>
 
 
-        <!-- FOOTS OIL -->
-        <%= link_to product_path(Product.find_by!(name: "Footsoil")),
-            class: "product-menu-item" do %>
-          <span>Foots Oil</span>
-          <i class="fa-solid fa-arrow-right"></i>
-        <% end %>
+                <!-- BASE OIL -->
+                <%= link_to product_path(Product.find_by!(name: "Base Oil")),
+                class: "product-menu-item" do %>
+                <span>Base Oil</span>
+                <i class="fa-solid fa-arrow-right"></i>
+                <% end %>
 
 
-       
+                <!-- FOOTS OIL -->
+                <%= link_to product_path(Product.find_by!(name: "Footsoil")),
+                class: "product-menu-item" do %>
+                <span>Foots Oil</span>
+                <i class="fa-solid fa-arrow-right"></i>
+                <% end %>
 
-      </div>
+                <!-- CARBON BLACK -->
+                <%= link_to product_path(Product.find_by!(name: "Carbon Black")),
+                class: "product-menu-item" do %>
+                <span>Carbon Black</span>
+                <i class="fa-solid fa-arrow-right"></i>
+                <% end %>
 
-    </div>
 
-  </div>
+                <!-- OTHER PRODUCTS -->
+                <%= link_to product_path(Product.find_by!(name: "Other Products")),
+                class: "product-menu-item" do %>
+                <span>Other Products</span>
+                <i class="fa-solid fa-arrow-right"></i>
+                <% end %>
 
-</div>
+
+
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
 
         
         <!-- =================================================
-             REPORTS
+             ARTICLES
         ================================================== -->
 
         <div class="nav-item has-dropdown">
@@ -222,24 +237,24 @@
 
           <div class="simple-dropdown">
 
-            <%= link_to posts_path + "#reports" do %>
-            <span>Reports</span>
-            <i class="fa-solid fa-arrow-right"></i>
+            <%= link_to "#{posts_path(type: 'reports')}#posts-explore" do %>
+              <span>Reports</span>
+              <i class="fa-solid fa-arrow-right"></i>
             <% end %>
 
-            <%= link_to posts_path + "#news" do %>
-            <span>News</span>
-            <i class="fa-solid fa-arrow-right"></i>
+            <%= link_to "#{posts_path(type: 'news')}#posts-explore" do %>
+              <span>News</span>
+              <i class="fa-solid fa-arrow-right"></i>
             <% end %>
 
-            <%= link_to posts_path + "#articles" do %>
-            <span>Articles</span>
-            <i class="fa-solid fa-arrow-right"></i>
+            <%= link_to "#{posts_path(type: 'articles')}#posts-explore" do %>
+              <span>Articles</span>
+              <i class="fa-solid fa-arrow-right"></i>
             <% end %>
 
-            <%= link_to posts_path + "#applications" do %>
-            <span>Applications</span>
-            <i class="fa-solid fa-arrow-right"></i>
+            <%= link_to "#{posts_path(type: 'applications')}#posts-explore" do %>
+              <span>Applications</span>
+              <i class="fa-solid fa-arrow-right"></i>
             <% end %>
 
           </div>
@@ -262,80 +277,97 @@
         class: "nav-link" %>
 
       </nav>
+     <!-- =====================================================
+     HEADER ACTIONS
+  ===================================================== -->
 
-      <!-- =====================================================
-           HEADER ACTIONS
-      ====================================================== -->
+  <div class="header-actions">
 
-      <div class="header-actions">
+    <!-- SEARCH -->
+    <div class="search-dropdown-wrap" data-controller="search">
 
-        <!-- SEARCH -->
-        <div class="search-dropdown-wrap" data-controller="search">
+      <button
+      class="header-search-btn"
+      type="button"
+      aria-label="Search"
+      id="search-toggle">
 
-          <button class="header-search-btn"
-          type="button"
-          aria-label="Search"
-          id="search-toggle">
+      <i class="fa-solid fa-magnifying-glass"></i>
 
-          <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
 
-        </button>
+    <div class="header-search-dropdown" id="search-dropdown">
 
-        <div class="header-search-dropdown" id="search-dropdown">
+      <form
+      action="/search"
+      method="get"
+      class="header-search-form"
+      data-turbo="false">
 
-          <form action="/search"
-          method="get"
-          class="header-search-form"
-          data-turbo="false">
+      <input
+      type="text"
+      name="q"
+      placeholder="Search..."
+      autocomplete="off"
+      aria-label="Search"
+      id="search-input"
+      data-search-target="input"
+      data-action="input->search#search">
 
-          <input type="text"
-          name="q"
-          placeholder="Search..."
-          autocomplete="off"
-          aria-label="Search"
-          id="search-input"
-          data-search-target="input"
-          data-action="input->search#search">
+      <button type="submit">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
 
-          <button type="submit">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
-
-        </form>
-
-      </div>
-
-    </div>
-
-
-
-    <!-- INQUIRY -->
-
-    <%= link_to inquiry_path,
-    class: "header-inquiry-btn" do %>
-
-    <span>Inquiry</span>
-    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-
-    <% end %>
-
-    <!-- MOBILE MENU -->
-
-    <button class="mobile-menu-toggle"
-    type="button"
-    aria-label="Open menu"
-    aria-expanded="false"
-    aria-controls="mobile-navigation">
-
-    <span></span>
-    <span></span>
-    <span></span>
-
-  </button>
+    </form>
 
   </div>
 
-  </div>
+</div>
+
+
+<!-- INQUIRY -->
+<%= link_to inquiry_path,
+class: "header-inquiry-btn" do %>
+
+<span>Inquiry</span>
+<i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+<% end %>
+
+
+<!-- ADMIN AUTH -->
+<% if user_signed_in? %>
+
+<%= link_to destroy_user_session_path,
+data: { turbo_method: :delete },
+class: "header-logout-btn",
+  title: "Log Out",
+  aria: { label: "Log Out" } do %>
+
+  <i class="fa-solid fa-right-from-bracket"></i>
+
+  <% end %>
+
+  <% end %>
+
+
+  <!-- MOBILE MENU -->
+  <button
+  class="mobile-menu-toggle"
+  type="button"
+  aria-label="Open menu"
+  aria-expanded="false"
+  aria-controls="mobile-navigation">
+
+  <span></span>
+  <span></span>
+  <span></span>
+
+</button>
+
+</div> 
+
+
 
     <!-- =====================================================
          MOBILE NAVIGATION
@@ -435,43 +467,58 @@
           <% end %>
 
           <!-- PARAFFIN WAX -->
-        <%= link_to product_path(Product.find_by!(name: "Paraffin Wax")),
-            class: "product-menu-item" do %>
+          <%= link_to product_path(Product.find_by!(name: "Paraffin Wax")),
+          class: "product-menu-item" do %>
           <span>Paraffin Wax</span>
           <i class="fa-solid fa-arrow-right"></i>
-        <% end %>
+          <% end %>
 
 
-        <!-- SLACK WAX -->
-        <%= link_to product_path(Product.find_by!(name: "Slack Wax")),
-            class: "product-menu-item" do %>
+          <!-- SLACK WAX -->
+          <%= link_to product_path(Product.find_by!(name: "Slack Wax")),
+          class: "product-menu-item" do %>
           <span>Slack Wax</span>
           <i class="fa-solid fa-arrow-right"></i>
-        <% end %>
+          <% end %>
 
 
-        <!-- RPO -->
-        <%= link_to product_path(Product.find_by!(name: "RPO")),
-            class: "product-menu-item" do %>
+          <!-- RPO -->
+          <%= link_to product_path(Product.find_by!(name: "RPO")),
+          class: "product-menu-item" do %>
           <span>RPO</span>
           <i class="fa-solid fa-arrow-right"></i>
-        <% end %>
+          <% end %>
 
 
-        <!-- BASE OIL -->
-        <%= link_to product_path(Product.find_by!(name: "Base Oil")),
-            class: "product-menu-item" do %>
+          <!-- BASE OIL -->
+          <%= link_to product_path(Product.find_by!(name: "Base Oil")),
+          class: "product-menu-item" do %>
           <span>Base Oil</span>
           <i class="fa-solid fa-arrow-right"></i>
-        <% end %>
+          <% end %>
 
 
-        <!-- FOOTS OIL -->
-        <%= link_to product_path(Product.find_by!(name: "Footsoil")),
-            class: "product-menu-item" do %>
+          <!-- FOOTS OIL -->
+          <%= link_to product_path(Product.find_by!(name: "Footsoil")),
+          class: "product-menu-item" do %>
           <span>Foots Oil</span>
           <i class="fa-solid fa-arrow-right"></i>
-        <% end %>
+          <% end %>
+
+          <!-- CARBON BLACK -->
+          <%= link_to product_path(Product.find_by!(name: "Carbon Black")),
+          class: "product-menu-item" do %>
+          <span>Carbon Black</span>
+          <i class="fa-solid fa-arrow-right"></i>
+          <% end %>
+
+
+          <!-- OTHER PRODUCTS -->
+          <%= link_to product_path(Product.find_by!(name: "Other Products")),
+          class: "product-menu-item" do %>
+          <span>Other Products</span>
+          <i class="fa-solid fa-arrow-right"></i>
+          <% end %>
 
         </div>
 
@@ -481,37 +528,37 @@
              REPORTS - Mobile
         ================================================== -->
 
-        <div class="mobile-nav-group">
+      <div class="mobile-nav-group">
 
-          <button class="mobile-nav-parent"
+        <button
+          class="mobile-nav-parent"
           type="button"
-          aria-expanded="false">
-
-          <span>Reports</span>
+          aria-expanded="false"
+        >
+          <span>Articles</span>
           <i class="fa-solid fa-chevron-down"></i>
-
         </button>
 
         <div class="mobile-nav-submenu">
 
-          <%= link_to posts_path(post_type: "Report") do %>
-          <span>Reports</span>
-          <i class="fa-solid fa-arrow-right"></i>
+          <%= link_to "#{posts_path(type: 'reports')}#posts-explore" do %>
+            <span>Reports</span>
+            <i class="fa-solid fa-arrow-right"></i>
           <% end %>
 
-          <%= link_to posts_path(post_type: "News") do %>
-          <span>News</span>
-          <i class="fa-solid fa-arrow-right"></i>
+          <%= link_to "#{posts_path(type: 'news')}#posts-explore" do %>
+            <span>News</span>
+            <i class="fa-solid fa-arrow-right"></i>
           <% end %>
 
-          <%= link_to posts_path(post_type: "Article") do %>
-          <span>Articles</span>
-          <i class="fa-solid fa-arrow-right"></i>
+          <%= link_to "#{posts_path(type: 'articles')}#posts-explore" do %>
+            <span>Articles</span>
+            <i class="fa-solid fa-arrow-right"></i>
           <% end %>
 
-          <%= link_to posts_path(post_type: "Application") do %>
-          <span>Applications</span>
-          <i class="fa-solid fa-arrow-right"></i>
+          <%= link_to "#{posts_path(type: 'applications')}#posts-explore" do %>
+            <span>Applications</span>
+            <i class="fa-solid fa-arrow-right"></i>
           <% end %>
 
         </div>
@@ -540,47 +587,240 @@
 
       <% end %>
 
+      <% if user_signed_in? %>
+
+      <%= link_to destroy_user_session_path,
+      data: { turbo_method: :delete },
+      class: "mobile-nav-link mobile-logout-link" do %>
+
+      <span>Log Out</span>
+      <i class="fa-solid fa-right-from-bracket"></i>
+
+      <% end %>
+
+      <% end %>
+
     </div>
 
   </div>
 
-  </header>
+</header>
 
-  <script>
-    (function () {
-      function initSearch() {
-        const searchToggle = document.getElementById("search-toggle");
-        const searchDropdown = document.getElementById("search-dropdown");
-        const searchInput = document.getElementById("search-input");
+<script>
+  (function () {
 
-        if (!searchToggle || !searchDropdown) return;
+    function initHeader() {
+
+      /* =====================================================
+         SEARCH
+      ===================================================== */
+
+      const searchToggle =
+        document.getElementById("search-toggle");
+
+      const searchDropdown =
+        document.getElementById("search-dropdown");
+
+      const searchInput =
+        document.getElementById("search-input");
 
 
-        if (searchToggle.dataset.searchInitialized === "true") return;
+      if (
+        searchToggle &&
+        searchDropdown &&
+        searchToggle.dataset.searchInitialized !== "true"
+      ) {
 
         searchToggle.dataset.searchInitialized = "true";
 
         searchToggle.addEventListener("click", function (event) {
+
           event.preventDefault();
           event.stopPropagation();
 
           searchDropdown.classList.toggle("active");
 
-          if (searchDropdown.classList.contains("active") && searchInput) {
+          if (
+            searchDropdown.classList.contains("active") &&
+            searchInput
+          ) {
+
             setTimeout(function () {
               searchInput.focus();
             }, 50);
+
           }
+
         });
+
 
         searchDropdown.addEventListener("click", function (event) {
           event.stopPropagation();
         });
+
       }
 
-      document.addEventListener("turbo:load", initSearch);
-      document.addEventListener("DOMContentLoaded", initSearch);
-    })();
-  </script>
 
+      /* =====================================================
+         MOBILE MAIN MENU
+      ===================================================== */
+
+      const siteHeader =
+        document.getElementById("site-header");
+
+      const mobileToggle =
+        document.querySelector(".mobile-menu-toggle");
+
+      const mobileNavigation =
+        document.getElementById("mobile-navigation");
+
+
+      if (
+        siteHeader &&
+        mobileToggle &&
+        mobileNavigation &&
+        mobileToggle.dataset.mobileInitialized !== "true"
+      ) {
+
+        mobileToggle.dataset.mobileInitialized = "true";
+
+
+        mobileToggle.addEventListener("click", function (event) {
+
+          event.preventDefault();
+
+          const isOpen =
+            siteHeader.classList.toggle("mobile-open");
+
+          mobileToggle.classList.toggle(
+            "active",
+            isOpen
+          );
+
+          mobileToggle.setAttribute(
+            "aria-expanded",
+            isOpen ? "true" : "false"
+          );
+
+
+          document.body.classList.toggle(
+            "mobile-menu-open",
+            isOpen
+          );
+
+        });
+
+      }
+
+
+      /* =====================================================
+         MOBILE ACCORDIONS
+      ===================================================== */
+
+      const mobileParents =
+        document.querySelectorAll(".mobile-nav-parent");
+
+
+      mobileParents.forEach(function (parent) {
+
+        if (
+          parent.dataset.submenuInitialized === "true"
+        ) {
+          return;
+        }
+
+
+        parent.dataset.submenuInitialized = "true";
+
+
+        parent.addEventListener("click", function (event) {
+
+          event.preventDefault();
+
+          const group =
+            parent.closest(".mobile-nav-group");
+
+          if (!group) return;
+
+
+          const isOpen =
+            group.classList.toggle("open");
+
+
+          parent.setAttribute(
+            "aria-expanded",
+            isOpen ? "true" : "false"
+          );
+
+        });
+
+      });
+
+
+      /* =====================================================
+         CLOSE MOBILE MENU AFTER CLICKING NORMAL LINK
+      ===================================================== */
+
+      if (
+        mobileNavigation &&
+        siteHeader &&
+        mobileNavigation.dataset.linksInitialized !== "true"
+      ) {
+
+        mobileNavigation.dataset.linksInitialized = "true";
+
+
+        mobileNavigation.addEventListener(
+          "click",
+          function (event) {
+
+            const link = event.target.closest("a");
+
+            if (!link) return;
+
+
+            siteHeader.classList.remove(
+              "mobile-open"
+            );
+
+
+            if (mobileToggle) {
+
+              mobileToggle.classList.remove(
+                "active"
+              );
+
+              mobileToggle.setAttribute(
+                "aria-expanded",
+                "false"
+              );
+
+            }
+
+
+            document.body.classList.remove(
+              "mobile-menu-open"
+            );
+
+          }
+        );
+
+      }
+
+    }
+
+
+    document.addEventListener(
+      "turbo:load",
+      initHeader
+    );
+
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      initHeader
+    );
+
+  })();
+</script>
 

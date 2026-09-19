@@ -13,4 +13,15 @@ class Packing < ApplicationRecord
   has_many :tags, through: :packing_tags
 
   has_one_attached :image
+
+  private
+
+  def normalize_slug
+    self.slug =
+      if slug.present?
+        slug.to_s.parameterize
+      elsif name.present?
+        name.to_s.parameterize
+      end
+  end
 end

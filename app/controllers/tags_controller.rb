@@ -1,10 +1,7 @@
 class TagsController < ApplicationController
-  before_action :set_tag, only: %i[
-    show
-    edit
-    update
-    destroy
-  ]
+  before_action :set_tag, only: %i[show edit update destroy]
+  before_action :authenticate_user!
+
 
   def index
     @tags = Tag.all.order(:name)

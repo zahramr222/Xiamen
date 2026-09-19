@@ -23,7 +23,7 @@
   <% end %>
 
   <%# PAGE TITLE %>
-  <% content_for(:page_title, "#{@product.name} | Xiamen") %>
+  <% content_for(:page_title, "#{@product.name} | Global Synergy") %>
 
   <div class="product-show">
 
@@ -249,40 +249,20 @@
     <!-- Inquiry Partial -->
     <%= render 'shared/inquiry', product_name: @product.name %>
 
-   <%# RIGHT SIDEBAR %>
-  <% content_for(:right_sidebar) do %>
-    <% if @articles_data.present? %>
-      <%= render "shared/right_sidebar",
-        label: "INSIGHTS",
-        title: "Related Articles",
-        description: "Latest insights related to #{@product.name}, specifications, supply and market developments.",
-        articles: @articles_data
-      %>
-    <% else %>
-      <%= render "shared/right_sidebar",
-        label: "INSIGHTS",
-        title: "Related Articles",
-        description: "Latest insights related to #{@product.name}, specifications, supply and market developments.",
-        articles: [
-          {
-            path: "#",
-            image_url: "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?auto=format&fit=crop&w=900&q=85",
-            category: "Market",
-            title: "Global Bitumen Market Developments",
-            summary: "Latest pricing, supply conditions and international shipping movements."
-          },
-          {
-            path: "#",
-            image_url: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=900&q=85",
-            category: "Supply",
-            title: "Understanding Bitumen Supply Chains",
-            summary: "Key factors affecting bitumen availability and international trade."
-          }
-        ]
-      %>
-    <% end %>
-  <% end %>
+   <%# =====================================================
+    RIGHT SIDEBAR
+===================================================== %>
 
+<% content_for(:right_sidebar) do %>
+
+  <%= related_articles(
+    @product,
+    label: "INSIGHTS",
+    title: "Related Articles",
+    description: "Latest insights related to #{@product.name}, specifications, supply and market developments."
+  ) %>
+
+<% end %>
   </div>
 
 

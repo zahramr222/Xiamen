@@ -1,75 +1,646 @@
-<%# BREADCRUMBS %>
+<%# =====================================================
+    BREADCRUMBS
+===================================================== %>
+
 <% @breadcrumbs = [
   { label: "Packings", path: packings_path },
   { label: @packing.name }
 ] %>
 
 
-<div class="packing-show">
+<%# =====================================================
+    LEFT SIDEBAR
+===================================================== %>
 
-  <!-- Header -->
-  <header class="packing-header">
-    <div class="packing-header-content">
+<% content_for(:left_sidebar) do %>
+
+  <%
+    nav_items = []
+
+    nav_items << {
+      id: "overview",
+      label: "Overview"
+    }
+
+    nav_items << {
+      id: "products",
+      label: "Products"
+    } if @products.present?
+
+    nav_items << {
+      id: "specification",
+      label: "Specification"
+    } if @specification.present?
+  %>
+
+  <%= render "shared/left_sidebar",
+    title: @packing.name,
+    nav_items: nav_items,
+    show_order_button: false
+  %>
+
+<% end %>
+
+
+<%# =====================================================
+    PAGE TITLE
+===================================================== %>
+
+<% content_for(
+  :page_title,
+  "#{@packing.name} Packing | Global Synergy"
+) %>
+
+
+<div class="product-show">
+
+
+  <%# =====================================================
+      HEADER / OVERVIEW
+  ===================================================== %>
+
+  <header
+    class="product-show-header"
+    id="overview"
+  >
+
+    <div class="product-show-header-content">
+
       <span class="section-label">
+
         <span class="section-label-line"></span>
-        PACKING
+
+        PACKING SOLUTION
+
       </span>
+
       <h1 class="section-title">
         <span><%= @packing.name %></span>
       </h1>
-      <div class="packing-meta">
-        <span class="packing-meta-item">
-          <i class="fa-regular fa-calendar"></i>
-          <%= @packing.created_at.strftime("%B %d, %Y") %>
-        </span>
-        <% if @packing.grades.present? %>
-          <span class="packing-meta-item">
-            <i class="fa-solid fa-flask"></i>
-            Grades: 
-            <%= @packing.grades.map { |g| link_to(g.name, grade_path(g)) }.join(", ").html_safe %>
-          </span>
-        <% end %>
-        <% if @packing.tags.present? %>
-          <span class="packing-meta-item">
-            <i class="fa-solid fa-tags"></i>
-            <%= @packing.tags.pluck(:name).join(", ") %>
-          </span>
-        <% end %>
-      </div>
+
+      <p class="product-show-subtitle">
+        Explore <%= @packing.name %> packing specifications,
+        compatible products and available applications.
+      </p>
+
     </div>
+
   </header>
 
-  <!-- Main Content -->
-  <div class="packing-content-wrapper">
-    
-    <!-- Image -->
-    <% if @packing.image.attached? %>
-      <div class="packing-image">
-        <%= image_tag @packing.image, alt: @packing.name %>
-      </div>
-    <% end %>
 
-    <!-- Content -->
-    <div class="packing-content">
-      <% if @packing.content.present? %>
-        <%= @packing.content.html_safe %>
+
+  <%# =====================================================
+      IMAGE + PACKING CONTENT
+  ===================================================== %>
+
+  <div class="product-show-details">
+
+    <div class="product-show-image-wrapper">
+
+      <% if @packing.image.attached? %>
+
+        <%= image_tag @packing.image,
+          alt: "#{@packing.name} packing",
+          class: "product-show-main-image"
+        %>
+
       <% else %>
-        <p class="text-muted">No description available for this packing.</p>
+
+        <img
+          src="https://images.unsplash.com/photo-1586528116493-da8b6e2e7c43?auto=format&fit=crop&w=1000&q=85"
+          alt="<%= @packing.name %> packing"
+          class="product-show-main-image"
+        >
+
       <% end %>
+
+    </div>
+
+
+    <div class="product-show-info">
+
+      <div class="product-show-info-content">
+
+        <h2>
+          About <%= @packing.name %>
+        </h2>
+
+
+        <% if @packing.content.present? %>
+
+          <div class="packing-show-content">
+
+            <%= safe_content_html(@packing.content) %>
+
+          </div>
+
+        <% elsif @packing.meta_description.present? %>
+
+          <p>
+            <%= @packing.meta_description %>
+          </p>
+
+        <% else %>
+
+          <p>
+            <%= @packing.name %> is a reliable packing
+            solution designed for safe handling, storage
+            and international transportation of petroleum
+            and bitumen products.
+          </p>
+
+        <% end %>
+
+
+        <% if @packing.grades.present? %>
+
+          <div class="product-show-specs">
+
+            <h3>
+              Available For
+            </h3>
+
+            <ul>
+
+              <li>
+
+                <strong>Grades:</strong>
+
+                <%= @packing.grades.count %>
+                available
+
+              </li>
+
+              <% if @products.present? %>
+
+                <li>
+
+                  <strong>Products:</strong>
+
+                  <%= @products.count %>
+                  available
+
+                </li>
+
+              <% end %>
+
+            </ul>
+
+          </div>
+
+        <% end %>
+
+      </div>
+
     </div>
 
   </div>
 
-  <!-- Back Link -->
-  <div class="packing-actions">
-    <%= link_to packings_path, class: "packing-back-btn" do %>
-      <i class="fa-solid fa-arrow-left"></i>
-      Back to Packings
-    <% end %>
-    <%= link_to edit_packing_path(@packing), class: "packing-edit-btn" do %>
-      <i class="fa-solid fa-pencil"></i>
-      Edit Packing
-    <% end %>
-  </div>
+
+
+  <%# =====================================================
+      PRODUCTS
+  ===================================================== %>
+
+  <% if @products.present? %>
+
+    <section
+      class="product-grades"
+      id="products"
+    >
+
+      <div class="product-features-header">
+
+        <span class="section-label">
+
+          <span class="section-label-line"></span>
+
+          AVAILABLE PRODUCTS
+
+        </span>
+
+
+        <h2>
+          Products Using
+          <span><%= @packing.name %></span>
+        </h2>
+
+
+        <p class="product-show-subtitle">
+
+          Explore the products and grades available
+          with <%= @packing.name %> packing.
+
+        </p>
+
+      </div>
+
+
+
+      <div class="product-grades-grid">
+
+        <% @products.each do |product| %>
+
+          <%= link_to product_path(product),
+              class: "product-grade-card" do %>
+
+
+            <%# IMAGE %>
+
+            <div class="product-grade-image-wrapper">
+
+              <% if product.image.attached? %>
+
+                <%= image_tag product.image,
+                  alt: product.name,
+                  class: "product-grade-image",
+                  loading: "lazy"
+                %>
+
+              <% else %>
+
+                <img
+                  src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80"
+                  alt="<%= product.name %>"
+                  class="product-grade-image"
+                  loading="lazy"
+                >
+
+              <% end %>
+
+
+              <div class="product-grade-badge">
+                <span>Product</span>
+              </div>
+
+            </div>
+
+
+
+            <%# CONTENT %>
+
+            <div class="product-grade-content">
+
+              <h3>
+                <%= product.name %>
+              </h3>
+
+
+              <% if product.meta_description.present? %>
+
+                <p>
+                  <%= truncate(
+                    strip_tags(product.meta_description),
+                    length: 125
+                  ) %>
+                </p>
+
+              <% elsif product.content.present? %>
+
+                <p>
+                  <%= truncate(
+                    strip_tags(product.content),
+                    length: 125
+                  ) %>
+                </p>
+
+              <% else %>
+
+                <p>
+                  Premium quality
+                  <%= product.name %>
+                  supplied for industrial and
+                  international applications.
+                </p>
+
+              <% end %>
+
+
+
+              <% related_grades =
+                   @grades.select {
+                     |grade|
+                     grade.product_id == product.id
+                   }
+              %>
+
+
+              <div class="product-grade-meta">
+
+                <% if related_grades.present? %>
+
+                  <span class="product-grade-tag">
+
+                    <i class="fa-solid fa-box"></i>
+
+                    <%= related_grades.count %>
+
+                    <%= related_grades.count == 1 ?
+                          "Grade" :
+                          "Grades"
+                    %>
+
+                  </span>
+
+                <% end %>
+
+
+                <span class="product-grade-arrow">
+
+                  View Product
+
+                  <i class="fa-solid fa-arrow-right"></i>
+
+                </span>
+
+              </div>
+
+            </div>
+
+          <% end %>
+
+        <% end %>
+
+      </div>
+
+    </section>
+
+  <% end %>
+
+
+
+  <%# =====================================================
+      SPECIFICATION
+  ===================================================== %>
+
+  <% if @specification.present? %>
+
+    <section
+      class="product-features"
+      id="specification"
+    >
+
+      <div class="product-features-header">
+
+        <span class="section-label">
+
+          <span class="section-label-line"></span>
+
+          TECHNICAL INFORMATION
+
+        </span>
+
+
+        <h2>
+          Packing
+          <span>Specification</span>
+        </h2>
+
+      </div>
+
+
+
+      <div class="product-show-specs">
+
+        <% if @specification.title.present? %>
+
+          <h3>
+            <%= @specification.title %>
+          </h3>
+
+        <% else %>
+
+          <h3>
+            <%= @packing.name %> Specification
+          </h3>
+
+        <% end %>
+
+
+        <% if @specification.content.present? %>
+
+          <div class="packing-specification-content">
+
+            <%= safe_content_html(@specification.content) %>
+
+          </div>
+
+        <% end %>
+
+      </div>
+
+    </section>
+
+  <% end %>
+
+  <%# =====================================================
+    EXPLORE OTHER PACKINGS
+    ===================================================== %>
+
+    <section class="packing-explore">
+
+      <div class="packing-explore-content">
+
+        <div class="packing-explore-text">
+
+          <span class="section-label">
+            <span class="section-label-line"></span>
+            PACKING OPTIONS
+          </span>
+
+          <h2>
+            Explore Other <span>Packings</span>
+          </h2>
+
+          <p>
+            Discover our complete range of packing solutions for
+            bitumen and petroleum products, designed for safe handling,
+            storage and international transportation.
+          </p>
+
+        </div>
+
+
+        <%= link_to packings_path,
+        class: "packing-explore-link" do %>
+
+        Explore All Packings
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+        <% end %>
+
+      </div>
+
+    </section>
+
+
+
+  <%# =====================================================
+      INQUIRY
+  ===================================================== %>
+
+  <%= render "shared/inquiry",
+      product_name: @packing.name
+  %>
+
+
+
+  <% content_for(:right_sidebar) do %>
+
+  <%= related_articles(
+    @packing,
+    label: "INSIGHTS",
+    title: "Related Articles",
+    description: "Latest insights related to #{@packing.name}, packing methods, handling and supply."
+  ) %>
+
+<% end %>
+
 
 </div>
+
+
+
+<%# =====================================================
+    JAVASCRIPT
+===================================================== %>
+
+<% content_for(:javascript) do %>
+
+  <script>
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
+
+        const navLinks =
+          document.querySelectorAll(
+            ".grade-nav-link"
+          );
+
+
+        const sections = [
+
+          document.getElementById(
+            "overview"
+          ),
+
+          document.getElementById(
+            "products"
+          ),
+
+          document.getElementById(
+            "specification"
+          )
+
+        ];
+
+
+        navLinks.forEach(function (link) {
+
+          link.addEventListener(
+            "click",
+            function (event) {
+
+              const targetId =
+                link.getAttribute("href");
+
+              const target =
+                document.querySelector(
+                  targetId
+                );
+
+
+              if (!target) return;
+
+
+              event.preventDefault();
+
+
+              target.scrollIntoView({
+
+                behavior: "smooth",
+
+                block: "start"
+
+              });
+
+            }
+          );
+
+        });
+
+
+
+        function updateActiveNavigation() {
+
+          const scrollPosition =
+            window.scrollY + 150;
+
+
+          let currentSection =
+            "overview";
+
+
+          sections.forEach(
+            function (section) {
+
+              if (!section) return;
+
+
+              if (
+                scrollPosition >=
+                section.offsetTop
+              ) {
+
+                currentSection =
+                  section.id;
+
+              }
+
+            }
+          );
+
+
+          navLinks.forEach(
+            function (link) {
+
+              const sectionName =
+                link.dataset.section;
+
+
+              link.classList.toggle(
+
+                "active",
+
+                sectionName ===
+                  currentSection
+
+              );
+
+            }
+          );
+
+        }
+
+
+        window.addEventListener(
+
+          "scroll",
+
+          updateActiveNavigation,
+
+          { passive: true }
+
+        );
+
+
+        updateActiveNavigation();
+
+      }
+    );
+
+  </script>
+
+<% end %>

@@ -19,11 +19,8 @@
     <% end %>
   </nav>
 
-  <a href="<%= local_assigns[:order_url] || "#" %>" 
-     target="_blank" 
-     rel="noopener noreferrer" 
-     class="grade-order-button">
-    <span><%= local_assigns[:order_text] || "Order Now" %></span>
-    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-  </a>
+  <%= link_to inquiry_path, class: "grade-order-button" do %>
+  <span><%= local_assigns[:order_text] || "Order Now" %></span>
+  <i class="fa-solid fa-arrow-up-right-from-square"></i>
+<% end %>
 </div>

@@ -16,4 +16,15 @@ class Grade < ApplicationRecord
 
   has_one_attached :image
   has_one_attached :msds_file 
+
+  private
+
+  def normalize_slug
+    self.slug =
+      if slug.present?
+        slug.to_s.parameterize
+      elsif name.present?
+        name.to_s.parameterize
+      end
+  end
 end

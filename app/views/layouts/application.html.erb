@@ -3,6 +3,40 @@
   <head>
     <%= display_meta_tags(default_meta_tags) %>
 
+    <!-- Organization Structured Data -->
+    <script type="application/ld+json">
+      <%= raw ERB::Util.json_escape(organization_schema.to_json) %>
+    </script>
+
+    <!-- Website Structured Data -->
+    <script type="application/ld+json">
+      <%= raw ERB::Util.json_escape(website_schema.to_json) %>
+    </script>
+
+    <% if @breadcrumbs.present? %>
+      <script type="application/ld+json">
+        <%= raw ERB::Util.json_escape(breadcrumb_schema(@breadcrumbs).to_json) %>
+      </script>
+    <% end %>
+
+    <% if defined?(@product) &&
+          @product.present? &&
+          controller_name == "products" &&
+          action_name == "show" %>
+      <script type="application/ld+json">
+        <%= raw ERB::Util.json_escape(product_schema(@product).to_json) %>
+      </script>
+    <% end %>
+
+    <% if defined?(@post) &&
+          @post.present? &&
+          controller_name == "posts" &&
+          action_name == "show" %>
+      <script type="application/ld+json">
+        <%= raw ERB::Util.json_escape(post_schema(@post).to_json) %>
+      </script>
+    <% end %>
+
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
     <%= csrf_meta_tags %>
@@ -25,51 +59,28 @@
 
       <%= render "shared/header" %>
 
-      <% if content_for?(:left_sidebar) || content_for?(:right_sidebar) %>
-
-        <div class="grade-page">
-
-          <% if content_for?(:left_sidebar) %>
-            <aside class="grade-sidebar">
-              <%= yield(:left_sidebar) %>
-            </aside>
-          <% end %>
-
-          <main class="grade-main">
-            <% unless current_page?(root_path) %>
-              <%= render "shared/breadcrumbs", breadcrumbs: @breadcrumbs %>
-            <% end %>
-
-            <%= yield %>
-          </main>
-
-          <% if content_for?(:right_sidebar) %>
-            <aside class="grade-related-sidebar">
-              <%= yield(:right_sidebar) %>
-            </aside>
-          <% end %>
-
+      <% if notice.present? %>
+        <div class="flash-toast flash-toast-success" data-flash-toast>
+          <i class="fa-solid fa-circle-check"></i>
+          <span><%= notice %></span>
         </div>
-
-      <% else %>
-
-        <main class="main">
-          <div class="content">
-            <% unless current_page?(root_path) %>
-              <%= render "shared/breadcrumbs", breadcrumbs: @breadcrumbs %>
-            <% end %>
-
-            <%= yield %>
-          </div>
-        </main>
-
       <% end %>
+
+      <% if alert.present? %>
+        <div class="flash-toast flash-toast-error" data-flash-toast>
+          <i class="fa-solid fa-circle-exclamation"></i>
+          <span><%= alert %></span>
+        </div>
+      <% end %>
+
+      <main class="main">
+        <div class="content">
+          <%= yield %>
+        </div>
+      </main>
 
       <%= render "shared/footer" %>
 
     </div>
-
-    <%= yield(:javascript) %>
   </body>
 </html>
-

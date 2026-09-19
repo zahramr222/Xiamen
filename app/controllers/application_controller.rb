@@ -1,109 +1,118 @@
 class ApplicationController < ActionController::Base
- include Pagy::Method
-
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
-
-  # Changes to the importmap will invalidate the etag for HTML responses
-  stale_when_importmap_changes
-
-  before_action :load_navigation
-
-  private
-
-  def load_navigation
-
-    bitumen_names = [
-      "Oxidized Bitumen",
-      "Penetration Bitumen",
-      "Cutback Bitumen",
-      "Emulsion Bitumen"
-    ]
+  include Pagy::Method
 
 
-    # =====================================================
-    # BITUMEN PRODUCTS
-    # =====================================================
+# Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
+allow_browser versions: :modern
 
-    bitumen_products = Product
-      .includes(:grades)
-      .where(name: bitumen_names)
+# Changes to the importmap will invalidate the etag for HTML responses
+stale_when_importmap_changes
+
+before_action :set_noindex_for_private_pages
+
+before_action :load_navigation
+
+private
+
+def set_noindex_for_private_pages
+  if devise_controller?
+    set_meta_tags robots: "noindex,follow"
+  end
+end
+
+def load_navigation
+
+  bitumen_names = [
+    "Oxidized Bitumen",
+    "Penetration Bitumen",
+    "Cutback Bitumen",
+    "Emulsion Bitumen"
+  ]
 
 
-    # Keep the exact order we want in the header
+  # =====================================================
+  # BITUMEN PRODUCTS
+  # =====================================================
 
-    @nav_bitumen_products =
-      bitumen_names.filter_map do |name|
-
-        bitumen_products.find do |product|
-          product.name == name
-        end
-
-      end
+  bitumen_products = Product
+  .includes(:grades)
+  .where(name: bitumen_names)
 
 
-    # =====================================================
-    # OTHER PRODUCTS
-    # =====================================================
+  # Keep the exact order we want in the header
 
-    @nav_products = Product
-      .where.not(name: bitumen_names)
-      .order(:name)
+  @nav_bitumen_products =
+  bitumen_names.filter_map do |name|
+
+    bitumen_products.find do |product|
+      product.name == name
+    end
 
   end
 
-  def set_record_meta_tags(record)
-    record_name =
-      if record.respond_to?(:name)
-        record.name
-      elsif record.respond_to?(:title)
-        record.title
-      else
-        "Xiamen"
-      end
 
-    meta_title =
-      if record.respond_to?(:meta_title) && record.meta_title.present?
-        record.meta_title
-      else
-        record_name
-      end
+  # =====================================================
+  # OTHER PRODUCTS
+  # =====================================================
 
-    meta_description =
-      if record.respond_to?(:meta_description) && record.meta_description.present?
-        record.meta_description
-      else
-        "Explore #{record_name} from Xiamen, a global supplier and exporter of bitumen and petroleum products."
-      end
+  @nav_products = Product
+  .where.not(name: bitumen_names)
+  .order(:name)
 
-    page_url = "#{request.base_url}#{request.path}"
+end
 
-    image_url =
-      if record.respond_to?(:image) && record.image.attached?
-        url_for(record.image)
-      end
+def set_record_meta_tags(record)
+  record_name =
+  if record.respond_to?(:name)
+    record.name
+  elsif record.respond_to?(:title)
+    record.title
+  else
+    "Global Synergy"
+  end
 
-    set_meta_tags(
-      title: meta_title,
+  meta_title =
+  if record.respond_to?(:meta_title) && record.meta_title.present?
+    record.meta_title
+  else
+    record_name
+  end
+
+  meta_description =
+  if record.respond_to?(:meta_description) && record.meta_description.present?
+    record.meta_description
+  else
+    "Explore #{record_name} from Global Synergy, a reliable supplier and exporter of bitumen and petroleum products."
+  end
+
+  page_url = "#{request.base_url}#{request.path}"
+
+  image_url =
+  if record.respond_to?(:image) && record.image.attached?
+    url_for(record.image)
+  end
+
+  set_meta_tags(
+    title: meta_title,
+    description: meta_description,
+    canonical: page_url,
+
+    og: {
+      title: "#{meta_title} | Global Synergy",
       description: meta_description,
-      canonical: page_url,
+      type: "website",
+      url: page_url,
+      image: image_url,
+      site_name: "Global Synergy"
+    },
 
-      og: {
-        title: "#{meta_title} | Xiamen",
-        description: meta_description,
-        type: "website",
-        url: page_url,
-        image: image_url,
-        site_name: "Xiamen"
-      },
-
-      twitter: {
-        card: "summary_large_image",
-        title: "#{meta_title} | Xiamen",
-        description: meta_description,
-        image: image_url
-      }
+    twitter: {
+      card: "summary_large_image",
+      title: "#{meta_title} | Global Synergy",
+      description: meta_description,
+      image: image_url
+    }
     )
-  end
+end
 
 end

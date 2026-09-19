@@ -1,1 +1,14 @@
-# See https://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+User-agent: *
+
+Disallow: /users/
+Disallow: /products/new
+Disallow: /posts/new
+Disallow: /grades/new
+Disallow: /packings/new
+Disallow: /specifications/new
+Disallow: /tags/
+Disallow: /post_tags/
+
+Allow: /
+
+Sitemap: https://globalsynergy-co.com/sitemap.xml

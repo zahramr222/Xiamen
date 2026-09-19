@@ -8,7 +8,9 @@
                                 </div>
                                 <h2>Why Choose <span>Us</span></h2>
                                 <p class="support-intro">
-                                    Everything you need to know about the product and billing. Can't find the answer you're looking for? Our team is ready to help.
+                                    <p class="support-intro">
+                                      Global Synergy provides reliable international supply of high-quality bitumen and petroleum products, supported by quality control, flexible logistics and experienced operations.
+                                    </p>
                                 </p>
                             </div>
                         </div>
@@ -58,10 +60,10 @@
                                     <span>Contact Us</span>
                                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
                                 </a>
-                                <a href="/contact" class="about-btn about-btn-secondary">
-                                    <span>Book a Meeting</span>
-                                    <i class="fa-regular fa-calendar"></i>
-                                </a>
+                                <%= link_to inquiry_path, class: "about-btn about-btn-secondary" do %>
+                                  <span>Book a Meeting</span>
+                                  <i class="fa-regular fa-calendar"></i>
+                                <% end %>
                             </div>
                         </div>
                     </div>

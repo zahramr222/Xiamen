@@ -33,7 +33,10 @@
 
       <td>
         <% if grade.image.attached? %>
-          <%= image_tag grade.image, width: 100 %>
+          <%= image_tag grade.image,
+              alt: grade.name,
+              width: 100,
+              loading: "lazy" %>
         <% end %>
       </td>
 

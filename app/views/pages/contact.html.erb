@@ -4,7 +4,7 @@
 ] %>
 
 <%# PAGE TITLE %>
-<% content_for(:page_title, "Contact Us | Infinity Galaxy") %>
+<% content_for(:page_title, "Contact Us | Global Synergy") %>
 
 <div class="contact-page" style="text-align: left !important;">
 
@@ -26,31 +26,84 @@
     <!-- Form -->
     <div class="contact-form-wrapper">
       <h3>Write Us</h3>
-      
-      <form class="contact-form">
-        <div class="contact-form-group">
-          <label for="full_name">Full Name</label>
-          <input type="text" id="full_name" placeholder="John Doe" required>
+      <%= form_with model: @contact,
+              url: contact_path,
+              method: :post,
+              class: "contact-form",
+                
+              data: { turbo: false } do |f| %>
+
+        <div
+          style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;"
+          aria-hidden="true"
+        >
+          <%= label_tag :website, "Website" %>
+          <%= text_field_tag :website,
+                             nil,
+                             tabindex: "-1",
+                             autocomplete: "off" %>
         </div>
 
         <div class="contact-form-group">
-          <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" placeholder="+1 234 567 890" required>
+          <%= f.label :full_name, "Full Name" %>
+
+          <%= f.text_field :full_name,
+                           placeholder: "John Doe",
+                           required: true,
+                           maxlength: 100,
+                           autocomplete: "name" %>
         </div>
 
         <div class="contact-form-group">
-          <label for="message">Your Message</label>
-          <textarea id="message" rows="5" placeholder="Tell us how we can help..." required></textarea>
+          <%= f.label :phone, "Phone Number" %>
+
+          <%= f.telephone_field :phone,
+                                placeholder: "+1 234 567 890",
+                                required: true,
+                                maxlength: 30,
+                                autocomplete: "tel" %>
         </div>
 
-        <button type="submit" class="contact-submit-btn">
-          Send Message
-          <i class="fa-solid fa-arrow-right"></i>
-        </button>
-      </form>
+        <div class="contact-form-group">
+          <%= f.label :message, "Your Message" %>
+
+          <%= f.text_area :message,
+                          rows: 5,
+                          placeholder: "Tell us how we can help...",
+                          required: true,
+                          minlength: 10,
+                          maxlength: 3000 %>
+        </div>
+
+        <div class="contact-captcha">
+          <div
+            class="cf-turnstile"
+            data-sitekey="<%= Rails.application.credentials.dig(
+              :cloudflare,
+              :turnstile,
+              :site_key
+            ) %>"
+          ></div>
+        </div>
+
+        <%= f.submit "Send Message",
+                     class: "contact-submit-btn",
+                     data: {
+                       disable_with: "Sending..."
+                     } %>
+
+      <% end %>
     </div>
 
     <%= render 'inquiry/getintouch' %>
   </div>
 
 </div>
+
+<% content_for :head do %>
+  <script
+    src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+    async
+    defer
+  ></script>
+<% end %>

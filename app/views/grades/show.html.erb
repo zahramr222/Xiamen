@@ -25,14 +25,15 @@
 <%# MAIN CONTENT %>
 <%= render "grades/grade", grade: @grade %>
 
-<%# RIGHT SIDEBAR %>
 <% content_for(:right_sidebar) do %>
-  <%= render "shared/right_sidebar",
+
+  <%= related_articles(
+    @grade,
     label: "INSIGHTS",
     title: "Related Articles",
-    description: "Latest insights related to #{@grade.name}, specifications, supply and market developments.",
-    articles: @articles_data || []
-  %>
+    description: "Latest insights related to #{@grade.name}, applications, specifications and supply."
+  ) %>
+
 <% end %>
 
 <%# JAVASCRIPT %>

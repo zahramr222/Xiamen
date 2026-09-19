@@ -1,25 +1,68 @@
   class PackingsController < ApplicationController
     before_action :set_packing, only: %i[show edit update destroy]
+    before_action :authenticate_user!, only: %i[new create edit update destroy]
 
     def index
-      @packings = Packing
-        .includes(:grades, :tags)  # Changed from :specification to :grades
-        .order(created_at: :desc)
+      packings_scope = Packing
+      .includes(:grades, :tags)
+      .order(created_at: :desc)
+
+      @pagy, @packings = pagy(
+        packings_scope,
+        limit: 9
+        )
+
+      page_title = "Packing Solutions"
+
+      page_description =
+      "Explore Global Synergy's available packing solutions for bitumen and petroleum products, including options for safe handling, storage and international transportation."
+
+      page_url = "#{request.base_url}#{request.path}"
+
+      set_meta_tags(
+        title: page_title,
+        description: page_description,
+
+        og: {
+          title: "#{page_title} | Global Synergy",
+          description: page_description,
+          type: "website",
+          url: page_url,
+          site_name: "Global Synergy"
+        },
+
+        twitter: {
+          card: "summary_large_image",
+          title: "#{page_title} | Global Synergy",
+          description: page_description
+        }
+        )
+
+      @breadcrumbs = [
+        { label: "Packings" }
+      ]
     end
 
     def show
-
       if params[:id].to_s != @packing.slug.to_s
-        redirect_to packing_path(@packing), status: :moved_permanently
+        return redirect_to packing_path(@packing), status: :moved_permanently
       end
-      
+
       set_record_meta_tags(@packing)
+
+      @grades = @packing.grades.includes(:product)
+
+      @products = @grades
+      .map(&:product)
+      .compact
+      .uniq
+
+      @specification = @packing.specification
 
       @breadcrumbs = [
         { label: "Packings", path: packings_path },
         { label: @packing.name }
       ]
-
     end
 
     def new
@@ -60,6 +103,7 @@
       @packing.destroy
       redirect_to packings_path, notice: "Packing deleted successfully."
     end
+
 
     private
 

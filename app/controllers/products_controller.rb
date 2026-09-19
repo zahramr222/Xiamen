@@ -17,23 +17,23 @@
   @rpo          = Product.find_by(slug: "rpo")
 
   products_description =
-    "Explore Xiamen's range of bitumen and petroleum products, including penetration bitumen, oxidized bitumen, bitumen emulsion, cutback bitumen, base oil, paraffin wax and more."
+    "Explore Global Synergy's range of bitumen and petroleum products, including penetration bitumen, oxidized bitumen, bitumen emulsion, cutback bitumen, base oil, paraffin wax and more."
 
   set_meta_tags(
     title: "Bitumen & Petroleum Products",
     description: products_description,
 
     og: {
-      title: "Bitumen & Petroleum Products | Xiamen",
+      title: "Bitumen & Petroleum Products | Global Synergy",
       description: products_description,
       type: "website",
       url: "#{request.base_url}#{request.path}",
-      site_name: "Xiamen"
+      site_name: "Global Synergy"
     },
 
     twitter: {
       card: "summary_large_image",
-      title: "Bitumen & Petroleum Products | Xiamen",
+      title: "Bitumen & Petroleum Products | Global Synergy",
       description: products_description
     }
   )
@@ -43,44 +43,31 @@
   ]
   end
 
-    # --------------------------------------------------
-    # Product Show
-    # --------------------------------------------------
-    def show
-  # Redirect old numeric URLs to the FriendlyId slug URL
+   def show
   if params[:id].to_s != @product.slug.to_s
     return redirect_to product_path(@product), status: :moved_permanently
   end
 
   set_record_meta_tags(@product)
 
-
-
-  # Get grades for this product
   @grades = @product.grades
 
-  # Related articles
-  @articles_data = get_related_articles(@product)
-
-  # Get packings only from grades that belong to this product
   @packings =
-  if @grades.any?
-    Packing
-    .joins(:grade_packings)
-    .where(grade_packings: { grade_id: @grades.pluck(:id) })
-    .distinct
-    .order(:name)
-  else
-    []
-  end
+    if @grades.any?
+      Packing
+        .joins(:grade_packings)
+        .where(grade_packings: { grade_id: @grades.pluck(:id) })
+        .distinct
+        .order(:name)
+    else
+      []
+    end
 
-  # Breadcrumbs
   @breadcrumbs = [
     { label: "Products", path: products_path },
     { label: @product.name }
   ]
-  end
-
+end
     # --------------------------------------------------
   # Bitumen Landing Page
   # --------------------------------------------------
@@ -106,10 +93,10 @@
   { label: "Bitumen" }
   ]
 
-  page_title = "Bitumen Supplier & Exporter"
+  page_title = "Bitumen Supplier & Exporter | Buy Bitumen | Global Synergy"
 
   page_description =
-  "Explore Xiamen's bitumen products, including penetration bitumen, oxidized bitumen, cutback bitumen and bitumen emulsion for road construction, waterproofing and industrial applications."
+  "Buy high-quality bitumen from Global Synergy, a reliable international bitumen supplier offering penetration, oxidized, cutback and emulsion bitumen at competitive prices."
 
   page_url = "#{request.base_url}#{request.path}"
 
@@ -118,16 +105,16 @@
   description: page_description,
 
   og: {
-    title: "#{page_title} | Xiamen",
+    title: "#{page_title} | Global Synergy",
     description: page_description,
     type: "website",
     url: page_url,
-    site_name: "Xiamen"
+    site_name: "Global Synergy"
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "#{page_title} | Xiamen",
+    title: "#{page_title} | Global Synergy",
     description: page_description
   }
   )

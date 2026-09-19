@@ -6,7 +6,7 @@
 ] %>
 
 <%# PAGE TITLE %>
-<% content_for(:page_title, "About Us | Infinity Galaxy") %>
+<% content_for(:page_title, "About Us | Global Synergy") %>
 
 <div class="about-page">
 
@@ -19,14 +19,14 @@
       </span>
       <h1 class="section-title">Who We <span>Are</span></h1>
       <p class="about-hero-description">
-        Xiamen is a trusted global supplier and exporter of premium oil derivatives, connecting reliable sources with customers across international markets. We are committed to delivering consistent quality, competitive solutions, and dependable service while building long-term partnerships with our clients worldwide.
+        Global Synergy is a trusted global supplier and exporter of premium oil derivatives, connecting reliable sources with customers across international markets. We are committed to delivering consistent quality, competitive solutions, and dependable service while building long-term partnerships with our clients worldwide.
 
-        With a strong understanding of the energy and petrochemical markets, Xiamen combines industry expertise, international reach, and a customer-focused approach to create lasting value for every partnership.
+        With a strong understanding of the energy and petrochemical markets, Global Synergy combines industry expertise, international reach, and a customer-focused approach to create lasting value for every partnership.
   
       </p>
     </div>
     <div class="about-hero-image">
-      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=85" alt="About Infinity Galaxy">
+      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=85" alt="About Global Synergy">
     </div>
   </section>
 
@@ -50,7 +50,7 @@
   <section class="about-team">
     <div class="about-team-header">
       <span class="section-label"><span class="section-label-line"></span>OUR TEAM</span>
-      <h2 class="section-title">Meet the Team Behind <span>Infinity Galaxy</span></h2>
+      <h2 class="section-title">Meet the Team Behind <span>Global Synergy</span></h2>
       <p class="about-team-subtitle">A dedicated team across sales, export, marketing, and operations. The people who make every shipment perfect and on time.</p>
     </div>
     <div class="about-team-grid">
@@ -77,7 +77,7 @@
     </div>
   </section>
 
-  <!-- History -->
+  <%# <!-- History -->
   <section class="about-history">
     <div class="about-history-header">
       <span class="section-label"><span class="section-label-line"></span>OUR HISTORY</span>
@@ -87,12 +87,12 @@
       <div class="about-history-item">
         <span class="about-history-year">2011</span>
         <h4>Foundation</h4>
-        <p>Infinity Galaxy was initially named Galaxy Energy</p>
+        <p>Ximen was initialXimen Energy</p>
       </div>
       <div class="about-history-item">
         <span class="about-history-year">2016</span>
         <h4>Rebrand</h4>
-        <p>Galaxy Energy switched to "Infinity Galaxy"</p>
+             Ximen Energy switched to "Ximen"</p>
       </div>
       <div class="about-history-item">
         <span class="about-history-year">2018</span>
@@ -105,7 +105,7 @@
         <p>Supplying Recycled Base Oil and Caustic Soda</p>
       </div>
     </div>
-  </section>
+  </section> %>
 
   <!-- Certifications -->
   <section class="about-certifications">
@@ -171,9 +171,11 @@
       <span class="section-label"><span class="section-label-line"></span>LET'S GET IN TOUCH</span>
       <h2 class="section-title">Our team is ready to provide <span>quotation for your order</span></h2>
       <div class="about-cta-actions">
-        <a href="/contact" class="about-btn about-btn-primary">
-          Contact Us <i class="fa-solid fa-arrow-up-right-from-square"></i>
-        </a>
+        <%= link_to contact_path, class: "about-btn about-btn-primary" do %>
+        Contact Us <i class="fa-solid fa-arrow-up-right-from-square"></i>
+  
+        <% end %>
+        
       </div>
     </div>
   </section>

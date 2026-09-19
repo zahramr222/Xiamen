@@ -10,15 +10,57 @@
                                 <p>Get weekly bitumen price updates, market trends and global industry insights.</p>
                             </div>
                         </div>
-                        <form class="newsletter-form" action="#" method="post">
-                            <div class="newsletter-input-wrap">
-                                <i class="fa-regular fa-envelope"></i>
-                                <input type="email" name="email" placeholder="Enter your email address" required>
-                            </div>
-                            <button type="submit" class="newsletter-button">
-                                <span>Subscribe</span>
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </button>
-                        </form>
+                        <%= form_with model: Newsletter.new,
+                                      url: newsletter_path,
+                                      method: :post,
+                                      class: "newsletter-form",
+                                      id: "newsletter-form",
+                                      data: { turbo: false } do |f| %>
+
+                          <div
+                            style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;"
+                            aria-hidden="true"
+                          >
+                            <%= label_tag :website, "Website" %>
+                            <%= text_field_tag :website,
+                                               nil,
+                                               tabindex: "-1",
+                                               autocomplete: "off" %>
+                          </div>
+
+                          <div class="newsletter-input-wrap">
+                            <i class="fa-regular fa-envelope"></i>
+
+                            <%= f.email_field :email,
+                                              placeholder: "Enter your email address",
+                                              required: true,
+                                              maxlength: 254,
+                                              autocomplete: "email" %>
+                          </div>
+
+                          <div
+                            id="newsletter-turnstile"
+                            class="cf-turnstile"
+                           data-sitekey="<%= Rails.application.credentials.dig(
+                              :cloudflare,
+                              :newsletter_turnstile,
+                              :site_key
+                            ) %>"
+                          ></div>
+
+                          <button type="submit" class="newsletter-button">
+                            <span>Subscribe</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                          </button>
+
+                        <% end %>
                     </div>
                 </section>
+
+<% content_for :head do %>
+  <script
+    src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+    async
+    defer
+  ></script>
+<% end %>

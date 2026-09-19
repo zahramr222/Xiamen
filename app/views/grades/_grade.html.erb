@@ -27,7 +27,8 @@
   </div>
 
   <% if grade.content.present? %>
-    <%= grade.content.html_safe %>
+    <%= safe_content_html(grade.content) %>
+
   <% end %>
 </section>
 
@@ -44,7 +45,7 @@
   <% if grade.specifications.present? %>
     <% grade.specifications.each do |spec| %>
       <% if spec.content.present? %>
-        <%= spec.content.html_safe %>
+        <%= safe_content_html(spec.content) %>
       <% end %>
     <% end %>
   <% end %>
@@ -137,7 +138,7 @@
             <h3><%= packing.name %></h3>
 
             <% if packing.content.present? %>
-              <%= packing.content.html_safe %>
+              <%= safe_content_html(packing.content) %>
             <% end %>
 
             <div class="grade-packing-link-wrapper">

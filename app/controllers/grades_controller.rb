@@ -1,28 +1,28 @@
   class GradesController < ApplicationController
     before_action :set_grade, only: %i[show edit update destroy]
-    before_action :authenticate_user!, only: %i[new create edit update destroy]
+    before_action :authenticate_user!, only: %i[index new create edit update destroy]
 
     def index
       @grades = Grade.all.order(:name)
 
       grades_description =
-      "Explore Xiamen's available bitumen grades, specifications, packing options and industrial applications for international supply and export."
+      "Explore Global Synergy's available bitumen grades, specifications, packing options and industrial applications for international supply and export."
 
       set_meta_tags(
         title: "Bitumen Grades & Specifications",
         description: grades_description,
 
         og: {
-          title: "Bitumen Grades & Specifications | Xiamen",
+          title: "Bitumen Grades & Specifications | Global Synergy",
           description: grades_description,
           type: "website",
           url: "#{request.base_url}#{request.path}",
-          site_name: "Xiamen"
+          site_name: "Global Synergy"
         },
 
         twitter: {
           card: "summary_large_image",
-          title: "Bitumen Grades & Specifications | Xiamen",
+          title: "Bitumen Grades & Specifications | Global Synergy",
           description: grades_description
         }
         )
@@ -34,13 +34,17 @@
 
     def show
       if params[:id].to_s != @grade.slug.to_s
-        redirect_to grade_path(@grade), status: :moved_permanently
+        return redirect_to grade_path(@grade), status: :moved_permanently
       end
+
       set_record_meta_tags(@grade)
-      
+
       @product = @grade.product
-      @articles_data = get_related_articles(@grade)
-      @related_articles = []
+
+      @breadcrumbs = [
+        { label: "Grades", path: grades_path },
+        { label: @grade.name }
+      ]
     end
 
     def new

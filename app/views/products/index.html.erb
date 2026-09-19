@@ -16,14 +16,18 @@
   <header class="products-header">
     <div class="products-header-content">
 
-      <span class="section-label">
-        <span class="section-label-line"></span>
-        OUR PRODUCTS
-      </span>
+      <div class="other-products-header">
 
-      <h1 class="section-title">
+    <span class="section-label">
+      <span class="section-label-line"></span>
+      OUR PRODUCTS
+    </span>
+
+    <h1 class="section-title">
         Bitumen & <span>Petroleum Products</span>
       </h1>
+
+      
 
       <p class="products-subtitle">
         Explore our comprehensive range of high-quality petroleum and industrial products,
@@ -163,156 +167,166 @@
   </section>
 
 
-  <%# =========================================================
-     OTHER PRODUCTS
-  ========================================================= %>
-
   <section class="other-products">
 
-    <div class="other-products-header">
+  <div class="other-products-header">
 
-      <span class="section-label">
-        <span class="section-label-line"></span>
-        MORE PRODUCTS
-      </span>
+    <span class="section-label">
+      <span class="section-label-line"></span>
+      MORE PRODUCTS
+    </span>
 
-      <h2>
-        Other <span>Products</span>
-      </h2>
+    <h2>
+      Other <span>Products</span>
+    </h2>
 
-    </div>
-
-
-    <div class="other-products-grid">
-
-      <%# -------------------------------------------------------
-         SLACK WAX
-      ------------------------------------------------------- %>
-
-      <article class="other-product-card">
-
-        <div class="other-product-icon">
-          <i class="fa-solid fa-layer-group"></i>
-        </div>
-
-        <h3>Slack Wax</h3>
-
-        <p>
-          High-quality slack wax for industrial applications and global exports.
-        </p>
-
-        <% if @slack_wax.present? %>
-
-          <%= link_to product_path(@slack_wax),
-              class: "other-product-link" do %>
-
-            Learn More
-            <i class="fa-solid fa-arrow-right"></i>
-
-          <% end %>
-
-        <% end %>
-
-      </article>
+  </div>
 
 
-      <%# -------------------------------------------------------
-         FOOTSOIL
-      ------------------------------------------------------- %>
-
-      <article class="other-product-card">
-
-        <div class="other-product-icon">
-          <i class="fa-solid fa-droplet"></i>
-        </div>
-
-        <h3>Footsoil</h3>
-
-        <p>
-          Premium footsoil for international supply with reliable quality
-          and efficient delivery.
-        </p>
-
-        <% if @footsoil.present? %>
-
-          <%= link_to product_path(@footsoil),
-              class: "other-product-link" do %>
-
-            Learn More
-            <i class="fa-solid fa-arrow-right"></i>
-
-          <% end %>
-
-        <% end %>
-
-      </article>
+  <div class="other-products-grid">
 
 
-      <%# -------------------------------------------------------
-         BASE OIL
-      ------------------------------------------------------- %>
+    <article class="other-product-card">
 
-      <article class="other-product-card">
+      <div class="other-product-icon">
+        <i class="fa-solid fa-layer-group"></i>
+      </div>
 
-        <div class="other-product-icon">
-          <i class="fa-solid fa-oil-can"></i>
-        </div>
+      <h3>Slack Wax</h3>
 
-        <h3>Base Oil</h3>
+      <p>
+        High-quality slack wax for industrial applications and global exports.
+      </p>
 
-        <p>
-          Quality base oil for lubricant production and industrial applications.
-        </p>
+      <%= link_to product_path(Product.find_by!(name: "Slack Wax")),
+      class: "other-product-link" do %>
 
-        <% if @base_oil.present? %>
+        Learn More
+        <i class="fa-solid fa-arrow-right"></i>
 
-          <%= link_to product_path(@base_oil),
-              class: "other-product-link" do %>
+      <% end %>
 
-            Learn More
-            <i class="fa-solid fa-arrow-right"></i>
-
-          <% end %>
-
-        <% end %>
-
-      </article>
+    </article>
 
 
-      <%# -------------------------------------------------------
-         RPO
-      ------------------------------------------------------- %>
+    <article class="other-product-card">
 
-      <article class="other-product-card">
+      <div class="other-product-icon">
+        <i class="fa-solid fa-droplet"></i>
+      </div>
 
-        <div class="other-product-icon">
-          <i class="fa-solid fa-flask"></i>
-        </div>
+      <h3>Footsoil</h3>
 
-        <h3>RPO</h3>
+      <p>
+        Premium footsoil for international supply with reliable quality
+        and efficient delivery.
+      </p>
 
-        <p>
-          Reliable RPO supply for rubber manufacturing and industrial applications.
-        </p>
+      <%= link_to product_path(Product.find_by!(name: "Footsoil")),
+      class: "other-product-link" do %>
 
-        <% if @rpo.present? %>
+        Learn More
+        <i class="fa-solid fa-arrow-right"></i>
 
-          <%= link_to product_path(@rpo),
-              class: "other-product-link" do %>
+      <% end %>
 
-            Learn More
-            <i class="fa-solid fa-arrow-right"></i>
+    </article>
 
-          <% end %>
 
-        <% end %>
+    <article class="other-product-card">
 
-      </article>
+      <div class="other-product-icon">
+        <i class="fa-solid fa-oil-can"></i>
+      </div>
 
-    </div>
+      <h3>Base Oil</h3>
 
-  </section>
+      <p>
+        Quality base oil for lubricant production and industrial applications.
+      </p>
 
+      <%= link_to product_path(Product.find_by!(name: "Base Oil")),
+      class: "other-product-link" do %>
+
+        Learn More
+        <i class="fa-solid fa-arrow-right"></i>
+
+      <% end %>
+
+    </article>
+
+
+    <article class="other-product-card">
+
+      <div class="other-product-icon">
+        <i class="fa-solid fa-flask"></i>
+      </div>
+
+      <h3>RPO</h3>
+
+      <p>
+        Reliable RPO supply for rubber manufacturing and industrial applications.
+      </p>
+
+      <%= link_to product_path(Product.find_by!(name: "RPO")),
+      class: "other-product-link" do %>
+
+        Learn More
+        <i class="fa-solid fa-arrow-right"></i>
+
+      <% end %>
+
+    </article>
+
+
+    <article class="other-product-card">
+
+      <div class="other-product-icon">
+        <i class="fa-solid fa-circle"></i>
+      </div>
+
+      <h3>Carbon Black</h3>
+
+      <p>
+        High-quality carbon black for rubber, tire, plastic and industrial applications.
+      </p>
+
+      <%= link_to product_path(Product.find_by!(name: "Carbon Black")),
+      class: "other-product-link" do %>
+
+        Learn More
+        <i class="fa-solid fa-arrow-right"></i>
+
+      <% end %>
+
+    </article>
+
+
+    <article class="other-product-card">
+
+      <div class="other-product-icon">
+        <i class="fa-solid fa-boxes-stacked"></i>
+      </div>
+
+      <h3>Other Products</h3>
+
+      <p>
+        Explore additional petroleum and industrial products supplied for international markets.
+      </p>
+
+      <%= link_to product_path(Product.find_by!(name: "Other Products")),
+      class: "other-product-link" do %>
+
+        Learn More
+        <i class="fa-solid fa-arrow-right"></i>
+
+      <% end %>
+
+    </article>
+
+  </div>
+
+</section>
 
   <%# =========================================================
      INQUIRY

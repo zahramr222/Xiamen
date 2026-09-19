@@ -59,7 +59,7 @@
       </div>
       <h2>No results found</h2>
       <p>We couldn't find anything matching "<strong><%= @query %></strong>".<br>Try a different keyword.</p>
-      <a href="/" class="search-empty-btn">Back to Home</a>
-    </div>
+      <%= link_to "Back to Home", root_path, class: "search-empty-btn" %>
+          </div>
   <% end %>
 </div>

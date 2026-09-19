@@ -18,23 +18,22 @@
         </span>
         <h1>Premium Quality <span>Bitumen</span> for Industrial Use</h1>
         <p class="bitumen-hero-description">
-          Leverage the durability and versatility of our top-grade bitumen, ideal for a wide range of 
-          construction and paving projects. We ensure competitive prices and consistent supply, 
-          directly sourced from the best producers.
+          Buy high-quality bitumen for road construction, paving and industrial applications with reliable international supply and competitive prices.
         </p>
         <div class="bitumen-hero-actions">
-          <%= link_to "#{root_path}#inquiry", class: "about-btn about-btn-primary" do %>
-          Get a Quote
-          <i class="fa-solid fa-arrow-right"></i>
+          <%= link_to inquiry_path, class: "about-btn about-btn-primary" do %>
+            <span>Request a Quote</span>
           <% end %>
-          <%= link_to "/contact", class: "about-btn about-btn-secondary" do %>
-          Contact Us
-          <i class="fa-solid fa-phone"></i>
+          <%= link_to contact_path, class: "about-btn about-btn-secondary" do %>
+            <span>Book a Meeting</span>
+            <i class="fa-regular fa-calendar"></i>
           <% end %>
         </div>
       </div>
       <div class="bitumen-hero-image">
-        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=85" alt="Bitumen">
+        <img
+        src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=85"
+        alt="Bitumen for road construction and industrial applications">
       </div>
     </section>
 
@@ -80,7 +79,7 @@
           <div class="bitumen-product-count">
             <span>(12)</span> Products
           </div>
-          <%= link_to "/products/bitumen/penetration", class: "bitumen-product-link" do %>
+          <%= link_to product_path(@penetration_bitumen), class: "bitumen-product-link" do %>
           View Products
           <i class="fa-solid fa-arrow-right"></i>
           <% end %>
@@ -96,7 +95,7 @@
           <div class="bitumen-product-count">
             <span>(13)</span> Products
           </div>
-          <%= link_to "/products/bitumen/cutback", class: "bitumen-product-link" do %>
+          <%= link_to product_path(@cutback_bitumen), class: "bitumen-product-link" do %>
           View Products
           <i class="fa-solid fa-arrow-right"></i>
           <% end %>
@@ -112,7 +111,7 @@
           <div class="bitumen-product-count">
             <span>(3)</span> Products
           </div>
-          <%= link_to "/products/bitumen/emulsion", class: "bitumen-product-link" do %>
+          <%= link_to product_path(@emulsion_bitumen), class: "bitumen-product-link" do %>
           View Products
           <i class="fa-solid fa-arrow-right"></i>
           <% end %>
@@ -175,10 +174,9 @@
         </span>
         <h2>Understanding <span>Bitumen Pricing</span></h2>
         <p class="bitumen-pricing-intro">
-          The price of bitumen is influenced by a variety of global factors including crude oil prices, 
-          production costs, and market demand. As a leading supplier, we stay abreast of market trends 
-          to offer our customers competitive bitumen prices without compromising on quality.
+          Bitumen prices are influenced by crude oil costs, refinery output, market demand, shipping conditions and destination. As an international bitumen supplier, Global Synergy follows market trends closely to offer competitive bitumen prices with reliable supply and consistent product quality.
         </p>
+
         
         <div class="bitumen-pricing-grid">
           <div class="bitumen-pricing-item">
@@ -188,8 +186,9 @@
           </div>
           <div class="bitumen-pricing-item">
             <h4>How We Offer Competitive Prices</h4>
-            <p>We leverage advanced procurement and production processes to keep our bitumen prices affordable. 
-            Our strategic partnerships with top Middle Eastern producers allow us to secure bitumen at optimal prices.</p>
+            <p>
+              Our sourcing network, market monitoring and logistics coordination help us provide competitive bitumen prices based on grade, quantity, packing method and destination.
+            </p>
           </div>
           <div class="bitumen-pricing-item">
             <h4>Our Pricing Strategy</h4>

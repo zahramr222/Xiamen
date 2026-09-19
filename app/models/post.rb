@@ -36,4 +36,15 @@ validates :post_type, inclusion: { in: POST_TYPES }
     RelatedPostsService.new(self, limit: limit).call
   end
 
+  private
+
+  def normalize_slug
+    self.slug =
+      if slug.present?
+        slug.to_s.parameterize
+      elsif title.present?
+        title.to_s.parameterize
+      end
+  end
+
 end

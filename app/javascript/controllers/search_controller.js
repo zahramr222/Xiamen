@@ -6,10 +6,13 @@ export default class extends Controller {
   connect() {
     this.timeout = null
     console.log("SEARCH CONTROLLER CONNECTED")
-    
+
     // Handle "/" key to focus search
     document.addEventListener("keydown", (event) => {
-      if (event.key === "/" && document.activeElement.tagName !== "INPUT") {
+      if (
+        event.key === "/" &&
+        document.activeElement.tagName !== "INPUT"
+      ) {
         event.preventDefault()
         this.inputTarget.focus()
       }
@@ -26,7 +29,7 @@ export default class extends Controller {
     console.log("QUERY:", query)
 
     if (query.length < 3) {
-      this.resultsTarget.innerHTML = ""
+      this.resultsTarget.replaceChildren()
       this.resultsTarget.style.display = "none"
       return
     }
@@ -60,38 +63,66 @@ export default class extends Controller {
       console.log("RESULTS:", results)
 
       this.renderResults(results)
-
     } catch (error) {
       console.error("Search error:", error)
-      this.resultsTarget.innerHTML = `<p class="search-error">Something went wrong. Please try again.</p>`
+
+      const errorMessage = document.createElement("p")
+      errorMessage.className = "search-error"
+      errorMessage.textContent =
+        "Something went wrong. Please try again."
+
+      this.resultsTarget.replaceChildren(errorMessage)
       this.resultsTarget.style.display = "block"
     }
   }
 
   renderResults(results) {
+    this.resultsTarget.replaceChildren()
+
     if (!results || results.length === 0) {
-      this.resultsTarget.innerHTML = `
-        <p class="search-no-results">No results found for "<strong>${this.inputTarget.value}</strong>"</p>
-      `
+      const message = document.createElement("p")
+      message.className = "search-no-results"
+
+      message.append('No results found for "')
+
+      const strong = document.createElement("strong")
+      strong.textContent = this.inputTarget.value
+
+      message.appendChild(strong)
+      message.append('"')
+
+      this.resultsTarget.appendChild(message)
       this.resultsTarget.style.display = "block"
+
       return
     }
 
-    this.resultsTarget.innerHTML = `
-      <ul>
-        ${results.map(result => `
-          <li>
-            <a href="${result.url}">
-              ${this.escapeHtml(result.title)}
-            </a>
-            <small>
-              ${this.escapeHtml(result.type)} · 
-              matched by ${this.escapeHtml(result.matched_by)}
-            </small>
-          </li>
-        `).join("")}
-      </ul>
-    `
+    const list = document.createElement("ul")
+
+    results.forEach((result) => {
+      const item = document.createElement("li")
+
+      const link = document.createElement("a")
+
+      if (this.isSafeUrl(result.url)) {
+        link.href = result.url
+      } else {
+        link.href = "#"
+      }
+
+      link.textContent = result.title ?? ""
+
+      const details = document.createElement("small")
+      details.textContent =
+        `${result.type ?? ""} · matched by ${result.matched_by ?? ""}`
+
+      item.appendChild(link)
+      item.appendChild(details)
+
+      list.appendChild(item)
+    })
+
+    this.resultsTarget.appendChild(list)
     this.resultsTarget.style.display = "block"
   }
 
@@ -108,6 +139,7 @@ export default class extends Controller {
 
     if (panel.classList.contains("is-open")) {
       const input = panel.querySelector("input")
+
       if (input) {
         input.focus()
       }
@@ -116,17 +148,33 @@ export default class extends Controller {
 
   hideResults(event) {
     // Don't hide if clicking inside results
-    if (event && this.resultsTarget.contains(event.relatedTarget)) {
+    if (
+      event &&
+      this.resultsTarget.contains(event.relatedTarget)
+    ) {
       return
     }
+
     setTimeout(() => {
       this.resultsTarget.style.display = "none"
     }, 200)
   }
 
-  escapeHtml(text) {
-    const div = document.createElement("div")
-    div.textContent = text ?? ""
-    return div.innerHTML
+  isSafeUrl(url) {
+    if (!url) return false
+
+    try {
+      const parsedUrl = new URL(
+        url,
+        window.location.origin
+      )
+
+      return (
+        parsedUrl.protocol === "http:" ||
+        parsedUrl.protocol === "https:"
+      )
+    } catch {
+      return false
+    }
   }
 }

@@ -3,26 +3,25 @@
                     <div class="about-container">
                         <div class="about-content">
                             <div class="about-label">
-                                <span class="about-label-line"></span> ABOUT XIAMEN
+                                <span class="about-label-line"></span> ABOUT GLOBAL SYNERGY
                             </div>
-                            <h2>In Pursuit of <span>Excellence</span></h2>
+                            <h2>Trusted <span>Bitumen Supplier</span> Worldwide</h2>
                             <p class="about-description">
                                 Premium bitumen, petroleum, and industrial chemical products supplied to clients in 60+ countries with verified quality and on-time delivery.
                             </p>
                             <div class="about-actions">
-                                <a href="/contact" class="about-btn about-btn-primary">
-                                    <span>Contact Us</span>
-                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                </a>
-                                <a href="/contact" class="about-btn about-btn-secondary">
-                                    <span>Book a Meeting</span>
-                                    <i class="fa-regular fa-calendar"></i>
-                                </a>
+                                <%= link_to inquiry_path, class: "about-btn about-btn-primary" do %>
+                                  <span>Request a Quote</span>
+                                <% end %>
+                                <%= link_to contact_path, class: "about-btn about-btn-secondary" do %>
+                                  <span>Book a Meeting</span>
+                                  <i class="fa-regular fa-calendar"></i>
+                                <% end %>
                             </div>
                         </div>
                         <div class="about-visual">
                             <div class="about-image">
-                                <img src="images/mian-image.jpeg" alt="Industrial supply and global trade">
+                                <img src="images/mian-image.webp" alt="Industrial supply and global trade">
                                 <div class="about-image-overlay"></div>
                                 <div class="about-stat-card">
                                     <div class="about-stat-icon"><i class="fa-solid fa-globe"></i></div>

@@ -6,11 +6,8 @@
     <p>If you have any inquiries, fill out the form below or keep in touch with us by WhatsApp. We will contact you within 12 hours.</p>
   </div>
 
-  <a href="/contact" 
-     target="_blank" 
-     rel="noopener noreferrer" 
-     class="grade-inquiry-button">
-    Contact Sales
-    <i class="fa-solid fa-arrow-right"></i>
-  </a>
+  <%= link_to contact_path, class: "grade-inquiry-button" do %>
+  Contact Sales
+  <i class="fa-solid fa-arrow-right"></i>
+  <% end %>
 </section>

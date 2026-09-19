@@ -1,6 +1,6 @@
 class Product < ApplicationRecord
   extend FriendlyId
-  before_validation :normalize_slug
+  
   
   friendly_id :slug, use: :slugged
   before_validation :normalize_slug
@@ -13,4 +13,15 @@ class Product < ApplicationRecord
   has_many :tags, through: :product_tags
 
   has_one_attached :image
+
+  private
+
+  def normalize_slug
+    self.slug =
+      if slug.present?
+        slug.to_s.parameterize
+      elsif name.present?
+        name.to_s.parameterize
+      end
+  end
 end

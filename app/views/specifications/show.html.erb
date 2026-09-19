@@ -11,7 +11,8 @@
 
 <% if @specification.content.present? %>
   <div class="specification-content">
-    <%= @specification.content.html_safe %>
+    <%= safe_content_html(@specification.content) %>
+
   </div>
 <% else %>
   <p style="color: #999;">No content available.</p>

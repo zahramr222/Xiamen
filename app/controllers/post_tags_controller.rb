@@ -1,4 +1,6 @@
 class PostTagsController < ApplicationController
+  before_action :authenticate_user!
+
   def destroy
     post_tag = PostTag.friendly.find(params[:id])
     post = post_tag.post

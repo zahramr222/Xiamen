@@ -17,7 +17,6 @@
     title: @post.title,
     nav_items: nav_items,
     show_order_button: false,
-    order_url: "#{root_path}#inquiry",
     order_text: "Send Inquiry"
   %>
 <% end %>
@@ -74,7 +73,7 @@
   <div class="post-content" id="content">
     <div class="post-content-wrapper">
       <% if @post.content.present? %>
-        <%= simple_format(@post.content).html_safe %>
+        <%= safe_content_html(simple_format(@post.content)) %>
       <% else %>
         <p class="text-muted">No content available.</p>
       <% end %>
@@ -94,7 +93,7 @@
         <%= link_to post_path(related), class: "post-related-card" do %>
           <% if related.image.attached? %>
             <div class="post-related-image">
-              <%= image_tag related.image, alt: related.title %>
+              <%= image_tag related.image, alt: related.title,  loading: "lazy" %>
             </div>
           <% end %>
           <div class="post-related-content">
