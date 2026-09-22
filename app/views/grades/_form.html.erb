@@ -1,129 +1,136 @@
+<%= form_with(model: grade, class: "admin-form") do |form| %>
 
-<%= form_with model: grade do |form| %>
+  <div class="admin-form-header">
+    <h1><%= grade.persisted? ? "Edit Grade" : "New Grade" %></h1>
+    <p>Manage grade information, packing options, MSDS and SEO.</p>
+  </div>
 
-<% if grade.errors.any? %>
-<div style="color: red;">
-  <h2>
-    <%= pluralize(grade.errors.count, "error") %>
-    prohibited this grade from being saved:
-  </h2>
-
-  <ul>
-    <% grade.errors.each do |error| %>
-    <li><%= error.full_message %></li>
-    <% end %>
-  </ul>
-</div>
-<% end %>
-
-<!-- Grade Name -->
-<div>
-  <%= form.label :name, "Grade Name" %><br>
-  <%= form.text_field :name %>
-</div>
-
-<br>
-
-<!-- Slug -->
-<div>
-  <%= form.label :slug, "Slug" %><br>
-  <%= form.text_field :slug %>
-</div>
-
-<br>
-
-<div>
-  <%= form.label :meta_title, "SEO Meta Title" %>
-  <%= form.text_field :meta_title,
-  maxlength: 60,
-  placeholder: "SEO title for this page" %>
-  <small>Recommended: 50–60 characters.</small>
-</div> 
-
-<br> 
-
-<div>
-  <%= form.label :meta_description, "SEO Meta Description" %>
-  <%= form.text_area :meta_description,
-  maxlength: 160,
-  rows: 4,
-  placeholder: "SEO description for this page" %>
-  <small>Recommended: 140–160 characters.</small>
-</div>
-
-<br>
-
-<!-- Packings -->
-<div>
-  <%= form.label :packing_ids, "Packings" %><br>
-
-  <%= form.collection_select :packing_ids,
-  Packing.all,
-  :id,
-  :name,
-  {},
-  { multiple: true } %>
-
-  <br>
-
-  <%= link_to "New Packing",
-  new_packing_path,
-  class: "btn btn-primary" %>
-</div>
-
-<br>
-
-<!-- Content -->
-<div>
-  <%= form.label :content, "Content" %><br>
-
-  <%= form.text_area :content,
-  rows: 15,
-  placeholder: "Write grade content here..." %>
-</div>
-
-<br>
-
-<!-- Image -->
-<div>
-  <%= form.label :image, "Grade Image" %><br>
-  <%= form.file_field :image %>
-</div>
-
-<br>
-
-
-<!-- MSDS File Upload -->
-<div>
-  <%= form.label :msds_file, "MSDS File (PDF only)" %><br>
-  <%= form.file_field :msds_file, accept: "application/pdf" %>
-  <% if grade.msds_file.attached? %>
-  <p>Current MSDS: <%= link_to grade.msds_file.filename, grade.msds_file, target: "_blank" %></p>
-  <p><%= check_box_tag :remove_msds %> Remove MSDS</p>
+  <% if grade.errors.any? %>
+    <div class="admin-form-errors">
+      <h3><%= pluralize(grade.errors.count, "error") %> prevented this grade from being saved:</h3>
+      <ul>
+        <% grade.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
   <% end %>
-</div>
 
-<!-- Tags -->
-<div>
-  <%= label_tag :tag_names, "Tags" %><br>
+  <section class="admin-form-section">
+    <h2 class="admin-form-section-title">General Information</h2>
 
-  <%= text_field_tag :tag_names,
-  @tag_names,
-  placeholder: "premium, industrial, chemical" %>
+    <div class="admin-form-group">
+      <%= form.label :name, "Grade Name" %>
+      <%= form.text_field :name, placeholder: "Grade name" %>
+    </div>
 
-  <br>
+    <div class="admin-form-group">
+      <%= form.label :slug, "Slug" %>
+      <%= form.text_field :slug, placeholder: "grade-url-slug" %>
+    </div>
+  </section>
 
-  <small>
-    Separate tags with commas (,)
-  </small>
-</div>
+  <section class="admin-form-section">
+    <h2 class="admin-form-section-title">SEO</h2>
 
-<br>
+    <div class="admin-form-group">
+      <%= form.label :meta_title, "SEO Meta Title" %>
+      <%= form.text_field :meta_title,
+            maxlength: 60,
+            placeholder: "SEO title for this page" %>
+      <small class="admin-form-help">Recommended: 50–60 characters.</small>
+    </div>
 
-<!-- Submit -->
-<div>
-  <%= form.submit %>
-</div>
+    <div class="admin-form-group">
+      <%= form.label :meta_description, "SEO Meta Description" %>
+      <%= form.text_area :meta_description,
+            maxlength: 160,
+            rows: 4,
+            placeholder: "SEO description for this page" %>
+      <small class="admin-form-help">Recommended: 140–160 characters.</small>
+    </div>
+  </section>
+
+  <section class="admin-form-section">
+    <h2 class="admin-form-section-title">Packings</h2>
+
+    <div class="admin-form-group">
+      <%= form.label :packing_ids, "Packings" %>
+
+      <div class="admin-form-inline">
+        <div class="admin-form-inline-field">
+          <%= form.collection_select :packing_ids,
+                Packing.order(:name),
+                :id,
+                :name,
+                {},
+                { multiple: true } %>
+        </div>
+
+        <%= link_to "+ New Packing",
+              new_packing_path,
+              class: "admin-form-secondary-btn" %>
+      </div>
+
+      <small class="admin-form-help">Hold Ctrl/Cmd to select multiple packings.</small>
+    </div>
+  </section>
+
+  <section class="admin-form-section">
+    <h2 class="admin-form-section-title">Content & Media</h2>
+
+    <div class="admin-form-group">
+      <%= form.label :content, "Content" %>
+      <%= form.text_area :content,
+            rows: 15,
+            placeholder: "Write grade content here..." %>
+    </div>
+
+    <div class="admin-form-group">
+      <%= form.label :image, "Grade Image" %>
+      <%= form.file_field :image,
+            class: "admin-form-file",
+            accept: "image/*" %>
+    </div>
+
+    <div class="admin-form-group">
+      <%= form.label :msds_file, "MSDS File (PDF only)" %>
+
+      <%= form.file_field :msds_file,
+            accept: "application/pdf",
+            class: "admin-form-file" %>
+
+      <% if grade.msds_file.attached? %>
+        <div class="admin-current-file">
+          Current MSDS:
+          <%= link_to grade.msds_file.filename,
+                grade.msds_file,
+                target: "_blank",
+                rel: "noopener" %>
+
+          <div class="admin-remove-file">
+            <%= check_box_tag :remove_msds %>
+            <%= label_tag :remove_msds, "Remove current MSDS" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="admin-form-section">
+    <h2 class="admin-form-section-title">Tags</h2>
+
+    <div class="admin-form-group">
+      <%= label_tag :tag_names, "Tags" %>
+      <%= text_field_tag :tag_names,
+            @tag_names,
+            placeholder: "premium, industrial, chemical" %>
+      <small class="admin-form-help">Separate tags with commas (,).</small>
+    </div>
+  </section>
+
+  <div class="admin-form-actions">
+    <%= form.submit class: "admin-form-submit" %>
+  </div>
 
 <% end %>
-

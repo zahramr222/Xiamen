@@ -1,29 +1,448 @@
-<%# BREADCRUMBS - MUST BE AT THE TOP %>
+<%# =====================================================
+    BREADCRUMBS
+===================================================== %>
+
 <% @breadcrumbs = [
   { label: "Products", path: products_path },
   { label: @grade.name }
 ] %>
 
-<%# LEFT SIDEBAR %>
+
+<%# =====================================================
+    LEFT SIDEBAR
+===================================================== %>
+
 <% content_for(:left_sidebar) do %>
-  <% 
+
+  <%
     nav_items = []
-    nav_items << { id: "overview", label: "Overview" }
-    nav_items << { id: "specification", label: "Specification" } if @grade.specifications.present?
-    nav_items << { id: "msds", label: "MSDS" } if @grade.msds_file.attached?
-    nav_items << { id: "packing", label: "Packing" } if @grade.packings.present? || @grade.packing_options.present?
+
+    nav_items << {
+      id: "overview",
+      label: "Overview"
+    }
+
+    nav_items << {
+      id: "specification",
+      label: "Specification"
+    } if @grade.specifications.present?
+
+    nav_items << {
+      id: "msds",
+      label: "MSDS"
+    } if @grade.msds_file.attached?
+
+    nav_items << {
+      id: "packing",
+      label: "Packing"
+    } if @grade.packings.present? || @grade.packing_options.present?
   %>
-  
+
   <%= render "shared/left_sidebar",
     title: @grade.name,
     nav_items: nav_items,
-    order_url: @grade.try(:contact_url) || "https://wa.me/17788678823?text=Hi%2C%20I%20want%20to%20order%20#{@grade.name}",
+    order_url: @grade.try(:contact_url) ||
+      "https://wa.me/17788678823?text=Hi%2C%20I%20want%20to%20order%20#{ERB::Util.url_encode(@grade.name)}",
     order_text: "Order Now"
   %>
+
 <% end %>
 
-<%# MAIN CONTENT %>
-<%= render "grades/grade", grade: @grade %>
+
+<%# =====================================================
+    PAGE TITLE
+===================================================== %>
+
+<% content_for(:page_title, "#{@grade.name} | Global Synergy") %>
+
+
+<%# =====================================================
+    MAIN CONTENT
+===================================================== %>
+
+<div class="product-show">
+
+
+  <%# ===================================================
+      HEADER
+  =================================================== %>
+
+  <header class="product-show-header" id="overview">
+
+    <div class="product-show-header-content">
+
+      <span class="section-label">
+        <span class="section-label-line"></span>
+        PRODUCT GRADE
+      </span>
+
+      <h1 class="section-title">
+        <span><%= @grade.name %></span>
+      </h1>
+
+      <p class="product-show-subtitle">
+        <%= @grade.try(:summary).presence ||
+            "High-quality #{@grade.name} supplied for industrial, road construction and infrastructure applications with reliable international delivery and flexible packing options." %>
+      </p>
+
+    </div>
+
+  </header>
+
+
+  <%# ===================================================
+      IMAGE + OVERVIEW
+  =================================================== %>
+
+  <div class="product-show-details">
+
+    <div class="product-show-image-wrapper">
+
+      <% if @grade.image.attached? %>
+
+        <%= image_tag @grade.image,
+              alt: @grade.name,
+              class: "product-show-main-image" %>
+
+      <% else %>
+
+        <img
+          src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1400&q=85"
+          alt="<%= @grade.name %>"
+          class="product-show-main-image">
+
+      <% end %>
+
+    </div>
+
+
+    <div class="product-show-info">
+
+      <div class="product-show-info-content">
+
+        <h2>
+          About <%= @grade.name %>
+        </h2>
+
+        <% if @grade.content.present? %>
+
+          <%= safe_content_html(@grade.content) %>
+
+        <% else %>
+
+          <p>
+            Premium quality <%= @grade.name %> supplied for
+            industrial and infrastructure applications.
+          </p>
+
+        <% end %>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <%# ===================================================
+      SPECIFICATIONS
+  =================================================== %>
+
+  <% if @grade.specifications.present? %>
+
+    <section class="grade-section" id="specification">
+
+      <div class="product-features-header">
+
+        <span class="section-label">
+          <span class="section-label-line"></span>
+          TECHNICAL DATA
+        </span>
+
+        <h2>
+          Technical <span>Specifications</span>
+        </h2>
+
+      </div>
+
+
+      <% @grade.specifications.each do |spec| %>
+
+        <% if spec.content.present? %>
+
+          <%= safe_content_html(spec.content) %>
+
+        <% end %>
+
+      <% end %>
+
+    </section>
+
+  <% end %>
+
+
+  <%# ===================================================
+      MSDS
+  =================================================== %>
+
+  <% if @grade.msds_file.attached? %>
+
+    <section class="grade-section" id="msds">
+
+      <div class="product-features-header">
+
+        <span class="section-label">
+          <span class="section-label-line"></span>
+          SAFETY & DOCUMENTATION
+        </span>
+
+        <h2>
+          Safety <span>Information</span>
+        </h2>
+
+      </div>
+
+
+      <div class="grade-msds-card">
+
+        <div class="grade-msds-icon">
+          <i class="fa-regular fa-file-pdf"></i>
+        </div>
+
+
+        <div class="grade-msds-content">
+
+          <span>PDF DOCUMENT</span>
+
+          <h3>
+            <%= @grade.name %> MSDS
+          </h3>
+
+          <p>
+            Material Safety Data Sheet and product safety information.
+          </p>
+
+        </div>
+
+
+        <div class="grade-msds-actions">
+
+          <%= link_to @grade.msds_file,
+                class: "grade-msds-download",
+                aria_label: "Download MSDS",
+                target: "_blank" do %>
+
+            <i class="fa-solid fa-download"></i>
+            Download
+
+          <% end %>
+
+
+          <%= link_to rails_blob_path(
+                @grade.msds_file,
+                disposition: "inline"
+              ),
+              class: "grade-msds-view",
+              aria_label: "View MSDS",
+              target: "_blank" do %>
+
+            <i class="fa-regular fa-eye"></i>
+            View
+
+          <% end %>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  <% end %>
+
+
+  <%# ===================================================
+      PACKING
+  =================================================== %>
+
+  <% if @grade.packings.present? || @grade.packing_options.present? %>
+
+    <section class="product-packings" id="packing">
+
+      <div class="product-packings-header">
+
+        <span class="section-label">
+          <span class="section-label-line"></span>
+          PACKING OPTIONS
+        </span>
+
+        <h2>
+          Flexible <span>Packing Solutions</span>
+        </h2>
+
+        <p>
+          Explore the available packing solutions for
+          <%= @grade.name %>.
+        </p>
+
+      </div>
+
+
+      <div class="product-packings-grid">
+
+
+        <%# ===============================
+            DATABASE PACKINGS
+        =============================== %>
+
+        <% if @grade.packings.present? %>
+
+          <% @grade.packings.each do |packing| %>
+
+            <article class="product-packing-card">
+
+
+              <% if packing.image.attached? %>
+
+                <div class="product-packing-image">
+
+                  <%= image_tag packing.image,
+                        alt: packing.name,
+                        loading: "lazy" %>
+
+                </div>
+
+              <% end %>
+
+
+              <div class="product-packing-content">
+
+                <span class="product-packing-label">
+                  PACKING TYPE
+                </span>
+
+                <h3>
+                  <%= packing.name %>
+                </h3>
+
+
+                <% if packing.content.present? %>
+
+                  <div class="product-packing-description">
+
+                    <%= truncate(
+                          strip_tags(packing.content),
+                          length: 120
+                        ) %>
+
+                  </div>
+
+                <% end %>
+
+
+                <div class="product-packing-actions">
+
+                  <%= link_to packing_path(packing),
+                        class: "product-packing-link" do %>
+
+                    <i class="fa-solid fa-box"></i>
+
+                    View Packing Details
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                  <% end %>
+
+                </div>
+
+              </div>
+
+            </article>
+
+          <% end %>
+
+
+        <%# ===============================
+            FALLBACK PACKING OPTIONS
+        =============================== %>
+
+        <% elsif @grade.packing_options.present? %>
+
+          <% @grade.packing_options.each do |packing| %>
+
+            <article class="product-packing-card">
+
+              <div class="product-packing-content">
+
+                <span class="product-packing-label">
+                  PACKING TYPE
+                </span>
+
+                <h3>
+                  <%= packing[:name] %>
+                </h3>
+
+
+                <% if packing[:description].present? %>
+
+                  <div class="product-packing-description">
+
+                    <p>
+                      <%= packing[:description] %>
+                    </p>
+
+                  </div>
+
+                <% end %>
+
+
+                <% if packing[:id].present? %>
+
+                  <div class="product-packing-actions">
+
+                    <%= link_to packing_path(packing[:id]),
+                          class: "product-packing-link" do %>
+
+                      <i class="fa-solid fa-box"></i>
+
+                      View Packing Details
+
+                      <i class="fa-solid fa-arrow-right"></i>
+
+                    <% end %>
+
+                  </div>
+
+                <% end %>
+
+              </div>
+
+            </article>
+
+          <% end %>
+
+        <% end %>
+
+      </div>
+
+    </section>
+
+  <% end %>
+
+
+  <%# ===================================================
+      INQUIRY
+  =================================================== %>
+
+  <%= render "shared/inquiry",
+        product_name: @grade.name %>
+
+
+</div>
+
+
+<%# =====================================================
+    RIGHT SIDEBAR
+===================================================== %>
 
 <% content_for(:right_sidebar) do %>
 
@@ -31,56 +450,130 @@
     @grade,
     label: "INSIGHTS",
     title: "Related Articles",
-    description: "Latest insights related to #{@grade.name}, applications, specifications and supply."
+    description:
+      "Latest insights related to #{@grade.name}, applications, specifications and supply."
   ) %>
 
 <% end %>
 
-<%# JAVASCRIPT %>
+
+<%# =====================================================
+    JAVASCRIPT
+===================================================== %>
+
 <% content_for(:javascript) do %>
+
   <script>
+
     document.addEventListener("DOMContentLoaded", function () {
-      const navLinks = document.querySelectorAll(".grade-nav-link");
+
+      const navLinks =
+        document.querySelectorAll(".grade-nav-link");
+
+
       const sections = [
+
         document.getElementById("overview"),
+
         document.getElementById("specification"),
+
         document.getElementById("msds"),
+
         document.getElementById("packing")
-      ];
+
+      ].filter(Boolean);
+
 
       navLinks.forEach(function (link) {
+
         link.addEventListener("click", function (event) {
-          const targetId = link.getAttribute("href");
-          const target = document.querySelector(targetId);
+
+          const targetId =
+            link.getAttribute("href");
+
+          const target =
+            document.querySelector(targetId);
+
+
           if (!target) return;
 
+
           event.preventDefault();
+
+
           target.scrollIntoView({
+
             behavior: "smooth",
+
             block: "start"
+
           });
+
         });
+
       });
 
+
       function updateActiveNavigation() {
-        const scrollPosition = window.scrollY + 150;
-        let currentSection = "overview";
+
+        const scrollPosition =
+          window.scrollY + 150;
+
+
+        let currentSection =
+          "overview";
+
 
         sections.forEach(function (section) {
-          if (!section) return;
-          if (scrollPosition >= section.offsetTop) {
-            currentSection = section.id;
+
+          if (
+            scrollPosition >=
+            section.offsetTop
+          ) {
+
+            currentSection =
+              section.id;
+
           }
+
         });
+
 
         navLinks.forEach(function (link) {
-          const sectionName = link.dataset.section;
-          link.classList.toggle("active", sectionName === currentSection);
+
+          const sectionName =
+            link.dataset.section;
+
+
+          link.classList.toggle(
+
+            "active",
+
+            sectionName ===
+              currentSection
+
+          );
+
         });
+
       }
 
-      window.addEventListener("scroll", updateActiveNavigation, { passive: true });
+
+      window.addEventListener(
+
+        "scroll",
+
+        updateActiveNavigation,
+
+        { passive: true }
+
+      );
+
+
       updateActiveNavigation();
+
     });
+
   </script>
+
 <% end %>

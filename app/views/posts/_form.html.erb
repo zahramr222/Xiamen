@@ -1,11 +1,13 @@
-<%= form_with(model: post) do |form| %>
+<%= form_with(model: post, class: "admin-form") do |form| %>
+
+  <div class="admin-form-header">
+    <h1><%= post.persisted? ? "Edit Post" : "New Post" %></h1>
+    <p>Manage post content, classification and search engine information.</p>
+  </div>
 
   <% if post.errors.any? %>
-    <div style="color:red">
-      <h2>
-        <%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:
-      </h2>
-
+    <div class="admin-form-errors">
+      <h3><%= pluralize(post.errors.count, "error") %> prevented this post from being saved:</h3>
       <ul>
         <% post.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -14,85 +16,86 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
-  </div>
+  <section class="admin-form-section">
+    <h2 class="admin-form-section-title">General Information</h2>
 
-  <br>
+    <div class="admin-form-group">
+      <%= form.label :title %>
+      <%= form.text_field :title, placeholder: "Post title" %>
+    </div>
 
-  <div>
-    <%= form.label :slug %><br>
-    <%= form.text_field :slug %>
-  </div>
+    <div class="admin-form-group">
+      <%= form.label :slug %>
+      <%= form.text_field :slug, placeholder: "post-url-slug" %>
+      <small class="admin-form-help">URL-friendly identifier for this post.</small>
+    </div>
 
-  <br>
+    <div class="admin-form-group">
+      <%= form.label :post_type, "Post Type" %>
+      <%= form.select :post_type,
+            Post::POST_TYPES.map { |type| [type, type] },
+            { prompt: "Select Post Type" } %>
+    </div>
+  </section>
 
-  <div>
-  <%= form.label :meta_title, "SEO Meta Title" %>
-  <%= form.text_field :meta_title,
-      maxlength: 60,
-      placeholder: "SEO title for this page" %>
-  <small>Recommended: 50–60 characters.</small>
-</div>
+  <section class="admin-form-section">
+    <h2 class="admin-form-section-title">SEO</h2>
 
-<div>
-  <%= form.label :meta_description, "SEO Meta Description" %>
-  <%= form.text_area :meta_description,
-      maxlength: 160,
-      rows: 4,
-      placeholder: "SEO description for this page" %>
-  <small>Recommended: 140–160 characters.</small>
-</div>
+    <div class="admin-form-group">
+      <%= form.label :meta_title, "SEO Meta Title" %>
+      <%= form.text_field :meta_title,
+            maxlength: 60,
+            placeholder: "SEO title for this page" %>
+      <small class="admin-form-help">Recommended: 50–60 characters.</small>
+    </div>
 
-<div>
-  <%= form.label :post_type, "Post Type" %><br>
+    <div class="admin-form-group">
+      <%= form.label :meta_description, "SEO Meta Description" %>
+      <%= form.text_area :meta_description,
+            maxlength: 160,
+            rows: 4,
+            placeholder: "SEO description for this page" %>
+      <small class="admin-form-help">Recommended: 140–160 characters.</small>
+    </div>
+  </section>
 
-  <%= form.select :post_type,
-                  Post::POST_TYPES.map { |type| [type, type] },
-                  { prompt: "Select Post Type" } %>
-</div>
+  <section class="admin-form-section">
+    <h2 class="admin-form-section-title">Content</h2>
 
-<br>
-<!-- Image -->
-  <div>
-    <%= form.label :image, "Post Image" %><br>
-    <%= form.file_field :image %>
-  </div>
+    <div class="admin-form-group">
+      <%= form.label :summery, "Summary" %>
+      <%= form.text_area :summery,
+            rows: 5,
+            placeholder: "Short summary of the post..." %>
+    </div>
 
-  <br>
-<br>
+    <div class="admin-form-group">
+      <%= form.label :content %>
+      <%= form.text_area :content,
+            rows: 15,
+            placeholder: "Write post content here..." %>
+    </div>
 
-  <br>
+    <div class="admin-form-group">
+      <%= form.label :image, "Post Image" %>
+      <%= form.file_field :image, class: "admin-form-file", accept: "image/*" %>
+    </div>
+  </section>
 
-  <div>
-    <%= form.label :content %><br>
-    <%= form.text_area :content, rows: 15 %>
-  </div>
+  <section class="admin-form-section">
+    <h2 class="admin-form-section-title">Tags</h2>
 
-  <div>
-    <%= form.label :summery %><br>
-    <%= form.text_area :summery, rows: 15 %>
-  </div>
+    <div class="admin-form-group">
+      <%= label_tag :tag_names, "Tags" %>
+      <%= text_field_tag :tag_names,
+            @tag_names,
+            placeholder: "plastic, food, container" %>
+      <small class="admin-form-help">Separate tags with commas (,).</small>
+    </div>
+  </section>
 
-  <br>
-
-  <div>
-    <%= label_tag :tag_names, "Tags" %><br>
-
-    <%= text_field_tag :tag_names,
-                       @tag_names,
-                       placeholder: "plastic, food, container" %>
-
-    <br>
-
-    <small>Separate tags with commas (,)</small>
-  </div>
-
-  <br>
-
-  <div>
-    <%= form.submit %>
+  <div class="admin-form-actions">
+    <%= form.submit class: "admin-form-submit" %>
   </div>
 
 <% end %>

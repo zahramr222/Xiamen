@@ -1,9 +1,26 @@
-<%= form_with(model: specification, local: true) do |form| %>
+<%= form_with(model: specification, local: true, class: "admin-form") do |form| %>
+
+  <div class="admin-form-header">
+    <h1>
+      <%= specification.persisted? ? "Edit Specification" : "New Specification" %>
+    </h1>
+
+    <p>
+      Manage specification details and assign it to a grade.
+    </p>
+  </div>
+
+
+  <%# ================================
+      ERRORS
+  ================================= %>
 
   <% if specification.errors.any? %>
-    <div class="errors">
+    <div class="admin-form-errors">
+
       <h3>
-        <%= pluralize(specification.errors.count, "error") %> prohibited this specification from being saved:
+        <%= pluralize(specification.errors.count, "error") %>
+        prevented this specification from being saved:
       </h3>
 
       <ul>
@@ -11,30 +28,89 @@
           <li><%= message %></li>
         <% end %>
       </ul>
+
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
+
+  <%# ================================
+      GENERAL INFORMATION
+  ================================= %>
+
+  <section class="admin-form-section">
+
+    <h2 class="admin-form-section-title">
+      General Information
+    </h2>
+
+
+    <div class="admin-form-group">
+
+      <%= form.label :title, "Specification Title" %>
+
+      <%= form.text_field :title,
+            placeholder: "e.g. Penetration Bitumen 60/70 Specification" %>
+
+    </div>
+
+
+    <div class="admin-form-group">
+
+      <%= form.label :grade_id, "Grade" %>
+
+      <%= form.collection_select(
+            :grade_id,
+            Grade.order(:name),
+            :id,
+            :name,
+            { prompt: "Select Grade" }
+          ) %>
+
+      <small class="admin-form-help">
+        Select the grade associated with this specification.
+      </small>
+
+    </div>
+
+  </section>
+
+
+  <%# ================================
+      SPECIFICATION CONTENT
+  ================================= %>
+
+  <section class="admin-form-section">
+
+    <h2 class="admin-form-section-title">
+      Specification Content
+    </h2>
+
+
+    <div class="admin-form-group">
+
+      <%= form.label :content, "Content" %>
+
+      <%= form.text_area :content,
+            rows: 15,
+            placeholder: "Enter specification details here..." %>
+
+      <small class="admin-form-help">
+        Add technical properties, standards, values and other specification details.
+      </small>
+
+    </div>
+
+  </section>
+
+
+  <%# ================================
+      ACTIONS
+  ================================= %>
+
+  <div class="admin-form-actions">
+
+    <%= form.submit class: "admin-form-submit" %>
+
   </div>
-
-  <br>
-
-  <div class="field">
-    <%= form.label :content %><br>
-    <%= form.text_area :content, rows: 15 %>
-  </div>
-
-  <br>
-
-  <div>
-    <%= form.label :grade_id, "Grade" %><br>
-    <%= form.collection_select :grade_id, Grade.all, :id, :name, prompt: "Select Grade" %>
-  </div>
-
-  <br>
-
-  <%= form.submit %>
 
 <% end %>

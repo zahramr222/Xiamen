@@ -73,14 +73,56 @@
         </div>
       <% end %>
 
-      <main class="main">
-        <div class="content">
-          <%= yield %>
-        </div>
-      </main>
+
+      <%# =====================================================
+          PAGES WITH SIDEBARS
+      ===================================================== %>
+
+      <% if content_for?(:left_sidebar) || content_for?(:right_sidebar) %>
+
+        <main class="main">
+          <div class="grade-page">
+
+            <% if content_for?(:left_sidebar) %>
+              <aside class="grade-sidebar">
+                <%= yield :left_sidebar %>
+              </aside>
+            <% end %>
+
+            <div class="grade-main">
+              <%= yield %>
+            </div>
+
+            <% if content_for?(:right_sidebar) %>
+              <aside class="grade-related-sidebar">
+                <%= yield :right_sidebar %>
+              </aside>
+            <% end %>
+
+          </div>
+        </main>
+
+
+      <%# =====================================================
+          NORMAL PAGES
+      ===================================================== %>
+
+      <% else %>
+
+        <main class="main">
+          <div class="content">
+            <%= yield %>
+          </div>
+        </main>
+
+      <% end %>
+
 
       <%= render "shared/footer" %>
 
     </div>
+
+    <%= yield :javascript %>
+
   </body>
 </html>

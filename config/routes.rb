@@ -33,7 +33,7 @@ Rails.application.routes.draw do
   
   
 
-  resources :specifications, only: [:new, :create, :edit, :update, :destroy]
+  resources :specifications
   resources :packings
   resources :grades
   resources :posts

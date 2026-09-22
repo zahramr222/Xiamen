@@ -1,119 +1,110 @@
+<%= form_with(model: @packing, local: true, class: "admin-form") do |form| %>
 
-<%= form_with(model: @packing, local: true) do |form| %>
-
-<% if @packing.errors.any? %>
-  <div style="color: red;">
-    <h2>
-      <%= pluralize(@packing.errors.count, "error") %>
-      prohibited this packing from being saved:
-    </h2>
-
-    <ul>
-      <% @packing.errors.each do |error| %>
-        <li><%= error.full_message %></li>
-      <% end %>
-    </ul>
+  <div class="admin-form-header">
+    <h1><%= @packing.persisted? ? "Edit Packing" : "New Packing" %></h1>
+    <p>Manage packing information, specification, content and SEO.</p>
   </div>
-<% end %>
 
-<!-- Packing Name -->
-<div>
-  <%= form.label :name, "Packing Name" %><br>
-  <%= form.text_field :name, class: "form-control" %>
-</div>
+  <% if @packing.errors.any? %>
+    <div class="admin-form-errors">
+      <h3><%= pluralize(@packing.errors.count, "error") %> prevented this packing from being saved:</h3>
+      <ul>
+        <% @packing.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-<br>
+  <section class="admin-form-section">
+    <h2 class="admin-form-section-title">General Information</h2>
 
-<!-- Slug -->
-<div>
-  <%= form.label :slug, "Slug" %><br>
-  <%= form.text_field :slug, class: "form-control" %>
-</div>
+    <div class="admin-form-group">
+      <%= form.label :name, "Packing Name" %>
+      <%= form.text_field :name, placeholder: "Packing name" %>
+    </div>
 
-<br>
+    <div class="admin-form-group">
+      <%= form.label :slug, "Slug" %>
+      <%= form.text_field :slug, placeholder: "packing-url-slug" %>
+    </div>
+  </section>
 
-<div>
-<%= form.label :meta_title, "SEO Meta Title" %>
-<%= form.text_field :meta_title,
-maxlength: 60,
-placeholder: "SEO title for this page" %>
-<small>Recommended: 50–60 characters.</small>
-</div> 
+  <section class="admin-form-section">
+    <h2 class="admin-form-section-title">SEO</h2>
 
-<br> 
+    <div class="admin-form-group">
+      <%= form.label :meta_title, "SEO Meta Title" %>
+      <%= form.text_field :meta_title,
+            maxlength: 60,
+            placeholder: "SEO title for this page" %>
+      <small class="admin-form-help">Recommended: 50–60 characters.</small>
+    </div>
 
-<div>
-<%= form.label :meta_description, "SEO Meta Description" %>
-<%= form.text_area :meta_description,
-maxlength: 160,
-rows: 4,
-placeholder: "SEO description for this page" %>
-<small>Recommended: 140–160 characters.</small>
-</div>
+    <div class="admin-form-group">
+      <%= form.label :meta_description, "SEO Meta Description" %>
+      <%= form.text_area :meta_description,
+            maxlength: 160,
+            rows: 4,
+            placeholder: "SEO description for this page" %>
+      <small class="admin-form-help">Recommended: 140–160 characters.</small>
+    </div>
+  </section>
 
-<br>
+  <section class="admin-form-section">
+    <h2 class="admin-form-section-title">Specification</h2>
 
-<!-- Specification -->
-<div>
-  <%= form.label :specification_id, "Specification" %><br>
+    <div class="admin-form-group">
+      <%= form.label :specification_id, "Specification" %>
 
-  <%= form.collection_select(
-    :specification_id,
-    Specification.order(:title),
-    :id,
-    :title,
-    { include_blank: "Select a specification" },
-    { class: "form-select" }
-  ) %>
+      <div class="admin-form-inline">
+        <div class="admin-form-inline-field">
+          <%= form.collection_select(
+                :specification_id,
+                Specification.order(:title),
+                :id,
+                :title,
+                { include_blank: "Select a specification" }
+              ) %>
+        </div>
 
-  <%= link_to "+ New",
+        <%= link_to "+ New Specification",
               new_specification_path,
-              class: "btn btn-success" %>
-</div>
+              class: "admin-form-secondary-btn" %>
+      </div>
+    </div>
+  </section>
 
-<br>
+  <section class="admin-form-section">
+    <h2 class="admin-form-section-title">Content & Media</h2>
 
-<!-- Content -->
-<div>
-  <%= form.label :content, "Content" %><br>
+    <div class="admin-form-group">
+      <%= form.label :content, "Content" %>
+      <%= form.text_area :content,
+            rows: 15,
+            placeholder: "Write packing content here..." %>
+    </div>
 
-  <%= form.text_area :content,
-                     rows: 15,
-                     class: "form-control",
-                     placeholder: "Write packing content here..." %>
-</div>
+    <div class="admin-form-group">
+      <%= form.label :image, "Packing Image" %>
+      <%= form.file_field :image, class: "admin-form-file", accept: "image/*" %>
+    </div>
+  </section>
 
-<br>
+  <section class="admin-form-section">
+    <h2 class="admin-form-section-title">Tags</h2>
 
-<!-- Image -->
-<div>
-  <%= form.label :image, "Packing Image" %><br>
-  <%= form.file_field :image, class: "form-control" %>
-</div>
+    <div class="admin-form-group">
+      <%= label_tag :tag_names, "Tags" %>
+      <%= text_field_tag :tag_names,
+            @tag_names,
+            placeholder: "25kg, bag, industrial, bulk" %>
+      <small class="admin-form-help">Separate tags with commas (,).</small>
+    </div>
+  </section>
 
-<br>
-
-<!-- Tags -->
-<div>
-  <%= label_tag :tag_names, "Tags" %><br>
-
-  <%= text_field_tag :tag_names,
-                     @tag_names,
-                     class: "form-control",
-                     placeholder: "25kg, bag, industrial, bulk" %>
-
-  <br>
-
-  <small>
-    Separate tags with commas (,)
-  </small>
-</div>
-
-<br>
-
-<!-- Submit -->
-<div>
-  <%= form.submit class: "btn btn-primary" %>
-</div>
+  <div class="admin-form-actions">
+    <%= form.submit class: "admin-form-submit" %>
+  </div>
 
 <% end %>
