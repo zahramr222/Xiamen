@@ -77,6 +77,10 @@ Rails.application.configure do
     # Prevent this website from being embedded by other websites.
     # Helps protect against clickjacking.
     policy.frame_ancestors :self
+
+    policy.frame_src :self,
+                "https://challenges.cloudflare.com",
+                "https://www.google.com"
   end
 
   # Enforce the policy.

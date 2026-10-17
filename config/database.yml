@@ -16,18 +16,30 @@ production:
   primary:
     <<: *default
     database: xiamen_production
+    host: <%= ENV["DB_HOST"] %>
+    username: <%= ENV["DB_USERNAME"] %>
+    password: <%= ENV["DB_PASSWORD"] %>
 
   cache:
     <<: *default
     database: xiamen_production_cache
+    host: <%= ENV["DB_HOST"] %>
+    username: <%= ENV["DB_USERNAME"] %>
+    password: <%= ENV["DB_PASSWORD"] %>
     migrations_paths: db/cache_migrate
 
   queue:
     <<: *default
     database: xiamen_production_queue
+    host: <%= ENV["DB_HOST"] %>
+    username: <%= ENV["DB_USERNAME"] %>
+    password: <%= ENV["DB_PASSWORD"] %>
     migrations_paths: db/queue_migrate
 
   cable:
     <<: *default
     database: xiamen_production_cable
+    host: <%= ENV["DB_HOST"] %>
+    username: <%= ENV["DB_USERNAME"] %>
+    password: <%= ENV["DB_PASSWORD"] %>
     migrations_paths: db/cable_migrate

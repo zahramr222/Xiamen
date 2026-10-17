@@ -2,12 +2,11 @@
 service: xiamen
 
 # Name of the container image (use your-user/app-name on external registries).
-image: xiamen
-
+image: zahramr222/xiamen
 # Deploy to these servers.
 servers:
   web:
-    - 192.168.0.1
+    - 37.221.21.211
   # job:
   #   hosts:
   #     - 192.168.0.1
@@ -20,14 +19,15 @@ servers:
 #
 # Don't use this when deploying to multiple web servers (then you have to terminate SSL at your load balancer).
 #
-# proxy:
-#   ssl: true
-#   host: app.example.com
-
+proxy:
+  host: 37.221.21.211
+  ssl: false
 # Where you keep your container images.
 registry:
-  # Alternatives: hub.docker.com / registry.digitalocean.com / ghcr.io / ...
-  server: localhost:5555
+  server: ghcr.io
+  username: zahramr222
+  password:
+    - KAMAL_REGISTRY_PASSWORD
 
   # Needed for authenticated registries.
   # username: your-user
@@ -40,11 +40,12 @@ registry:
 env:
   secret:
     - RAILS_MASTER_KEY
-  clear:
-    # Run the Solid Queue Supervisor inside the web server's Puma process to do jobs.
-    # When you start using multiple servers, you should split out job processing to a dedicated machine.
-    SOLID_QUEUE_IN_PUMA: true
+    - DB_PASSWORD
 
+  clear:
+    SOLID_QUEUE_IN_PUMA: true
+    DB_HOST: xiamen-db
+    DB_USERNAME: xiamen
     # Set number of processes dedicated to Solid Queue (default: 1)
     # JOB_CONCURRENCY: 3
 
@@ -93,27 +94,22 @@ builder:
 # Use a different ssh user than root
 # ssh:
 #   user: app
+ssh:
+  user: railsadmin
+  port: 20481
 
 # Use accessory services (secrets come from .kamal/secrets).
-# accessories:
-#   db:
-#     image: mysql:8.0
-#     host: 192.168.0.2
-#     # Change to 3306 to expose port to the world instead of just local network.
-#     port: "127.0.0.1:3306:3306"
-#     env:
-#       clear:
-#         MYSQL_ROOT_HOST: '%'
-#       secret:
-#         - MYSQL_ROOT_PASSWORD
-#     files:
-#       - config/mysql/production.cnf:/etc/mysql/my.cnf
-#       - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
-#     directories:
-#       - data:/var/lib/mysql
-#   redis:
-#     image: valkey/valkey:8
-#     host: 192.168.0.2
-#     port: 6379
-#     directories:
-#       - data:/data
+# PostgreSQL will run as a Docker container managed by Kamal.
+accessories:
+  db:
+    image: postgres:18
+    host: 37.221.21.211
+
+    env:
+      clear:
+        POSTGRES_USER: xiamen
+      secret:
+        - POSTGRES_PASSWORD
+
+    directories:
+      - data:/var/lib/postgresql

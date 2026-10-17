@@ -663,60 +663,111 @@ button, input, textarea {
    BITUMEN MEGA MENU
 ===================================================== */
 
+.has-mega-menu {
+  position: static;
+}
+
 .mega-menu {
   position: absolute;
-  top: calc(100% - 1px);
+  top: 100%;
+
+  /*
+   * Because .has-mega-menu is position: static,
+   * the mega menu is positioned against the navigation/header area
+   * instead of the Bitumen item itself.
+   */
   left: 50%;
+
   width: min(1080px, calc(100vw - 40px));
-  transform: translateX(-50%) translateY(10px);
+  max-width: 1080px;
+
   padding-top: 12px;
+
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity .25s ease, transform .25s ease, visibility .25s ease;
+
+  transform: translateX(-50%) translateY(10px);
+
+  transition:
+    opacity .25s ease,
+    transform .25s ease,
+    visibility .25s ease;
+
+  z-index: 1000;
 }
 
-.nav-item:hover .mega-menu {
+.has-mega-menu:hover .mega-menu {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
+
   transform: translateX(-50%) translateY(0);
 }
 
+
+/* =====================================================
+   MEGA MENU BOX
+===================================================== */
+
 .mega-menu-inner {
+  width: 100%;
+
   padding: 28px 30px 30px;
+
+  background: #ffffff;
+
   border: 1px solid #e7e8ed;
   border-radius: 14px;
-  background: #ffffff;
-  box-shadow: 0 20px 60px rgba(14,48,96,.12);
+
+  box-shadow: 0 20px 60px rgba(14, 48, 96, .12);
 }
+
+
+/* =====================================================
+   HEADER
+===================================================== */
 
 .mega-menu-header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+
+  gap: 20px;
+
   padding-bottom: 20px;
   margin-bottom: 24px;
+
   border-bottom: 1px solid #edf0f3;
 }
 
 .mega-menu-eyebrow {
   display: block;
+
   margin-bottom: 6px;
+
   color: #8A6F3D;
+
   font-size: 9px;
   font-weight: 750;
   letter-spacing: 2px;
+
   text-transform: uppercase;
 }
 
 .mega-menu-view-all {
   display: inline-flex;
   align-items: center;
+
   gap: 8px;
+
+  flex-shrink: 0;
+
   color: #0E3060;
+
   font-size: 11px;
   font-weight: 700;
+
   text-decoration: none;
 }
 
@@ -724,15 +775,24 @@ button, input, textarea {
   color: #8A6F3D;
 }
 
+
+/* =====================================================
+   PRODUCT GRID
+===================================================== */
+
 .bitumen-menu-grid {
   display: grid;
+
   grid-template-columns: repeat(4, minmax(0, 1fr));
+
   gap: 0;
 }
 
 .bitumen-menu-column {
   min-width: 0;
+
   padding: 0 22px;
+
   border-right: 1px solid #edf0f3;
 }
 
@@ -742,37 +802,69 @@ button, input, textarea {
 
 .bitumen-menu-column:last-child {
   padding-right: 0;
+
   border-right: 0;
 }
+
+
+/* =====================================================
+   PRODUCT TITLE
+===================================================== */
 
 .mega-product-title {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   gap: 10px;
+
   margin-bottom: 13px;
+
   color: #0E3060;
+
   font-size: 13px;
   font-weight: 750;
+
   text-decoration: none;
 }
 
+.mega-product-title span {
+  min-width: 0;
+
+  overflow-wrap: break-word;
+}
+
 .mega-product-title i {
+  flex-shrink: 0;
+
   color: #8A6F3D;
+
   font-size: 10px;
+
   opacity: 0;
+
   transform: translateX(-4px);
-  transition: opacity .2s ease, transform .2s ease;
+
+  transition:
+    opacity .2s ease,
+    transform .2s ease;
 }
 
 .mega-product-title:hover i {
   opacity: 1;
+
   transform: translateX(0);
 }
+
+
+/* =====================================================
+   GRADES
+===================================================== */
 
 .mega-grade-list {
   padding: 0;
   margin: 0;
+
   list-style: none;
 }
 
@@ -784,20 +876,40 @@ button, input, textarea {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  gap: 8px;
+
   padding: 6px 0;
+
   color: #7c8998;
+
   font-size: 11px;
+  line-height: 1.4;
+
   text-decoration: none;
-  transition: color .2s ease, padding-left .2s ease;
+
+  transition:
+    color .2s ease,
+    padding-left .2s ease;
+}
+
+.mega-grade-link span {
+  min-width: 0;
+
+  overflow-wrap: break-word;
 }
 
 .mega-grade-link:hover {
   padding-left: 4px;
+
   color: #8A6F3D;
 }
 
 .mega-grade-link i {
+  flex-shrink: 0;
+
   font-size: 8px;
+
   opacity: 0;
 }
 
@@ -805,33 +917,92 @@ button, input, textarea {
   opacity: 1;
 }
 
+
+/* =====================================================
+   SEE ALL
+===================================================== */
+
 .mega-see-all {
   margin-top: 7px;
   padding-top: 9px;
+
   border-top: 1px solid #f0f1f3;
 }
 
 .mega-see-all a {
   display: inline-flex;
   align-items: center;
+
   gap: 6px;
+
   color: #0E3060;
+
   font-size: 10px;
   font-weight: 750;
+
   text-decoration: none;
 }
 
 .mega-see-all i {
   color: #8A6F3D;
+
   font-size: 9px;
 }
 
 .mega-no-grades {
-  color: #a0a7b2;
-  font-size: 11px;
   padding-top: 5px;
+
+  color: #a0a7b2;
+
+  font-size: 11px;
 }
 
+
+/* =====================================================
+   LAPTOP
+   Keep 4 columns, reduce spacing
+===================================================== */
+
+@media (max-width: 1200px) and (min-width: 992px) {
+
+  .mega-menu {
+    width: calc(100vw - 32px);
+  }
+
+  .mega-menu-inner {
+    padding: 24px;
+  }
+
+  .mega-menu-header {
+    padding-bottom: 17px;
+    margin-bottom: 20px;
+  }
+
+  .bitumen-menu-column {
+    padding: 0 14px;
+  }
+
+  .mega-product-title {
+    font-size: 12px;
+  }
+
+  .mega-grade-link {
+    font-size: 10px;
+  }
+}
+
+
+/* =====================================================
+   MOBILE / TABLET
+   Your HTML already has a separate mobile Bitumen menu.
+===================================================== */
+
+@media (max-width: 991px) {
+
+  .mega-menu {
+    display: none;
+  }
+}
 /* =====================================================
    PRODUCTS DROPDOWN
 ===================================================== */
@@ -3575,7 +3746,7 @@ button, input, textarea {
   );
 
   text-align: left;
-  border-radius: 30px;
+ 
 }
 
 .reports-container {
@@ -3611,7 +3782,7 @@ button, input, textarea {
 
   text-align: left;
 
-  border-radius: 30px;
+ 
 }
 
 .reports-container {
@@ -5098,6 +5269,17 @@ button, input, textarea {
   }
 }
 
+
+.reports-header {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.reports-header > p {
+  max-width: 600px;
+  text-align: left;
+}
 /* =====================================================
    CONTACT SECTION - FIXED
 ===================================================== */
@@ -7281,7 +7463,7 @@ button, input, textarea {
 
 .grade-main {
   min-width: 0;
-  padding: 35px 45px 100px;
+  padding: 35px 45px 0px;
   border-left: 1px solid #e5e8eb;
   border-right: 1px solid #e5e8eb;
   background: #fff;
