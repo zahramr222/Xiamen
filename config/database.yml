@@ -18,14 +18,14 @@ production:
     database: xiamen_production
     host: <%= ENV["DB_HOST"] %>
     username: <%= ENV["DB_USERNAME"] %>
-    password: <%= ENV.fetch("DB_PASSWORD").to_json %>
+    password: <%= ENV["DB_PASSWORD"].to_json %>
 
   cache:
     <<: *default
     database: xiamen_production_cache
     host: <%= ENV["DB_HOST"] %>
     username: <%= ENV["DB_USERNAME"] %>
-    password: <%= ENV.fetch("DB_PASSWORD").to_json %>
+    password: <%= ENV["DB_PASSWORD"].to_json %>
     migrations_paths: db/cache_migrate
 
   queue:
@@ -33,7 +33,7 @@ production:
     database: xiamen_production_queue
     host: <%= ENV["DB_HOST"] %>
     username: <%= ENV["DB_USERNAME"] %>
-    password: <%= ENV.fetch("DB_PASSWORD").to_json %>
+    password: <%= ENV["DB_PASSWORD"].to_json %>
     migrations_paths: db/queue_migrate
 
   cable:
@@ -41,5 +41,5 @@ production:
     database: xiamen_production_cable
     host: <%= ENV["DB_HOST"] %>
     username: <%= ENV["DB_USERNAME"] %>
-    password: <%= ENV.fetch("DB_PASSWORD").to_json %>
+    password: <%= ENV["DB_PASSWORD"].to_json %>
     migrations_paths: db/cable_migrate
