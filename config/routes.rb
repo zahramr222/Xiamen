@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+get "/up" => proc { [200, { "Content-Type" => "text/plain" }, ["OK"]] }
   get "search/index"
   devise_for :users,
            skip: [:registrations],
