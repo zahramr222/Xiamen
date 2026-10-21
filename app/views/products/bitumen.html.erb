@@ -63,7 +63,7 @@
           <div class="bitumen-product-count">
             <span>(12)</span> Products
           </div>
-          <%= link_to product_path(@oxidized_bitumen), class: "bitumen-product-link" do %>
+          <%= link_to (@oxidized_bitumen.present? ? (@oxidized_bitumen.present? ? product_path(@oxidized_bitumen) : products_path) : products_path), class: "bitumen-product-link" do %>
           View Products
           <i class="fa-solid fa-arrow-right"></i>
           <% end %>
@@ -79,7 +79,7 @@
           <div class="bitumen-product-count">
             <span>(12)</span> Products
           </div>
-          <%= link_to product_path(@penetration_bitumen), class: "bitumen-product-link" do %>
+          <%= link_to (@penetration_bitumen.present? ? (@penetration_bitumen.present? ? product_path(@penetration_bitumen) : products_path) : products_path), class: "bitumen-product-link" do %>
           View Products
           <i class="fa-solid fa-arrow-right"></i>
           <% end %>
@@ -95,7 +95,7 @@
           <div class="bitumen-product-count">
             <span>(13)</span> Products
           </div>
-          <%= link_to product_path(@cutback_bitumen), class: "bitumen-product-link" do %>
+          <%= link_to (@cutback_bitumen.present? ? (@cutback_bitumen.present? ? product_path(@cutback_bitumen) : products_path) : products_path), class: "bitumen-product-link" do %>
           View Products
           <i class="fa-solid fa-arrow-right"></i>
           <% end %>
@@ -111,7 +111,7 @@
           <div class="bitumen-product-count">
             <span>(3)</span> Products
           </div>
-          <%= link_to product_path(@emulsion_bitumen), class: "bitumen-product-link" do %>
+          <%= link_to (@emulsion_bitumen.present? ? (@emulsion_bitumen.present? ? product_path(@emulsion_bitumen) : products_path) : products_path), class: "bitumen-product-link" do %>
           View Products
           <i class="fa-solid fa-arrow-right"></i>
           <% end %>

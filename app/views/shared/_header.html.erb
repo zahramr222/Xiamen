@@ -156,7 +156,7 @@
 
 
                 <!-- PARAFFIN WAX -->
-                <%= link_to product_path(Product.find_by!(name: "Paraffin Wax")),
+                <%= link_to (Product.find_by(name: "Paraffin Wax")&.then { |product| product_path(product) } || products_path),
                 class: "product-menu-item" do %>
                 <span>Paraffin Wax</span>
                 <i class="fa-solid fa-arrow-right"></i>
@@ -164,7 +164,7 @@
 
 
                 <!-- SLACK WAX -->
-                <%= link_to product_path(Product.find_by!(name: "Slack Wax")),
+                <%= link_to (Product.find_by(name: "Slack Wax")&.then { |product| product_path(product) } || products_path),
                 class: "product-menu-item" do %>
                 <span>Slack Wax</span>
                 <i class="fa-solid fa-arrow-right"></i>
@@ -172,7 +172,7 @@
 
 
                 <!-- RPO -->
-                <%= link_to product_path(Product.find_by!(name: "RPO")),
+                <%= link_to (Product.find_by(name: "RPO")&.then { |product| product_path(product) } || products_path),
                 class: "product-menu-item" do %>
                 <span>RPO</span>
                 <i class="fa-solid fa-arrow-right"></i>
@@ -180,7 +180,7 @@
 
 
                 <!-- BASE OIL -->
-                <%= link_to product_path(Product.find_by!(name: "Base Oil")),
+                <%= link_to (Product.find_by(name: "Base Oil")&.then { |product| product_path(product) } || products_path),
                 class: "product-menu-item" do %>
                 <span>Base Oil</span>
                 <i class="fa-solid fa-arrow-right"></i>
@@ -188,14 +188,14 @@
 
 
                 <!-- FOOTS OIL -->
-                <%= link_to product_path(Product.find_by!(name: "Footsoil")),
+                <%= link_to (Product.find_by(name: "Footsoil")&.then { |product| product_path(product) } || products_path),
                 class: "product-menu-item" do %>
                 <span>Foots Oil</span>
                 <i class="fa-solid fa-arrow-right"></i>
                 <% end %>
 
                 <!-- CARBON BLACK -->
-                <%= link_to product_path(Product.find_by!(name: "Carbon Black")),
+                <%= link_to (Product.find_by(name: "Carbon Black")&.then { |product| product_path(product) } || products_path),
                 class: "product-menu-item" do %>
                 <span>Carbon Black</span>
                 <i class="fa-solid fa-arrow-right"></i>
@@ -203,7 +203,7 @@
 
 
                 <!-- OTHER PRODUCTS -->
-                <%= link_to product_path(Product.find_by!(name: "Other Products")),
+                <%= link_to (Product.find_by(name: "Other Products")&.then { |product| product_path(product) } || products_path),
                 class: "product-menu-item" do %>
                 <span>Other Products</span>
                 <i class="fa-solid fa-arrow-right"></i>
@@ -467,7 +467,7 @@ class: "header-logout-btn",
           <% end %>
 
           <!-- PARAFFIN WAX -->
-          <%= link_to product_path(Product.find_by!(name: "Paraffin Wax")),
+          <%= link_to (Product.find_by(name: "Paraffin Wax")&.then { |product| product_path(product) } || products_path),
           class: "product-menu-item" do %>
           <span>Paraffin Wax</span>
           <i class="fa-solid fa-arrow-right"></i>
@@ -475,7 +475,7 @@ class: "header-logout-btn",
 
 
           <!-- SLACK WAX -->
-          <%= link_to product_path(Product.find_by!(name: "Slack Wax")),
+          <%= link_to (Product.find_by(name: "Slack Wax")&.then { |product| product_path(product) } || products_path),
           class: "product-menu-item" do %>
           <span>Slack Wax</span>
           <i class="fa-solid fa-arrow-right"></i>
@@ -483,7 +483,7 @@ class: "header-logout-btn",
 
 
           <!-- RPO -->
-          <%= link_to product_path(Product.find_by!(name: "RPO")),
+          <%= link_to (Product.find_by(name: "RPO")&.then { |product| product_path(product) } || products_path),
           class: "product-menu-item" do %>
           <span>RPO</span>
           <i class="fa-solid fa-arrow-right"></i>
@@ -491,7 +491,7 @@ class: "header-logout-btn",
 
 
           <!-- BASE OIL -->
-          <%= link_to product_path(Product.find_by!(name: "Base Oil")),
+          <%= link_to (Product.find_by(name: "Base Oil")&.then { |product| product_path(product) } || products_path),
           class: "product-menu-item" do %>
           <span>Base Oil</span>
           <i class="fa-solid fa-arrow-right"></i>
@@ -499,14 +499,14 @@ class: "header-logout-btn",
 
 
           <!-- FOOTS OIL -->
-          <%= link_to product_path(Product.find_by!(name: "Footsoil")),
+          <%= link_to (Product.find_by(name: "Footsoil")&.then { |product| product_path(product) } || products_path),
           class: "product-menu-item" do %>
           <span>Foots Oil</span>
           <i class="fa-solid fa-arrow-right"></i>
           <% end %>
 
           <!-- CARBON BLACK -->
-          <%= link_to product_path(Product.find_by!(name: "Carbon Black")),
+          <%= link_to (Product.find_by(name: "Carbon Black")&.then { |product| product_path(product) } || products_path),
           class: "product-menu-item" do %>
           <span>Carbon Black</span>
           <i class="fa-solid fa-arrow-right"></i>
@@ -514,7 +514,7 @@ class: "header-logout-btn",
 
 
           <!-- OTHER PRODUCTS -->
-          <%= link_to product_path(Product.find_by!(name: "Other Products")),
+          <%= link_to (Product.find_by(name: "Other Products")&.then { |product| product_path(product) } || products_path),
           class: "product-menu-item" do %>
           <span>Other Products</span>
           <i class="fa-solid fa-arrow-right"></i>
