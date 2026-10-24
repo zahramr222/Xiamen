@@ -1,0 +1,86 @@
+
+name: Xiamen Production Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: xiamen-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy with Kamal
+    runs-on: ubuntu-latest
+    environment: production
+
+    env:
+      KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+
+      - name: Install Kamal
+        run: gem install kamal -v '~> 2.0' --no-document
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.10.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Configure SSH known hosts
+        env:
+          KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Prepare Kamal secrets
+        run: |
+          mkdir -p .kamal
+          cat > .kamal/secrets <<'EOF'
+          KAMAL_REGISTRY_PASSWORD=$KAMAL_REGISTRY_PASSWORD
+          RAILS_MASTER_KEY=$RAILS_MASTER_KEY
+          DB_PASSWORD=$DB_PASSWORD
+          POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+          EOF
+          chmod 600 .kamal/secrets
+
+      - name: Check required secrets
+        run: |
+          test -n "$KAMAL_REGISTRY_PASSWORD"
+          test -n "$RAILS_MASTER_KEY"
+          test -n "$DB_PASSWORD"
+          test -n "$POSTGRES_PASSWORD"
+
+      - name: Verify SSH connection
+        run: |
+          ssh -o BatchMode=yes \
+              -o StrictHostKeyChecking=yes \
+              -o ConnectTimeout=15 \
+              -p 20481 \
+              railsadmin@37.221.21.211 \
+              'docker info >/dev/null && echo SERVER_READY'
+
+      - name: Deploy Production
+        run: kamal deploy
