@@ -9,7 +9,7 @@ class HomeController < ApplicationController
                     .limit(2)
 
     @products = Product.where(
-  name: ["Slack Wax", "Footsoil", "Paraffin Wax", "Base Oil", "RPO"]
+  name: [ "Slack Wax", "Footsoil", "Paraffin Wax", "Base Oil", "RPO" ]
 )
 
     home_description =
@@ -35,4 +35,3 @@ class HomeController < ApplicationController
     )
   end
 end
-

@@ -160,7 +160,7 @@ puts "Created #{tags.count} tags."
 
 puts "\nCreating Posts..."
 
-post_types = ["News", "Articles", "Applications"]
+post_types = [ "News", "Articles", "Applications" ]
 all_posts = []  # Changed from 'posts' to 'all_posts' for clarity
 
 # Create regular posts
@@ -180,7 +180,7 @@ puts "\nCreating Reports..."
 
 5.times do |i|
   title = "Weekly Industry Report #{i + 1}"
-  
+
   # Create the report post
   report = Post.create!(
     title: title,
@@ -189,7 +189,7 @@ puts "\nCreating Reports..."
     content: Faker::Lorem.paragraphs(number: rand(3..6)).join("\n\n"),
     image: "report_placeholder.jpg"  # Add a placeholder image
   )
-  
+
   all_posts << report
   puts "  Created report: #{title}"
 end
@@ -207,7 +207,7 @@ puts "\nCreating Post ↔ Tag relationships..."
 
 all_posts.each do |post|
   selected_tags = tags.sample(rand(2..6))
-  
+
   selected_tags.each do |tag|
     PostTag.create!(
       post: post,

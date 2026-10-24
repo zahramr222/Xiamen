@@ -141,14 +141,14 @@
       # If grade has tags, find posts with same tags
       if grade.tags.any?
         tag_ids = grade.tags.pluck(:id)
-        
+
         related_posts = Post.joins(:tags)
         .where(tags: { id: tag_ids })
         .group("posts.id")
         .select("posts.*, COUNT(tags.id) as match_count")
         .order("match_count DESC")
         .limit(limit)
-        
+
         if related_posts.any?
           return related_posts.map do |post|
             {

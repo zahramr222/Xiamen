@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
-get "/up" => proc { [200, { "Content-Type" => "text/plain" }, ["OK"]] }
+get "/up" => proc { [ 200, { "Content-Type" => "text/plain" }, [ "OK" ] ] }
   get "search/index"
   devise_for :users,
-           skip: [:registrations],
+           skip: [ :registrations ],
            controllers: {
              sessions: "users/sessions"
            }
   root "home#index"
-  
+
   post "/newsletter", to: "pages#create_newsletter", as: :newsletter
 
   get "/inquiry", to: "inquiry#inquiry", as: :inquiry
@@ -18,7 +18,7 @@ get "/up" => proc { [200, { "Content-Type" => "text/plain" }, ["OK"]] }
   # Pages
   get "/contact", to: "pages#contact", as: :contact
   post "/contact", to: "pages#create_contact"
-  
+
 
   get "/about", to: "pages#about", as: :about
 
@@ -31,8 +31,8 @@ get "/up" => proc { [200, { "Content-Type" => "text/plain" }, ["OK"]] }
   end
   end
 
-  
-  
+
+
 
   resources :specifications
   resources :packings
@@ -40,8 +40,8 @@ get "/up" => proc { [200, { "Content-Type" => "text/plain" }, ["OK"]] }
   resources :posts
   resources :tags
   resources :post_tags
-  resources :inquiry, only: [:new, :create]
-  
+  resources :inquiry, only: [ :new, :create ]
+
   get "/search", to: "search#index", as: :search
 
   get "sitemap.xml", to: "sitemaps#show", defaults: { format: "xml" }

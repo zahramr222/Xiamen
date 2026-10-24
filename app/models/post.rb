@@ -14,7 +14,7 @@ has_one_attached :image
 
 
 extend FriendlyId
-friendly_id :slug, use: :slugged  
+friendly_id :slug, use: :slugged
 before_validation :normalize_slug
 
 
@@ -24,7 +24,7 @@ validates :post_type, inclusion: { in: POST_TYPES }
 
 
   scope :reports, -> { where(post_type: "Reports") }
-  scope :articles, -> {where(post_type: ["Articles", "Applications"])}
+  scope :articles, -> { where(post_type: [ "Articles", "Applications" ]) }
 
   # Scopes for related posts
   scope :by_category, ->(category) { where(post_type: category) }
@@ -46,5 +46,4 @@ validates :post_type, inclusion: { in: POST_TYPES }
         title.to_s.parameterize
       end
   end
-
 end

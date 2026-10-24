@@ -2,7 +2,6 @@
 
 Rails.application.configure do
   config.content_security_policy do |policy|
-
     # Everything is blocked by default unless explicitly allowed below.
     policy.default_src :self
 

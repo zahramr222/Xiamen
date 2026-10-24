@@ -131,7 +131,7 @@ class Search
 
   def remove_duplicates(results)
     results
-      .group_by { |result| [result[:type], result[:id]] }
+      .group_by { |result| [ result[:type], result[:id] ] }
       .values
       .map { |matches| matches.max_by { |result| result[:score] } }
   end

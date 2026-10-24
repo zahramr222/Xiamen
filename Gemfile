@@ -68,11 +68,11 @@ end
 
 
 gem "cssbundling-rails", "~> 1.4"
-gem 'friendly_id', '~> 5.5.0'
+gem "friendly_id", "~> 5.5.0"
 gem "devise"
 gem "faker"
 gem "ransack"
-gem 'country_select'
-gem 'meta-tags'
+gem "country_select"
+gem "meta-tags"
 gem "pagy"
 gem "rack-attack"

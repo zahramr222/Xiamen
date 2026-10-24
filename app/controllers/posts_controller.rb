@@ -82,10 +82,10 @@ class PostsController < ApplicationController
     end
 
     set_record_meta_tags(@post)
-    
+
     # Get related posts based on tags, title, and summary
     @related_posts = find_related_posts(@post)
-    
+
     @breadcrumbs = [
       { label: "Posts", path: posts_path },
       { label: @post.title }
@@ -191,7 +191,7 @@ class PostsController < ApplicationController
     # Calculate relevance score for each post
     scored_posts = all_posts.map do |other_post|
       score = 0
-      
+
       # 1. Tag match (highest weight)
       other_tags = other_post.tags.pluck(:name).map(&:downcase)
       matching_tags = (post_tags & other_tags).count

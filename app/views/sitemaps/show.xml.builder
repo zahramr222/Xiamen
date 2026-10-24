@@ -3,7 +3,6 @@ xml.instruct! :xml, version: "1.0", encoding: "UTF-8"
 base_url = "https://globalsynergy-co.com"
 
 xml.urlset xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9" do
-
   [
     "#{base_url}/",
     "#{base_url}/about",
@@ -45,5 +44,4 @@ xml.urlset xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9" do
       xml.lastmod post.updated_at.iso8601
     end
   end
-
 end

@@ -2,7 +2,6 @@ require "net/http"
 require "json"
 
 class PagesController < ApplicationController
-
   # =====================================================
   # ABOUT
   # =====================================================
@@ -186,7 +185,7 @@ class PagesController < ApplicationController
 
   def turnstile_valid?
     token = params["cf-turnstile-response"]
-    
+
     return false if token.blank?
 
     secret_key =
@@ -307,5 +306,4 @@ class PagesController < ApplicationController
       { label: "Contact" }
     ]
   end
-
 end

@@ -21,7 +21,6 @@ def set_noindex_for_private_pages
 end
 
 def load_navigation
-
   bitumen_names = [
     "Oxidized Bitumen",
     "Penetration Bitumen",
@@ -43,11 +42,9 @@ def load_navigation
 
   @nav_bitumen_products =
   bitumen_names.filter_map do |name|
-
     bitumen_products.find do |product|
       product.name == name
     end
-
   end
 
 
@@ -58,7 +55,6 @@ def load_navigation
   @nav_products = Product
   .where.not(name: bitumen_names)
   .order(:name)
-
 end
 
 def set_record_meta_tags(record)
@@ -114,5 +110,4 @@ def set_record_meta_tags(record)
     }
     )
 end
-
 end

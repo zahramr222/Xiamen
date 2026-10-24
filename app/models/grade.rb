@@ -15,7 +15,7 @@ class Grade < ApplicationRecord
   has_many :tags, through: :grade_tags
 
   has_one_attached :image
-  has_one_attached :msds_file 
+  has_one_attached :msds_file
 
   private
 

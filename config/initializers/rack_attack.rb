@@ -1,5 +1,4 @@
 class Rack::Attack
-
   throttle("inquiry/ip", limit: 5, period: 1.minute) do |request|
     request.ip if request.post? && request.path == "/inquiry"
   end
@@ -19,5 +18,4 @@ class Rack::Attack
     request.ip
   end
   end
-
 end

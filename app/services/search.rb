@@ -35,7 +35,6 @@ class Search
       "name ILIKE ?",
       "%#{ActiveRecord::Base.sanitize_sql_like(query)}%"
     ).find_each do |tag|
-
       tag.products.find_each do |product|
         results << {
           type: "Product",
@@ -94,7 +93,6 @@ class Search
       )
       .find_each
       .map do |product|
-
         if product.name.to_s.downcase.include?(query.downcase)
           score = 500
           matched_by = "name"
@@ -124,7 +122,6 @@ class Search
       )
       .find_each
       .map do |grade|
-
         if grade.name.to_s.downcase.include?(query.downcase)
           score = 500
           matched_by = "name"
@@ -154,7 +151,6 @@ class Search
       )
       .find_each
       .map do |packing|
-
         if packing.name.to_s.downcase.include?(query.downcase)
           score = 500
           matched_by = "name"
@@ -184,7 +180,6 @@ class Search
       )
       .find_each
       .map do |post|
-
         if post.title.to_s.downcase.include?(query.downcase)
           score = 500
           matched_by = "title"
@@ -206,7 +201,7 @@ class Search
 
   def remove_duplicates(results)
     results
-      .group_by { |result| [result[:type], result[:id]] }
+      .group_by { |result| [ result[:type], result[:id] ] }
       .values
       .map { |matches| matches.max_by { |result| result[:score] } }
   end

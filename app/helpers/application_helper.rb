@@ -1,5 +1,4 @@
 module ApplicationHelper
-
   # =====================================================
   # DEFAULT META TAGS
   # =====================================================
@@ -80,7 +79,6 @@ module ApplicationHelper
     title: "Related Articles",
     description: nil
   )
-
     related_posts = find_related_posts(source, limit)
 
     articles_data = related_posts.map do |post|
@@ -134,7 +132,7 @@ module ApplicationHelper
       )
     }
   end
-end
+    end
 
     render(
       "shared/right_sidebar",
@@ -307,5 +305,4 @@ end
     ]
   )
 end
-
 end

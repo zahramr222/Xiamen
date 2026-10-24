@@ -1,5 +1,4 @@
 class AddTrigramIndexes < ActiveRecord::Migration[8.1]
-
   def change
     add_index :tags, :name,
               using: :gin,
@@ -38,5 +37,3 @@ class AddTrigramIndexes < ActiveRecord::Migration[8.1]
               opclass: :gin_trgm_ops
   end
 end
-  
-

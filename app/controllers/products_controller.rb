@@ -68,7 +68,7 @@
     { label: @product.name }
   ]
 end
-    # --------------------------------------------------
+  # --------------------------------------------------
   # Bitumen Landing Page
   # --------------------------------------------------
   def bitumen
@@ -288,7 +288,6 @@ end
       .order(created_at: :desc)
       .limit(limit)
       .map do |post|
-
         summary_text = post.summery || post.content || ""
 
         if summary_text.length > 120
@@ -310,5 +309,4 @@ end
     def normalize_slug
       self.slug = slug.to_s.parameterize if slug.present?
     end
-    
   end
