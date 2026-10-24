@@ -3,11 +3,7 @@
 one:
   name: MyString
   content: MyText
-  specification: one
-  packing: one
 
 two:
   name: MyString
   content: MyText
-  specification: two
-  packing: two

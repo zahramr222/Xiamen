@@ -4,10 +4,8 @@ one:
   name: MyString
   content: MyText
   slug: MyString
-  grade: one
 
 two:
   name: MyString
   content: MyText
   slug: MyString
-  grade: two
